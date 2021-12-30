@@ -1,0 +1,13 @@
+找到package.json文件夹 找"dependencies"然后就可以看到你装的vue的版本了
+或者 npm list vue , vue -V
+查看Vue/cli版本：
+
+vue -V 或者 vue --version
+
+问题：查看npm有哪些版本
+
+解决办法：npm view indicative versios
+
+安装固定版本：npm -g install npm@3.0.0
+
+Vue 升级版本参考 https://www.cnblogs.com/thinkingthigh/p/15529082.html

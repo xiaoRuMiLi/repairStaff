@@ -1,0 +1,8 @@
+{
+	
+	"/api/api/car_brand/index.php": {
+		"changeKey": { "account": "name", "pwd": "password" },
+		"defaultVal": {"sex": "nan","age":"16" }
+	
+    }
+}

@@ -1,0 +1,73 @@
+﻿{
+  "bgImg" : "登录页背景" ,
+  "bgImg" : "http://47.94.89.73:8080/zeefile/audio/photo/loginbg.jpg" ,
+  
+  
+  "helloTitle" : "登录页标题" ,
+  "helloTitle" : "adminTitle" ,
+  "webIco" : "网站ico" ,
+  "webIco" : "https://gitee.com/cloud_users/Cloud-management-system/raw/master/yun.ico" ,
+  "webIco" : "http://47.94.89.73:8080/zeefile/audio/photo/yun.ico" ,
+  "menuLogo" : "菜单栏logo" ,
+  "menuLogo" : "http://47.94.89.73:8080/zeefile/audio/photo/yun.ico" ,
+  "themeBackgroundColor" : "主题背景颜色" ,
+  "themeBackgroundColor" : "#304156" ,
+  "themeTextColor" : "主题文字颜色" ,
+  "themeTextColor" : "#BFCBD9" ,
+  "iconUnifiedStyleColor" : "icon图标颜色" ,
+  "iconUnifiedStyleColor" : "#304156" ,
+  "iconUnifiedStyleFontSize" : "icon图标大小" ,
+  "iconUnifiedStyleFontSize" : 28 ,
+  "menuCollapse" : "是否折叠菜单栏" ,
+  "menuCollapse" : false ,
+  "languageOpt" : "语言默认选项" ,
+  "languageOpt" : "zh-CN" ,
+  "languageList" : "语言包配置" ,
+  "languageList" : {
+    "zh-CN" : "中文" ,
+    "en" : "English"
+  } ,
+  "showMenuLogo" : "是否显示菜单栏logo" ,
+  "showMenuLogo" : true ,
+  "asideVisible" : "是否打开菜单栏" ,
+  "asideVisible" : true ,
+  "homeQuickNav" : "首页快捷导航" ,
+  "homeQuickNav" : true ,
+  "menuUnique" : "单个菜单活动" ,
+  "menuUnique" : true ,
+  "rightClickMenu" : "右键快捷菜单" ,
+  "rightClickMenu" : false ,
+  "drawerVisible" : "是否打开抽屉" ,
+  "drawerVisible" : false ,
+  "drawerDirection" : "抽屉打开方向" ,
+  "drawerDirection" : "rtl" ,
+  "configThemeDisabled" : "是否禁用主题" ,
+  "configThemeDisabled" : false ,
+  "themePresetList" : "默认主题列表" ,
+  "themePresetList" : [
+    {
+      "themeBackgroundColor" : "#304156" ,
+      "themeTextColor" : "#BFCBD9"
+    }
+  ] ,
+  "helloMenuList" : "首页快捷进入" ,
+  "helloMenuList" : [
+    {
+      "icon" : "el-icon-sugar" ,
+      "title" : "test" ,
+      "route" : "test"
+    } , {
+      "icon" : "el-icon-switch-button" ,
+      "title" : "signOut" ,
+      "route" : "login"
+    }
+  ] ,
+  "test" : "测试" ,
+  "test" : [
+    {
+      "text" : "所有" ,
+      "text" : "all" ,
+      "value" : -1
+    }
+  ]
+}
