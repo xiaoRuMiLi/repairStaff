@@ -27,6 +27,7 @@ import less from 'less'
 window.CONFIG = {
 	admin: require ( "./web-config/config-admin.json" ),
 }
+//console.log("当前环境变量："+process.env.NODE_ENV) 和   console.log("当前环境路径："+process.env.VUE_APP_URL);
 Vue.prototype.$Post = fetchPost
 Vue.prototype.$Get = fetchGet
 Vue.use(Button).use(Icon)

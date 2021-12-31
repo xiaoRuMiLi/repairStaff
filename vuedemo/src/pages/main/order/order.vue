@@ -134,7 +134,8 @@ export default {
   methods: {
     getDatas () {
       self = this
-      this.get ('/v1/constructions').then( (data) => {
+      console.log(this);
+      this.get ('/api').then( (data) => {
         var datas = JSON.parse(data);
         if (datas.code == 200) {
             var res = datas.data

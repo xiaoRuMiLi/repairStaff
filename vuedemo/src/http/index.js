@@ -7,7 +7,6 @@ import { requestMiddle } from '@/http/requestMiddlewear'
 
 axios.defaults.timeout = 20000;                        //响应时间
 axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=UTF-8';        //配置请求头
-
 // axios.defaults.onUploadProgress = function (p) {
 // NProgress.set((p.loaded / p.total));
 // }
