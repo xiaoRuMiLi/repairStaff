@@ -11,3 +11,6 @@ vue -V 或者 vue --version
 安装固定版本：npm -g install npm@3.0.0
 
 Vue 升级版本参考 https://www.cnblogs.com/thinkingthigh/p/15529082.html
+
+报错：
+    如果修改了文件，引用的文件不存在，那么刷新显示将不会出现文件改变或报错，只有重新npm run dev 才会发现引用的文件不存在
