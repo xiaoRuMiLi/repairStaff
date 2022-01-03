@@ -1,7 +1,7 @@
 let m = {
     data () {
         return {
-            h : "/api"//全局请求地址,在config/index 下设置了跨域访问
+            h : ""//全局请求地址,在config/index 下设置了跨域访问
         };
     } ,
     computed : {

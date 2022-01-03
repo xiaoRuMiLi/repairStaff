@@ -32,8 +32,8 @@
     <van-cell v-for="item in list" :key="item" :title="item" />
     </van-list>
 
-    <van-popup v-model="showPop" position="right" :style="{ height: '100%', width: '80%' }"> 
-      
+    <van-popup v-model="showPop" position="right" :style="{ height: '100%', width: '80%' }">
+
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
       <jin-radio :arr="choose_datas" :on-change.sync="chooseVal" :val="chooseVal"></jin-radio>
     </van-popup>
@@ -46,6 +46,7 @@
 <script>
 import axios from 'axios'
 import { List, Tab, Tabs, Search, Popup, RadioGroup, Radio  } from 'vant';
+import { URL } from '@/web-config/apiUrl';
 import PercentLoop from '@/components/PercentLoop.vue'
 import JinRadio from '@/components/jin-radio.vue'
 import TextListItem from '@/components/TextListItem.vue'
@@ -55,7 +56,7 @@ export default {
   mixins : [ require ( "@/mixins" ).default],
   components: {
     List,
-    'van-radio-group': RadioGroup, 
+    'van-radio-group': RadioGroup,
     'van-radio': Radio,
     'van-tabs': Tabs,
     'van-tab': Tab,
@@ -128,19 +129,20 @@ export default {
           rightTitle: '已完成'
         }
       ]
-    } 
-    
+    }
+
   },
   methods: {
     getDatas () {
       self = this
-      console.log(this);
-      this.get ('/api').then( (data) => {
+
+      this.get (URL.getWorkHours).then( (data) => {
+        console.log(data)
         var datas = JSON.parse(data);
         if (datas.code == 200) {
             var res = datas.data
             console.log(datas.data)
-            
+
         }
 
       })
@@ -170,8 +172,8 @@ export default {
       this.showPop = true
       console.log("filter")
     }
-    
-    
+
+
   },
   watch: {
     chooseVal (newVal) {
@@ -182,10 +184,10 @@ export default {
 
   },
   mounted () {
-    this.getDatas (); 
+    this.getDatas ();
     console.log(CONFIG)
-    
-   
+
+
   },
   created () {
 

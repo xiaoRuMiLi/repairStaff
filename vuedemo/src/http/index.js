@@ -1,10 +1,11 @@
 import axios from 'axios'
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
+const { Toast } = require('vant');
 import store from '@/store';
 import { formData } from '@/function'
-import { requestMiddle } from '@/http/requestMiddlewear'
-
+import { requestMiddle } from '@/http/requestMiddleware'
+import statusCode from '@/http/responseMiddleware/statusCode'
 axios.defaults.timeout = 20000;                        //响应时间
 axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=UTF-8';        //配置请求头
 // axios.defaults.onUploadProgress = function (p) {
@@ -16,7 +17,7 @@ axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencod
 
 //POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use ( ( config ) => {
-    
+
     let newConfig = requestMiddle( config )
     //在发送请求之前做某件事
     NProgress.start ();
@@ -36,7 +37,8 @@ axios.interceptors.response.use ( ( res ) => {
     return Promise.resolve ( res.data );
 } , ( error ) => {
     NProgress.done ();
-    return Promise.reject ( error );
+    return statusCode.getStatusErr(error);
+    // return Promise.reject ( error );
 } );
 
 function mes () {
