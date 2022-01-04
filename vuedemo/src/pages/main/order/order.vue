@@ -136,7 +136,7 @@ export default {
     getDatas () {
       self = this
 
-      this.get (URL.getWorkHours).then( (data) => {
+      this.get (URL.api_searchConstruction).then( (data) => {
         console.log(data)
         var datas = JSON.parse(data);
         if (datas.code == 200) {

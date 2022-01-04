@@ -17,10 +17,10 @@ const getStatusErr = ( error, toast = true ) =>
     // 网络异常
     if (error.code === 'ECONNABORTED' || error.message === 'Network Error' || error.message.indexOf('timeout') !== -1) {
         Toast('网络异常');
-        return Promise.reject({
+        return {
             code: -10000,
             msg: '网络异常',
-        });
+        };
     }
     if (error && error.response.status) {
         switch (error.response.status) {
@@ -65,10 +65,10 @@ const getStatusErr = ( error, toast = true ) =>
     {
         Toast(error.message);
     }
-    return Promise.reject({
+    return {
         code: error.response.status,
         msg: error.message,
-    });
+    };
 }
 export default {
     getStatusErr: getStatusErr

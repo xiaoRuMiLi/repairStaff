@@ -25,18 +25,53 @@ const setDefaultVal = function ( obj , conf ) {
 }
 
 // 还未写好，等接口做出来了再改变
-export function responseMiddle ( res ) {
-	let url = config.url
-	let data = res.data
-	// 更改对象键名
-	if ( url in option & 'changeKey' in option[url] ) {
-        params = changeKey( params , option[url].changeKey )
-        
+/**
+ * [responseMiddle ]
+ * @param  {[type]} res  [description]
+ * @param  {[type]} path [访问路由]
+ * @return {[type]}      [description]
+ */
+export function responseMiddle ( res, path ) {
+	console.log( res );
+	console.log('path____',path);
+	let data = JSON.parse( res.data );
+	let isArr = Array.isArray(data);
+	let isObj = o instanceof Object;
+    let url =path;
+    let resData = null;
+    let resArr = [];
+    let newRes = res;
+	if ( isArr )
+	{
+        for ( i in data ) 
+        {
+        	// 更改对象键名
+			if ( url in option & 'changeKey' in option[url] ) {
+		        resData = changeKey( i , option[url].changeKey )
+		        resArr.append(resData);
+		        
+			}
+			// 添加默认值
+			if ( url in option & 'defaultVal' in option[url] ) {
+		        resData = setDefaultVal( i , option[url].defaultVal )
+		        resArr.append(resData);
+			}
+
+        }
+        newRes.data = resArr;
 	}
-	// 添加默认值
-	if ( url in option & 'defaultVal' in option[url] ) {
-        params = setDefaultVal( params , option[url].defaultVal )
+	if ( isObj )
+	{
+		// 更改对象键名
+		if ( url in option & 'changeKey' in option[url] ) {
+	        resData = changeKey( i , option[url].changeKey ) 
+		}
+		// 添加默认值
+		if ( url in option & 'defaultVal' in option[url] ) {
+	        resData = setDefaultVal( i , option[url].defaultVal )    
+		}
+		newRes.data = resData
 	}
-	config.params = params
-	return config
+	
+	return newRes;
 }

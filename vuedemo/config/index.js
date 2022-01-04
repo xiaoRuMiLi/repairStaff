@@ -12,11 +12,11 @@ module.exports = {
     assetsPublicPath: '/',
     // 设置访问代理，跨域等, 跨域访问有个大坑，就是如果你访问的路由不存在，例如https://weixiubang.club/index.php 如果index.php 文件不存在那么axios 会重定向域名到 当前项目地址，localhost:8080/index.php,然后报错 404, 使你误判断跨域设置有问题，其实跨越设置是成功了的。还有跨域设置在项目目录自定义vue.config.js文件 在里面设置也是可以的，好像是要VUE3.+版本才行。
     proxyTable: {
-        '/api': {
-            target: 'http://localhost:8000/',//后端接口地址，将/api替换成该地址
+        '/Api': {
+            target: 'http://127.0.0.1:8000/',//后端接口地址，将/api替换成该地址,设置时不要忘记了写http：//
             changeOrigin: true,//是否允许跨域访问
             pathRewrite: {
-                '^/api': '',//重写,正则匹配规则，路由必须由/api开头，
+                '^/Api': '',//重写,正则匹配规则，路由必须由/api开头，
             }
         },
         '/url': {

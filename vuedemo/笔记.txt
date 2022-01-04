@@ -1,0 +1,27 @@
+版本：
+
+	找到package.json文件夹 找"dependencies"然后就可以看到你装的vue的版本了
+	或者 npm list vue , vue -V
+	查看Vue/cli版本：
+
+	vue -V 或者 vue --version
+
+	问题：查看npm有哪些版本
+
+	解决办法：npm view indicative versios
+
+	安装固定版本：npm -g install npm@3.0.0
+
+	Vue 升级版本参考 https://www.cnblogs.com/thinkingthigh/p/15529082.html
+
+配置 vue.config.js
+
+	vue-cli3 脚手架搭建完成后，项目目录中没有 vue.config.js 文件，需要手动创建
+	创建vue.config.js
+	vue.config.js 是一个可选的配置文件，如果项目的 (和 package.json 同级的) 根目录中存在这个文件，那么它会被 @vue/cli-service 自动加载。你也可以使用 package.json 中的 vue 字段，但是注意这种写法需要你严格遵照 JSON 的格式来写。
+
+	作者：Rising_life
+	链接：https://www.jianshu.com/p/b358a91bdf2d
+	来源：简书
+	著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+    

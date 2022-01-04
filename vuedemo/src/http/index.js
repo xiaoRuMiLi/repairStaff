@@ -5,6 +5,7 @@ const { Toast } = require('vant');
 import store from '@/store';
 import { formData } from '@/function'
 import { requestMiddle } from '@/http/requestMiddleware'
+import { responseMiddle } from '@/http/responseMiddleware'
 import statusCode from '@/http/responseMiddleware/statusCode'
 axios.defaults.timeout = 20000;                        //响应时间
 axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=UTF-8';        //配置请求头
@@ -14,11 +15,13 @@ axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencod
 // axios.defaults.onDownloadProgress = function (p) {
 // NProgress.set((p.loaded / p.total));
 // }
-
+// 路由
+var path = '';
 //POST传参序列化(添加请求拦截器)
 axios.interceptors.request.use ( ( config ) => {
 
     let newConfig = requestMiddle( config )
+    path = config.url;
     //在发送请求之前做某件事
     NProgress.start ();
     // 设置访问token
@@ -39,6 +42,14 @@ axios.interceptors.response.use ( ( res ) => {
     NProgress.done ();
     return statusCode.getStatusErr(error);
     // return Promise.reject ( error );
+} );
+//返回状态判断(添加响应拦截器)
+axios.interceptors.response.use ( ( res ) => {
+    //对响应数据做些事
+    let newRes = responseMiddle( res, path );
+    return Promise.resolve ( newRes.data );
+} , ( error ) => {
+    return Promise.reject ( error );
 } );
 
 function mes () {

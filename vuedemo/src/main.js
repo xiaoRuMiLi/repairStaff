@@ -23,7 +23,7 @@ import BaseRefreshView from "./components/BaseRefreshView.vue";
 import BaiduMap from 'vue-baidu-map';
 import vuescroll from 'vuescroll';
 import less from 'less'
-// 配置文件挂载到Windows上
+// 配置文件挂载到Windows上//////////////////////////////////////////
 window.CONFIG = {
 	admin: require ( "./web-config/config-admin.json" ),
 }
