@@ -21,8 +21,8 @@
     </div>
     <div class="white-place"></div>
     <van-list
-      v-model="loading"
-      :finished="finished"
+      v-model="onOff.loading"
+      :finished="onOff.finished"
       finished-text="没有更多了"
       @load="onLoad"
     >
@@ -32,10 +32,11 @@
     <van-cell v-for="item in list" :key="item" :title="item" />
     </van-list>
 
-    <van-popup v-model="showPop" position="right" :style="{ height: '100%', width: '80%' }">
-
+    <van-popup v-model="onOff.showPop" position="right" :style="{ height: '100%', width: '80%' }">
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
-      <jin-radio :arr="choose_datas" :on-change.sync="chooseVal" :val="chooseVal"></jin-radio>
+      <jin-radio :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
+
+      <jin-date-check :arr="choose_dates" :on-change.sync="inputs.chooseDate" :val="inputs.chooseDate"></jin-date-check>
     </van-popup>
 
 
@@ -49,6 +50,7 @@ import { List, Tab, Tabs, Search, Popup, RadioGroup, Radio  } from 'vant';
 import { URL } from '@/web-config/apiUrl';
 import PercentLoop from '@/components/PercentLoop.vue'
 import JinRadio from '@/components/jin-radio.vue'
+import JinDateCheck from '@/components/JinDateCheck.vue'
 import TextListItem from '@/components/TextListItem.vue'
 
 export default {
@@ -65,22 +67,30 @@ export default {
     'percent-loop': PercentLoop,
     'jin-radio': JinRadio,
     'text-list-item': TextListItem,
+    'jin-date-check': JinDateCheck,
   },
   data () {
     return {
       list: [],
-      loading: false,
-      finished: false,
       // 标签动作
       active: 2,
-      // 弹出
-      showPop: true,
       // 单选框
       radio: 1,
       // 搜索内容
       searchValue: '',
       choose_datas: ['选择项1','选择项2','选择项3','选择项4','选择项5','选择项6','选择项7','选择项8'],
-      chooseVal: '选择项6',
+      choose_dates: ['近两个月','近一个月','近二十天','近十天'],
+      onOff:{
+        // 弹出右侧弹层
+        showPop: true,
+        // 列表下方读取中动画
+        loading: false,
+        finished: false,
+      },
+      inputs: {
+        chooseVal: '选择项6',
+        chooseDate: '近一个月',
+      },
       datas: [
         {
           title: '喷漆施工单',
@@ -169,7 +179,7 @@ export default {
 
     },
     onFilter () {
-      this.showPop = true
+      this.onOff.showPop = true
       console.log("filter")
     }
 

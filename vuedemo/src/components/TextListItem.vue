@@ -4,23 +4,23 @@
 			<div class="left-con">
 				<div class="title">
 					<span>{{title}}</span>
-				     
+
 			    </div>
 				<div class="amount">￥
 					<span>{{amount}}</span>
-				     
+
 			    </div>
 				<div class="text-container" v-for=" item in content">
-					<div class="lable"> 
+					<div class="lable">
 						<span class="lable">{{ item.title }}</span>
 					</div>
 					<span class="content">{{item.content}}</span>
-				</div>	
+				</div>
 			</div>
 
 			<div class="right-con">
 				<span>{{ rightTitle}} </span>
-				
+
 			</div>
         </div>
         <div class="bottom">
@@ -50,15 +50,15 @@ export default {
 		content: {
 			type: [ Array ],
 			default: [
-				{ 
+				{
 					title: 'title1',
 					content: 'content1',
 			    },
-				{ 
+				{
 					title: 'title2',
 					content: 'content2',
 			    },
-			    { 
+			    {
 					title: 'title3',
 					content: 'content3',
 			    },
@@ -94,7 +94,7 @@ export default {
 
 	},
 }
-	
+
 </script>
 <style scoped>
 .father {
@@ -106,7 +106,7 @@ export default {
 
 }
 .father .title {
-	
+
     padding: 5px;
     font-weight: 550;
     font-size: 4vw;
@@ -120,7 +120,7 @@ export default {
     font-weight: 550;
     font-size: 4vw;
 }
-    
+
 .top-container {
 	display: flex;
 	flex-direction: row;
@@ -136,7 +136,7 @@ export default {
 .left-con,.right-con {
 	padding: 0 10px;
 	text-align: start;
-   
+
 }
 .left-con span {
 	display: inline;

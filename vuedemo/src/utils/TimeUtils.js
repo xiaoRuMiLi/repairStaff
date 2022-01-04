@@ -1,18 +1,6 @@
 //时间转换工具类
 
-module.exports = {
-    Jh_timeStampToTime,
-    Jh_convertTimeStamp,
-    Jh_timestampToYMD,
-    Jh_isToday,
-    Jh_isBetweenTimes,
-    Jh_getYearMonth,
-    Jh_getPrevYear,
-    Jh_getNextYear,
-    Jh_getPrevYearMonth,
-    Jh_getNextYearMonth,
-    getEndTime,
-};
+
 
 /**
  * 将某个时间戳转化成 指定格式时间
@@ -230,6 +218,19 @@ function getEndTime(time) {
     var second = Math.floor(leftsecond - day * 60 * 60 * 24 - hour * 60 * 60 - minute * 60);
     return `距离${year}年${month}月${date}日还有${day}天${hour}小时${minute}分${second}秒`;
 }
+export default {
+    Jh_timeStampToTime,
+    Jh_convertTimeStamp,
+    Jh_timestampToYMD,
+    Jh_isToday,
+    Jh_isBetweenTimes,
+    Jh_getYearMonth,
+    Jh_getPrevYear,
+    Jh_getNextYear,
+    Jh_getPrevYearMonth,
+    Jh_getNextYearMonth,
+    getEndTime,
+};
 
 /*
   使用方法：
