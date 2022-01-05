@@ -148,7 +148,7 @@ export default {
 
       this.get (URL.api_searchConstruction).then( (data) => {
         console.log(data)
-        var datas = JSON.parse(data);
+        var datas = typeof data == 'string'? JSON.parse( data ): data;
         if (datas.code == 200) {
             var res = datas.data
             console.log(datas.data)

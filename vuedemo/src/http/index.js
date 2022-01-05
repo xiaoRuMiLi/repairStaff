@@ -37,21 +37,15 @@ axios.interceptors.request.use ( ( config ) => {
 axios.interceptors.response.use ( ( res ) => {
     //对响应数据做些事
     NProgress.done ();
-    return Promise.resolve ( res.data );
-} , ( error ) => {
-    NProgress.done ();
-    return statusCode.getStatusErr(error);
-    // return Promise.reject ( error );
-} );
-//返回状态判断(添加响应拦截器)
-axios.interceptors.response.use ( ( res ) => {
-    //对响应数据做些事
-    let newRes = responseMiddle( res, path );
+    // 增加了键名转换和默认值处理的中间件
+    let newRes = responseMiddle( res );
     return Promise.resolve ( newRes.data );
 } , ( error ) => {
-    return Promise.reject ( error );
+    NProgress.done ();
+    // 对系统返回code做统一弹出提示处理
+    return Promise.reject (statusCode.getStatusErr(error));
+    //return Promise.reject ( error );
 } );
-
 function mes () {
     /* ELEMENT.Message ( {
         message : store.state.language.serveError ,

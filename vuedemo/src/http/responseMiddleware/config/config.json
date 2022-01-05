@@ -2,7 +2,7 @@
 	
 	"/Api/api/v1/constructions": {
 		"changeKey": { "car_number": "title", "car_mode": "mode" },
-		"defaultVal": {"sex": "nan","age":"16" }
+		"defaultVal": {"remarks": "备注为空","age":"16" }
 	
     }
 }
