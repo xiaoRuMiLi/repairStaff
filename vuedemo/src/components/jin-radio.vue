@@ -34,9 +34,9 @@
 
         	return {
 
-        		
+
         		currentValue: this.val,
-        	
+
 
         	}
         },
@@ -47,7 +47,7 @@
         		// data中的值通过$data可以获取.因为这里的this指向Component实例
         		// console.log(this.$data.currentValue)
         		// console.log(eve);
-        		
+
                 // 父元素通过:on-change.sync="父元素的值" 可以修改父组件的值，这个机制的原理是触发on-change事件，父组件通过watch,set 的回调来修改对应的值实现.sync是简写
         		this.$emit('update:on-change', this.$data.currentValue);
 
@@ -74,14 +74,14 @@
 	        			console.log('false')
 	        			return false
 	        		}
-	                
+
 	        	}
 	        }
 
 
         },
         watch: {
-            
+
 
         },
         onready () {
@@ -92,7 +92,7 @@
         }
     }
 </script>
-<style scoped> 
+<style scoped>
 .input-box {
     box-sizing: border-box;
     border-bottom: 1px solid #eeeeee;
@@ -103,6 +103,7 @@
     display: flex;
     align-items: start;
     flex-direction: column;
+    padding: 10px 0px 20px 0px;
 }
 
 .input-con {
@@ -114,9 +115,9 @@
 .input-box label {
     line-height: 30px;
     width: 100%;
-    color: #222;
+    color: #666666;
     height: 30px;
-    padding-left: 10px;
+    padding: 10px 25px;
     text-align: left;
 
 }

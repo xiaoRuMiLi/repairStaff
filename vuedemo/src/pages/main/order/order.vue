@@ -11,7 +11,7 @@
         v-model="searchValue"
         show-action
         label="关键词"
-        placeholder="输入车牌，施工单号码，车型"
+        :placeholder="inputs.betweenDate.startDate + inputs.betweenDate.endDate"
         @search="onSearch"
       >
         <template #action>
@@ -36,7 +36,7 @@
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
       <jin-radio :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
 
-      <jin-date-check :arr="choose_dates" :on-change.sync="inputs.chooseDate" :val="inputs.chooseDate"></jin-date-check>
+      <jin-date-check :arr="choose_dates" :on-change.sync="inputs.betweenDate" :val="inputs.chooseDate"></jin-date-check>
     </van-popup>
 
 
@@ -82,7 +82,7 @@ export default {
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
       onOff:{
         // 弹出右侧弹层
-        showPop: true,
+        showPop: !1,
         // 列表下方读取中动画
         loading: false,
         finished: false,
@@ -90,6 +90,10 @@ export default {
       inputs: {
         chooseVal: '选择项6',
         chooseDate: '近一个月',
+        betweenDate: {
+          startDate: '2021-12-01',
+          endDate: '2022-01-01',
+        }
       },
       datas: [
         {
