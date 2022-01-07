@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseNavBar :title="title"> </BaseNavBar>
+
     <div id="myChart" class="charts"></div>
     <div class="btn" @click="onClick">获取数据</div>
   </div>

@@ -11,11 +11,11 @@
         v-model="searchValue"
         show-action
         label="关键词"
-        :placeholder="inputs.betweenDate.startDate + inputs.betweenDate.endDate"
+        placeholder="输入车牌,车型,施工单号"
         @search="onSearch"
       >
         <template #action>
-          <div @click="onFilter">搜索</div>
+          <div @click="onFilter">筛选</div>
         </template>
       </van-search>
     </div>
@@ -33,10 +33,23 @@
     </van-list>
 
     <van-popup v-model="onOff.showPop" position="right" :style="{ height: '100%', width: '80%' }">
+    <van-nav-bar
+      title="筛选"
+      left-arrow
+      @click-left="onClickLeft"
+    />
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
       <jin-radio :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
-
       <jin-date-check :arr="choose_dates" :on-change.sync="inputs.betweenDate" :val="inputs.chooseDate"></jin-date-check>
+      <div class="button-box">
+        <div>
+            <van-button color="#2873ff" size="large" @click="onClickLeft" plain> 取  消 </van-button>
+        </div>
+        <div>
+            <van-button color="#2873ff" size="large"> 确  定 </van-button>
+        </div>
+      </div>
+
     </van-popup>
 
 
@@ -46,7 +59,7 @@
 
 <script>
 import axios from 'axios'
-import { List, Tab, Tabs, Search, Popup, RadioGroup, Radio  } from 'vant';
+import { List, Tab, Tabs, Search, Popup, RadioGroup, Radio, Button, NavBar } from 'vant';
 import { URL } from '@/web-config/apiUrl';
 import PercentLoop from '@/components/PercentLoop.vue'
 import JinRadio from '@/components/jin-radio.vue'
@@ -68,14 +81,14 @@ export default {
     'jin-radio': JinRadio,
     'text-list-item': TextListItem,
     'jin-date-check': JinDateCheck,
+    'van-button': Button,
+    'van-nav-bar': NavBar,
   },
   data () {
     return {
       list: [],
       // 标签动作
       active: 2,
-      // 单选框
-      radio: 1,
       // 搜索内容
       searchValue: '',
       choose_datas: ['选择项1','选择项2','选择项3','选择项4','选择项5','选择项6','选择项7','选择项8'],
@@ -161,6 +174,10 @@ export default {
 
       })
     },
+    onClickLeft ()
+    {
+      self.onOff.showPop = !1;
+    },
     onLoad() {
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
@@ -234,6 +251,20 @@ export default {
     text-align: left;
     height: 40px;
     line-height: 40px;
+  }
+  .button-box {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+  }
+  .button-box > div {
+    width: 50%;
+    padding: 10px;
+
   }
 
 </style>

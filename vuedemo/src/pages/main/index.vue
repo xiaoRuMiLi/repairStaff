@@ -15,9 +15,9 @@
     <!-- 标签栏支持路由模式，用于搭配vue-router使用。路由模式下会匹配页面路径和标签的to属性，并自动选中对应的标签 -->
     <van-tabbar route v-model="active" :active-color="adminConfig.iconActiveColor" :color="adminConfig.iconUnifiedStyleColor" >
       <van-tabbar-item icon="home-o" name="home" to="/home">首页</van-tabbar-item>
-      <van-tabbar-item icon="search" name="search" to="/">数据报表</van-tabbar-item>
-      <van-tabbar-item icon="friends-o" name="friend" to="/" >绩效</van-tabbar-item>
-      <van-tabbar-item icon="setting-o" name="setting" to="/">我的</van-tabbar-item>
+      <van-tabbar-item icon="balance-list-o" name="order" to="/order">施工单</van-tabbar-item>
+      <van-tabbar-item icon="bar-chart-o" name="chart" to="/chart" >报表</van-tabbar-item>
+      <van-tabbar-item icon="user-o" name="setting" to="/">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

@@ -1,8 +1,8 @@
 ﻿{
   "bgImg" : "登录页背景" ,
   "bgImg" : "http://47.94.89.73:8080/zeefile/audio/photo/loginbg.jpg" ,
-  
-  
+
+
   "helloTitle" : "登录页标题" ,
   "helloTitle" : "adminTitle" ,
   "webIco" : "网站ico" ,
@@ -15,7 +15,7 @@
   "themeTextColor" : "主题文字颜色" ,
   "themeTextColor" : "#BFCBD9" ,
   "iconActiveColor" : "图标选中颜色" ,
-  "iconActiveColor" : "#ee0a24" ,
+  "iconActiveColor" : "#1989fa" ,
   "iconUnifiedStyleColor" : "icon图标颜色" ,
   "iconUnifiedStyleColor" : "#304156" ,
   "iconUnifiedStyleFontSize" : "icon图标大小" ,

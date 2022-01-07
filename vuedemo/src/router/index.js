@@ -24,13 +24,13 @@ export default new Router({
 		    name: 'main',
 		    component: () => import('@/pages/main/index'),
 		    replace: true,
-		    /** @type {Object} [重定向] 
+		    /** @type {Object} [重定向]
 		    redirect : {
 			    "name" : "home"
 			} ,*/
 		    meta : {
 		    	icon: '',
-		      	// 是否需要拦截 
+		      	// 是否需要拦截
 		      	// 如果为真跳转到该路由需要守卫拦截,可能会出现无法正常跳转的现象,不设置这个如果跳转到没有设置过的路由会陷入死循环
 		        intercept : false ,
 		        // 有无快速跳转标签
@@ -46,7 +46,7 @@ export default new Router({
 				    name: 'home',
 				    component: () => import('@/pages/main/home/home'),
 				    replace: false,
-				    /** @type {Object} [重定向] 
+				    /** @type {Object} [重定向]
 				    redirect : {
 					    "name" : "home"
 					} ,*/
@@ -61,12 +61,12 @@ export default new Router({
 		                role : [ 5233 , 5232 , 5231 , 5230 ]
 				    },
 				},
-							    {
+				{
 				    path: 'order',
 				    name: 'order',
 				    component: () => import('@/pages/main/order/order'),
 				    replace: false,
-				    /** @type {Object} [重定向] 
+				    /** @type {Object} [重定向]
 				    redirect : {
 					    "name" : "home"
 					} ,*/
@@ -80,6 +80,26 @@ export default new Router({
 		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
 		                role : [ 5233 , 5232 , 5231 , 5230 ]
 				    },
+				},
+				{
+				    path: 'chart',
+				    name: 'chart',
+				    component: () => import('@/pages/demolist/echarts/Echarts1'),
+				    replace: false,
+				    /** @type {Object} [重定向]
+				    redirect : {
+					    "name" : "home"
+					} ,*/
+				    meta : {
+				      	// 是否需要拦截 如果为真跳转到该路由需要守卫拦截,可能会出现无法正常跳转的现象
+				        intercept : false ,
+				        // 有无快速跳转标签
+				        noQuickTabs : true ,
+				        title: '数据报表',
+		                keepAlive: false, // 需要被缓存
+		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
+		                role : [ 5233 , 5232 , 5231 , 5230 ]
+				    },
 				}
 		    ]
 	    },
@@ -88,7 +108,7 @@ export default new Router({
 		    name: 'root',
 		    component: () => import('@/pages/root/main'),
 		    replace: true,
-		    /** @type {Object} [重定向] 
+		    /** @type {Object} [重定向]
 		    redirect : {
 			    "name" : "home"
 			} ,*/
@@ -102,14 +122,14 @@ export default new Router({
                 // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
                 role : [ 5233 , 5232 , 5231 , 5230 ]
 		    },
-		    
+
 	    },
 	    {
 		    path: '/404',
 		    name: '404',
 		    component: () => import('@/pages/root/NotFound'),
 		    replace: true,
-		    /** @type {Object} [重定向] 
+		    /** @type {Object} [重定向]
 		    redirect : {
 			    "name" : "home"
 			} ,*/
