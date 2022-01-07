@@ -109,7 +109,7 @@ export default {
 
     padding: 5px;
     font-weight: 550;
-    font-size: 4vw;
+    font-size: 15px;
 }
 
 .father .amount {
@@ -118,7 +118,7 @@ export default {
 }
 .father .amount> span {
     font-weight: 550;
-    font-size: 4vw;
+    font-size: 15px;
 }
 
 .top-container {
@@ -142,6 +142,10 @@ export default {
 	display: inline;
     padding: 5px 5px;
     text-align: left;
+
+}
+.left-con  {
+	max-width: 70vw;
 
 }
 .buttons {

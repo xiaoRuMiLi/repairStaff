@@ -30,7 +30,7 @@ const setDefaultVal = function ( obj , conf ) {
  * @return {[type]}      [description]
  */
 export function responseMiddle ( res ) {
-	console.log(res);
+	// console.log(res);
 	const url = res.config.url;
 	let data = null;
 	if (typeof res.data.data == 'object') {
@@ -78,6 +78,6 @@ export function responseMiddle ( res ) {
 		}
 		newRes.data.data = resData
 	} 
-	console.log(newRes);
+	// console.log(newRes);
 	return newRes;
 }

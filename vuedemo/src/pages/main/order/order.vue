@@ -160,17 +160,56 @@ export default {
 
   },
   methods: {
+    /**
+     * [formatData 格式化后端数据]
+     * @param  {[type]} item [description]
+     * @return {[type]}      [description]
+     */
+    formatData ( item ) {       
+      let data = {
+        title: item.repair_type + '施工单',
+        amount: item.amount,
+        con: [
+          {
+            title: '车牌照号：',
+            content: item.title,
+          },
+          {
+            title: '车型：',
+            content: item.mode,
+          },
+          {
+            title: '指定时间：',
+            content: item.complete_at,
+          },
+          {
+            title: '接单时间：',
+            content: item.receive_at,
+          },
+          {
+            title: '达成时间：',
+            content: item.real_complete_at,
+          }
+        ],
+        buttons: [
+          'no1',
+          'no2',
+        ],
+        rightTitle: item.real_complete_at? '已完成': '未完成'      
+      }
+      console.log(data);
+      return data;
+    },
     getDatas () {
       self = this
-
       this.get (URL.api_searchConstruction).then( (data) => {
         console.log(data)
         var datas = typeof data == 'string'? JSON.parse( data ): data;
-        if (datas.code == 200) {
-            var res = datas.data
-            console.log(datas.data)
+        var res = datas.data
+        console.log(res)
+        self.datas = res.map( this.formatData );
 
-        }
+        
 
       })
     },
