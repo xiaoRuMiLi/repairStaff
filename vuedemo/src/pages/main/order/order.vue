@@ -3,8 +3,9 @@
     <div class="fixed">
       <van-tabs v-model="active">
         <van-tab title="全部"></van-tab>
-        <van-tab title="施工中"></van-tab>
         <van-tab title="待接单"></van-tab>
+        <van-tab title="施工中"></van-tab>
+        <van-tab title="已完成"></van-tab>
         <van-tab title="超时单"></van-tab>
       </van-tabs>
       <van-search
@@ -65,6 +66,7 @@ import PercentLoop from '@/components/PercentLoop.vue'
 import JinRadio from '@/components/jin-radio.vue'
 import JinDateCheck from '@/components/JinDateCheck.vue'
 import TextListItem from '@/components/TextListItem.vue'
+import conf from '@/web-config/index';
 
 export default {
   name: 'orderPage',
@@ -97,7 +99,7 @@ export default {
         // 弹出右侧弹层
         showPop: !1,
         // 列表下方读取中动画
-        loading: false,
+        loading: true,
         finished: false,
       },
       inputs: {
@@ -109,7 +111,7 @@ export default {
         }
       },
       datas: [
-        {
+        /*{
           title: '喷漆施工单',
           amount: 1000,
           con: [
@@ -154,7 +156,7 @@ export default {
             '留言',
           ],
           rightTitle: '已完成'
-        }
+        }*/
       ]
     }
 
@@ -165,7 +167,7 @@ export default {
      * @param  {[type]} item [description]
      * @return {[type]}      [description]
      */
-    formatData ( item ) {       
+    formatData ( item ) {
       let data = {
         title: item.repair_type + '施工单',
         amount: item.amount,
@@ -195,22 +197,21 @@ export default {
           'no1',
           'no2',
         ],
-        rightTitle: item.real_complete_at? '已完成': '未完成'      
+        rightTitle: item.real_complete_at? '已完成': '未完成'
       }
       console.log(data);
       return data;
     },
-    getDatas () {
+    getDatas ( pageNumber ) {
       self = this
-      this.get (URL.api_searchConstruction).then( (data) => {
-        console.log(data)
+      self.onOff.loading = !0;
+      this.get ( URL.api_searchConstruction, { page: pageNumber }).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
-        console.log(res)
-        self.datas = res.map( this.formatData );
-
-        
-
+        if (res.length < 1) self.onOff.finished = true;
+        self.datas = self.datas.concat( res.map( this.formatData ) );
+        this.onOff.loading = false;
+        //self.onOff.finished = true;
       })
     },
     onClickLeft ()
@@ -218,21 +219,13 @@ export default {
       self.onOff.showPop = !1;
     },
     onLoad() {
+      console.log('读取新的内容');
+      let pageNumber = this.datas.length / conf.numberPerPage + 1;
+      this.getDatas (pageNumber);
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
 
-        // 加载状态结束
-        this.loading = false;
 
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
-      }, 1000);
     },
     onSearch () {
       console.log('search')
@@ -254,8 +247,15 @@ export default {
 
   },
   mounted () {
-    this.getDatas ();
+    console.log(this)
+    let pageNumber = this.datas.length / 20;
+    this.getDatas (pageNumber);
     console.log(CONFIG)
+      // 加载状态结束
+      // 数据全部加载完成
+    if (this.datas.length >= 20) {
+        this.onOff.finished = true;
+    }
 
 
   },
