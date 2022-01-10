@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="fixed">
-      <van-tabs v-model="active">
+      <van-tabs v-model="inputs.active">
         <van-tab title="全部"></van-tab>
         <van-tab title="待接单"></van-tab>
         <van-tab title="施工中"></van-tab>
@@ -9,7 +9,7 @@
         <van-tab title="超时单"></van-tab>
       </van-tabs>
       <van-search
-        v-model="searchValue"
+        v-model="inputs.searchVal"
         show-action
         label="关键词"
         placeholder="输入车牌,车型,施工单号"
@@ -28,7 +28,7 @@
       @load="onLoad"
     >
     <template slot="default">
-      <text-list-item v-for="item in datas" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons"> </text-list-item>
+      <text-list-item v-for="(item,key) in datas" :key="key" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons"> </text-list-item>
     </template>
     <van-cell v-for="item in list" :key="item" :title="item" />
     </van-list>
@@ -41,7 +41,7 @@
     />
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
       <jin-radio :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
-      <jin-date-check :arr="choose_dates" :on-change.sync="inputs.betweenDate" :val="inputs.chooseDate"></jin-date-check>
+      <jin-date-check :arr="choose_dates" :on-change.sync="inputs.betweenRealCompleteDate" :val="inputs.chooseDate"></jin-date-check>
       <div class="button-box">
         <div>
             <van-button color="#2873ff" size="large" @click="onClickLeft" plain> 取  消 </van-button>
@@ -89,11 +89,7 @@ export default {
   data () {
     return {
       list: [],
-      // 标签动作
-      active: 2,
-      // 搜索内容
-      searchValue: '',
-      choose_datas: ['选择项1','选择项2','选择项3','选择项4','选择项5','选择项6','选择项7','选择项8'],
+      choose_datas: ['0-100','100-500','500-1000','1000-2000','2000-5000'],
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
       onOff:{
         // 弹出右侧弹层
@@ -103,12 +99,21 @@ export default {
         finished: false,
       },
       inputs: {
-        chooseVal: '选择项6',
+        // 订单类型，全部、超时单、已完成、未完成、施工中
+        // 标签动作
+        active: 2,
+        chooseVal: '0-100',
         chooseDate: '近一个月',
-        betweenDate: {
-          startDate: '2021-12-01',
-          endDate: '2022-01-01',
-        }
+        betweenRealComplete: [
+          '2021-12-01',
+          '2022-01-01'
+        ],
+        searchVal: '搜索内容',
+        // 筛选价格区间
+        betweenAmount: [
+          0,
+          10000
+        ]
       },
       datas: [
         /*{
@@ -163,7 +168,19 @@ export default {
   },
   methods: {
     /**
-     * [formatData 格式化后端数据]
+     * [makeRequestParams 从inputs对象中格式化后端需要的参数数据格式]
+     * @param  {[type]} inputs [description]
+     * @return {[type]}        [description]
+     */
+    makeRequestParams( inputs ) {
+      let params = {};
+      params.construction_type = inputs.active;
+      params.real_complete_at = inputs.betweenRealComplete
+      
+
+    },
+    /**
+     * [formatData 格式化后端返回的数据]
      * @param  {[type]} item [description]
      * @return {[type]}      [description]
      */
@@ -202,10 +219,12 @@ export default {
       console.log(data);
       return data;
     },
-    getDatas ( pageNumber ) {
+    getDatas ( params = {} ) {
       self = this
+      let pageNumber = self.datas.length / conf.numberPerPage + 1;
+      params.page = pageNumber;
       self.onOff.loading = !0;
-      this.get ( URL.api_searchConstruction, { page: pageNumber }).then( (data) => {
+      this.get ( URL.api_searchConstruction, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
         if (res.length < 1) self.onOff.finished = true;
@@ -220,8 +239,7 @@ export default {
     },
     onLoad() {
       console.log('读取新的内容');
-      let pageNumber = this.datas.length / conf.numberPerPage + 1;
-      this.getDatas (pageNumber);
+      this.getDatas ();
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
 
@@ -247,15 +265,8 @@ export default {
 
   },
   mounted () {
-    console.log(this)
-    let pageNumber = this.datas.length / 20;
-    this.getDatas (pageNumber);
+    this.getDatas ();
     console.log(CONFIG)
-      // 加载状态结束
-      // 数据全部加载完成
-    if (this.datas.length >= 20) {
-        this.onOff.finished = true;
-    }
 
 
   },

@@ -123,13 +123,13 @@
             onStartDateConfirm (date) {
                 this.onOff.startDateShow = false;
                 this.inputs.startDate = TimeUtils.Jh_timeStampToTime( date.getTime(), '{y}-{m}-{d}');
-                this.$emit('update:on-change', this.inputs);
+                this.$emit('update:on-change', [this.inputs.startDate,this.inputs.endDate]);
 
             },
             onEndDateConfirm (date) {
                 this.onOff.endDateShow = false;
                 this.inputs.endDate = TimeUtils.Jh_timeStampToTime( date.getTime(), '{y}-{m}-{d}');
-                this.$emit('update:on-change', this.inputs);
+                this.$emit('update:on-change', [this.inputs.startDate,this.inputs.endDate]);
             }
 
 
