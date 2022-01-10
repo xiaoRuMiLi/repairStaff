@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="fixed">
-      <van-tabs v-model="inputs.active">
+      <van-tabs v-model="inputs.active" @click="tapConstructionType">
         <van-tab title="全部"></van-tab>
         <van-tab title="待接单"></van-tab>
         <van-tab title="施工中"></van-tab>
@@ -12,7 +12,7 @@
         v-model="inputs.searchVal"
         show-action
         label="关键词"
-        placeholder="输入车牌,车型,施工单号"
+        placeholder="输入车牌,车型,施工单号,修理类型"
         @search="onSearch"
       >
         <template #action>
@@ -41,7 +41,7 @@
     />
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
       <jin-radio :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
-      <jin-date-check :arr="choose_dates" :on-change.sync="inputs.betweenRealCompleteDate" :val="inputs.chooseDate"></jin-date-check>
+      <jin-date-choose :arr="choose_dates" :on-change.sync="inputs.betweenRealCompleteDate" :val="inputs.chooseDate"></jin-date-choose>
       <div class="button-box">
         <div>
             <van-button color="#2873ff" size="large" @click="onClickLeft" plain> 取  消 </van-button>
@@ -64,7 +64,7 @@ import { List, Tab, Tabs, Search, Popup, RadioGroup, Radio, Button, NavBar } fro
 import { URL } from '@/web-config/apiUrl';
 import PercentLoop from '@/components/PercentLoop.vue'
 import JinRadio from '@/components/jin-radio.vue'
-import JinDateCheck from '@/components/JinDateCheck.vue'
+import JinDateChoose from '@/components/JinDateChoose.vue'
 import TextListItem from '@/components/TextListItem.vue'
 import conf from '@/web-config/index';
 
@@ -82,7 +82,7 @@ export default {
     'percent-loop': PercentLoop,
     'jin-radio': JinRadio,
     'text-list-item': TextListItem,
-    'jin-date-check': JinDateCheck,
+    'jin-date-choose': JinDateChoose,
     'van-button': Button,
     'van-nav-bar': NavBar,
   },
@@ -91,6 +91,8 @@ export default {
       list: [],
       choose_datas: ['0-100','100-500','500-1000','1000-2000','2000-5000'],
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
+      // 提交到后端的参数
+      params: {},
       onOff:{
         // 弹出右侧弹层
         showPop: !1,
@@ -101,19 +103,19 @@ export default {
       inputs: {
         // 订单类型，全部、超时单、已完成、未完成、施工中
         // 标签动作
-        active: 2,
+        active: 0,
         chooseVal: '0-100',
         chooseDate: '近一个月',
         betweenRealComplete: [
           '2021-12-01',
           '2022-01-01'
         ],
-        searchVal: '搜索内容',
+        searchVal: '',
         // 筛选价格区间
         betweenAmount: [
           0,
           10000
-        ]
+        ],
       },
       datas: [
         /*{
@@ -167,16 +169,18 @@ export default {
 
   },
   methods: {
+
     /**
-     * [makeRequestParams 从inputs对象中格式化后端需要的参数数据格式]
-     * @param  {[type]} inputs [description]
-     * @return {[type]}        [description]
+       选择施工单类型事件
      */
-    makeRequestParams( inputs ) {
-      let params = {};
-      params.construction_type = inputs.active;
-      params.real_complete_at = inputs.betweenRealComplete
-      
+    tapConstructionType( index, title )
+    {
+      let self = this;
+      self.searchBlur();
+      self.params.construction_type = index;
+      self.datas = [];
+      self.onOff.finished = !1;
+      this.getDatas()
 
     },
     /**
@@ -216,10 +220,9 @@ export default {
         ],
         rightTitle: item.real_complete_at? '已完成': '未完成'
       }
-      console.log(data);
       return data;
     },
-    getDatas ( params = {} ) {
+    getDatas ( params = this.params ) {
       self = this
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
       params.page = pageNumber;
@@ -245,8 +248,26 @@ export default {
 
 
     },
+    /**
+     * [onSearch 搜索输入事件]
+     * @return {[type]} [description]
+     */
     onSearch () {
-      console.log('search')
+      var self = this;
+      if ( !self.inputs.searchVal.trim()) return;
+      self.params.search = self.inputs.searchVal;
+      self.datas = [];
+      self.onOff.finished = !1;
+      this.getDatas()
+    },
+    /**
+     * [searchBlur 搜索输入框失去焦点事件]
+     * @return {[type]} [description]
+     */
+    searchBlur () {
+      let self = this;
+      self.inputs.searchVal = "";
+      delete self.params.search;
 
     },
     onFilter () {

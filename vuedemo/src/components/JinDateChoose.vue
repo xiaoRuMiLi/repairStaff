@@ -21,7 +21,7 @@
     import TimeUtils from '@/utils/timeUtils';
     import { Calendar } from 'vant';
     export default {
-        name: 'jinRadio',
+        name: 'JinDateChoose',
         components: {
             'van-calendar': Calendar
         },
