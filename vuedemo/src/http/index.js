@@ -27,6 +27,8 @@ axios.interceptors.request.use ( ( config ) => {
     // 设置访问token
     let token = store.state.userInfo.userToken
     newConfig.headers.Authorization = `${token ? token : ''}`
+    // 接收json
+    newConfig.headers.Accept = 'application/json';
     return newConfig;
 } , ( error ) => {
     NProgress.done ();

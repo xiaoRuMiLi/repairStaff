@@ -5,8 +5,8 @@
 		<div class="input-con">
 			<!-- lable 的 for 属性和input 的ID 关联-->
 			<div class="input-item" v-for="(item,key) in arr">
-				<input type="radio" name="sex" :id="key" :ischecked="ischecked(item)" :value="item" v-model="currentValue" @change="onChange($event)">
-				<label class="radio-label" :for="key">{{item}}</label>
+				<input type="radio" :name="item" :id="item + radom" :ischecked="ischecked(item)" :value="item" v-model="currentValue" @change="onChange($event)">
+				<label class="radio-label" :for="item + radom">{{item}}</label>
 			</div>
 		</div>
 	</div>
@@ -33,10 +33,9 @@
         data () {
 
         	return {
-
-
         		currentValue: this.val,
-
+                 // 为了避免同类型组件相互干扰，加上一个随机数字作为lable 的for 和input 的ID
+                radom : Math.floor((Math.random()*100)+1),
 
         	}
         },
@@ -67,20 +66,20 @@
 	            	// this指向proxy
 	            	// console.log('computed 中return function this is', this)
 	        		if ( item == self.currentValue ) {
-	        			console.log(item,self.currentValue)
-	        			console.log('true')
 	                    return true;
 	        		}else {
-	        			console.log('false')
 	        			return false
 	        		}
 
 	        	}
-	        }
+	        },
 
 
         },
         watch: {
+            val(newVal){
+                this.currentValue = newVal;
+            }
 
 
         },

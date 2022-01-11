@@ -40,14 +40,15 @@
       @click-left="onClickLeft"
     />
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
-      <jin-radio :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
-      <jin-date-choose :arr="choose_dates" :on-change.sync="inputs.betweenRealCompleteDate" :val="inputs.chooseDate"></jin-date-choose>
+      <jin-radio title="金额选择" :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
+      <jin-radio title="工单类型" :arr="filterConstructionTypes" :on-change.sync="filterConstructionType" :val="filterConstructionType"></jin-radio>
+      <jin-date-choose title="达成时间" :arr="choose_dates" :on-change.sync="inputs.betweenRealComplete" :val="inputs.chooseDate"></jin-date-choose>
       <div class="button-box">
         <div>
             <van-button color="#2873ff" size="large" @click="onClickLeft" plain> 取  消 </van-button>
         </div>
         <div>
-            <van-button color="#2873ff" size="large"> 确  定 </van-button>
+            <van-button color="#2873ff" size="large" @click="tapSubmit" > 确  定 </van-button>
         </div>
       </div>
 
@@ -91,6 +92,8 @@ export default {
       list: [],
       choose_datas: ['0-100','100-500','500-1000','1000-2000','2000-5000'],
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
+      filterConstructionTypes: ['全部','待接单','施工中','已完成','超时单',],
+      filterConstructionType: '待接单',
       // 提交到后端的参数
       params: {},
       onOff:{
@@ -107,7 +110,7 @@ export default {
         chooseVal: '0-100',
         chooseDate: '近一个月',
         betweenRealComplete: [
-          '2021-12-01',
+          '2020-12-01',
           '2022-01-01'
         ],
         searchVal: '',
@@ -273,23 +276,44 @@ export default {
     onFilter () {
       this.onOff.showPop = true
       console.log("filter")
-    }
+    },
+    /**
+     * [tapSubmit 提交筛选信息]
+     * @return {[type]} [description]
+     */
+    tapSubmit () {
+      // 与标签栏的选择项同步
+      if( this.filterConstructionType == '待接单' || this.filterConstructionType == '施工中')
+      {
+        this.filterConstructionType = '全部'
+      }
+      console.log(this.filterConstructionType);
+      this.inputs.active = this.filterConstructionTypes.indexOf( this.filterConstructionType );
+
+      this.params = {
+        construction_type: this.inputs.active,
+        // 传入实际完成时间的时间区间数组
+        real_complete_at: this.inputs.betweenRealComplete,
+        amount: this.inputs.betweenAmount
+      }
+      console.log('提交的params is',this.params);
+      self.datas = [];
+      self.onOff.finished = !1;
+      this.getDatas();
+    },
 
 
   },
   watch: {
-    chooseVal (newVal) {
-      console.log(newVal)
-
-
-    }
+    filterConstructionType (newVal) {
+      // 与标签栏的选择项同步
+      // this.inputs.active = this.filterConstructionTypes.indexOf( newVal );
+    },
 
   },
   mounted () {
     this.getDatas ();
-    console.log(CONFIG)
-
-
+    console.log(CONFIG);
   },
   created () {
 

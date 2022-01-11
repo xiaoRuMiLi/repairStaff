@@ -8,7 +8,7 @@ const changeKey = function (obj , conf ) {
         	newObj[newKey] = obj[i];
         } else {
         	newObj[i] = obj[i];
-        }    
+        }
 	}
 	return newObj;
 }
@@ -17,7 +17,7 @@ const setDefaultVal = function ( obj , conf ) {
 	let nObj = obj;
 	for ( let i in conf ) {
         if ( !obj.hasOwnProperty(i) ) {
-        	nObj[i] = conf[i] 	
+        	nObj[i] = conf[i]
         }
 	}
 	return nObj
@@ -36,7 +36,11 @@ export function responseMiddle ( res ) {
 	if (typeof res.data.data == 'object') {
 		data = res.data.data;
 	} else {
-        data = JSON.parse( res.data.data );
+        try {
+            data = JSON.parse( res.data.data );
+        }catch (err) {
+            console.log(err);
+        }
 	}
 	let isArr = Array.isArray(data);
 	let isObj = Object.prototype.toString.call(data) === '[object Object]';
@@ -44,7 +48,7 @@ export function responseMiddle ( res ) {
     let newRes = res;
 	if ( isArr )
 	{
-        for ( let i in data ) 
+        for ( let i in data )
         {
         	let item = typeof data[i] == 'string'? JSON.parse( data[i] ): data[i];
         	let resData = item;
@@ -54,11 +58,11 @@ export function responseMiddle ( res ) {
         	}
         	// 更改对象键名
 			if ( url in option & 'changeKey' in option[url] ) {
-		        resData = changeKey( item , option[url].changeKey )    
+		        resData = changeKey( item , option[url].changeKey )
 			}
 			// 添加默认值
 			if ( url in option & 'defaultVal' in option[url] ) {
-		        resData = setDefaultVal( resData , option[url].defaultVal );   
+		        resData = setDefaultVal( resData , option[url].defaultVal );
 			}
 			resArr.push(resData);
 
@@ -70,14 +74,14 @@ export function responseMiddle ( res ) {
 		let item = typeof data == 'string'? JSON.parse( data ): data;
 		// 更改对象键名
 		if ( url in option & 'changeKey' in option[url] ) {
-	        resData = changeKey( item , option[url].changeKey ) 
+	        resData = changeKey( item , option[url].changeKey )
 		}
 		// 添加默认值
 		if ( url in option & 'defaultVal' in option[url] ) {
-	        resData = setDefaultVal( item , option[url].defaultVal )    
+	        resData = setDefaultVal( item , option[url].defaultVal )
 		}
 		newRes.data.data = resData
-	} 
+	}
 	// console.log(newRes);
 	return newRes;
 }
