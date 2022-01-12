@@ -1,9 +1,8 @@
 <template>
   <div>
     <van-nav-bar
-      title="标题"
+      :title="$route.meta.title"
       left-text="返回"
-      right-text="按钮"
       :fixed = "isFixed"
       left-arrow
       @click-left="onClickLeft"
@@ -47,10 +46,11 @@ export default {
   },
   methods: {
     onClickLeft() {
-      Toast('返回');
+      this.$router.go(-1)
+      // Toast('返回');
     },
     onClickRight() {
-      Toast('按钮');
+      // Toast('按钮');
     },
     clickItem( key ) {
       console.log( key );
@@ -61,6 +61,7 @@ export default {
   },
   mounted () {
 
-  }
+  },
+
 }
 </script>

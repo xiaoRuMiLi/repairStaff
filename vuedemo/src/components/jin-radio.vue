@@ -113,7 +113,7 @@
 }
 .input-box label {
     line-height: 30px;
-    width: 100%;
+    width: 80%;
     color: #666666;
     height: 30px;
     padding: 10px 25px;

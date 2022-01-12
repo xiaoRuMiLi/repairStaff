@@ -32,7 +32,7 @@
     </template>
     <van-cell v-for="item in list" :key="item" :title="item" />
     </van-list>
-
+    <div class="white-place"></div>
     <van-popup v-model="onOff.showPop" position="right" :style="{ height: '100%', width: '80%' }">
     <van-nav-bar
       title="筛选"
@@ -40,7 +40,7 @@
       @click-left="onClickLeft"
     />
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->
-      <jin-radio title="金额选择" :arr="choose_datas" :on-change.sync="inputs.chooseVal" :val="inputs.chooseVal"></jin-radio>
+      <jin-radio title="金额选择" :arr="choose_datas" :on-change.sync="chooseVal" :val="chooseVal"></jin-radio>
       <jin-radio title="工单类型" :arr="filterConstructionTypes" :on-change.sync="filterConstructionType" :val="filterConstructionType"></jin-radio>
       <jin-date-choose title="达成时间" :arr="choose_dates" :on-change.sync="inputs.betweenRealComplete" :val="inputs.chooseDate"></jin-date-choose>
       <div class="button-box">
@@ -94,6 +94,7 @@ export default {
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
       filterConstructionTypes: ['全部','待接单','施工中','已完成','超时单',],
       filterConstructionType: '待接单',
+      chooseVal: '0-100',
       // 提交到后端的参数
       params: {},
       onOff:{
@@ -107,7 +108,6 @@ export default {
         // 订单类型，全部、超时单、已完成、未完成、施工中
         // 标签动作
         active: 0,
-        chooseVal: '0-100',
         chooseDate: '近一个月',
         betweenRealComplete: [
           '2020-12-01',
@@ -179,7 +179,8 @@ export default {
     tapConstructionType( index, title )
     {
       let self = this;
-      self.searchBlur();
+      /* 清空其它的所有限制 */
+      self.params = {},
       self.params.construction_type = index;
       self.datas = [];
       self.onOff.finished = !1;
@@ -230,10 +231,11 @@ export default {
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
       params.page = pageNumber;
       self.onOff.loading = !0;
+      console.log('params:', this.params );
       this.get ( URL.api_searchConstruction, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
-        if (res.length < 1) self.onOff.finished = true;
+        if ( res.length < conf.numberPerPage ) self.onOff.finished = true;
         self.datas = self.datas.concat( res.map( this.formatData ) );
         this.onOff.loading = false;
         //self.onOff.finished = true;
@@ -244,12 +246,9 @@ export default {
       self.onOff.showPop = !1;
     },
     onLoad() {
-      console.log('读取新的内容');
       this.getDatas ();
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-
-
     },
     /**
      * [onSearch 搜索输入事件]
@@ -258,16 +257,16 @@ export default {
     onSearch () {
       var self = this;
       if ( !self.inputs.searchVal.trim()) return;
-      self.params.search = self.inputs.searchVal;
+      self.params = {construction_type: self.inputs.active, search: self.inputs.searchVal},
       self.datas = [];
       self.onOff.finished = !1;
       this.getDatas()
     },
     /**
-     * [searchBlur 搜索输入框失去焦点事件]
+     * [searchBlur 清空搜索内容]
      * @return {[type]} [description]
      */
-    searchBlur () {
+    searchEmpty () {
       let self = this;
       self.inputs.searchVal = "";
       delete self.params.search;
@@ -287,7 +286,6 @@ export default {
       {
         this.filterConstructionType = '全部'
       }
-      console.log(this.filterConstructionType);
       this.inputs.active = this.filterConstructionTypes.indexOf( this.filterConstructionType );
 
       this.params = {
@@ -296,7 +294,7 @@ export default {
         real_complete_at: this.inputs.betweenRealComplete,
         amount: this.inputs.betweenAmount
       }
-      console.log('提交的params is',this.params);
+      // console.log('提交的params is',this.params);
       self.datas = [];
       self.onOff.finished = !1;
       this.getDatas();
@@ -305,15 +303,28 @@ export default {
 
   },
   watch: {
-    filterConstructionType (newVal) {
+    filterConstructionType ( newVal ) {
       // 与标签栏的选择项同步
       // this.inputs.active = this.filterConstructionTypes.indexOf( newVal );
     },
+    chooseVal ( newVal )
+    {
+      let amounts = newVal.split('-');
+      if ( amounts.length == 2 )
+      {
+        this.inputs.betweenAmount =
+        [
+        Number(amounts[0]),
+        Number(amounts[1])
+        ]
+      }
+    }
 
   },
   mounted () {
     this.getDatas ();
     console.log(CONFIG);
+    console.log(this.$route);
   },
   created () {
 

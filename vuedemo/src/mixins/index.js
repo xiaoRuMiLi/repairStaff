@@ -93,7 +93,7 @@ let m = {
         // 这里对全局方法$Post 进行封装，调用这个函数进行request才是正确的
         post ( u , p , f , ts ) {
             let that = this;
-            console.log( 'post url', this.h + u )
+            // console.log( 'post url', this.h + u )
             return new Promise ( ( resolve , reject ) => {
                 this.$Post ( this.h + u , p , f ).then ( res => {
                     that.backRequest ( u , res , ts );
@@ -105,7 +105,7 @@ let m = {
         } ,
         get ( u , p , f , ts ) {
             let that = this;
-            console.log( 'get url', this.h + u )
+            // console.log( 'get url', this.h + u )
             return new Promise ( ( resolve , reject ) => {
                 this.$Get ( this.h + u , p , f ).then ( res => {
                     // 对返回数据进行预处理

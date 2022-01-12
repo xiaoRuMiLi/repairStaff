@@ -67,7 +67,7 @@ Vue.prototype.$type = function ( j ) {
     return Object.prototype.toString.call ( j );
 }
 Vue.prototype.$log = function ( l ) {
-    console.log ( l );
+
 }
 Vue.prototype.$isFalse = function ( o ) {
     //检验值完全没有
@@ -99,7 +99,7 @@ Vue.prototype.$isTrue = function ( d ) {
 }
 /** [$message 输出消息，暂时未定义内容 ] */
 Vue.prototype.$message = function ( msgObj ) {
-    console.log( msgObj )
+    // console.log( msgObj )
 }
 Array.prototype.$operation = function ( i , o ) {
     //单个item的数组的计算

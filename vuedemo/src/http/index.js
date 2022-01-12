@@ -85,7 +85,6 @@ export function fetchPost ( url , params , form ) {
 
 ////返回一个Promise(发送get请求)
 export function fetchGet ( url , param , form ) {
-    console.log('fetchGet url is ' + url);
     let reqTime = new Date ().getTime ();
     if ( param ) {
         param.reqTime = reqTime;
