@@ -12,7 +12,7 @@
 			    </div>
 				<div class="text-container" v-for=" item in content">
 					<div class="lable">
-						<span class="lable">{{ item.title }}</span>
+						<span >{{ item.title }}<i></i></span>
 					</div>
 					<span class="content">{{item.content}}</span>
 				</div>
@@ -162,10 +162,22 @@ export default {
 	margin-right: 1vw;
 	/* 如果设置了 display inline 那么就会变成内联元素，设置宽度就不会起作用 */
     /* display: inline; */
-    width: 20vw;
-    padding: 5px;
+    width: 20vw; padding: 5px;
     text-align: start;
+   
 }
+.text-container .lable> span {
+	text-align-last:justify;
+	text-align:justify;
+	text-justify:distribute-all-lines; /*这行必加，兼容ie浏览器*/
+	width: 100%;
+}
+.text-container .lable> span i {
+	/*display:inline-block;*/ /*padding-left: 100%;*/
+	width:100%;
+	display:none;
+}
+
 .right-con> span {
 	color: #1989fa;
 }

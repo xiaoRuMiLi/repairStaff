@@ -287,7 +287,6 @@ export default {
         this.filterConstructionType = '全部'
       }
       this.inputs.active = this.filterConstructionTypes.indexOf( this.filterConstructionType );
-
       this.params = {
         construction_type: this.inputs.active,
         // 传入实际完成时间的时间区间数组
@@ -297,6 +296,7 @@ export default {
       // console.log('提交的params is',this.params);
       self.datas = [];
       self.onOff.finished = !1;
+      self.onOff.showPop = !1;
       this.getDatas();
     },
 
