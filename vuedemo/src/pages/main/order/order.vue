@@ -28,9 +28,8 @@
       @load="onLoad"
     >
     <template slot="default">
-      <text-list-item v-for="(item,key) in datas" :key="key" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons"> </text-list-item>
+      <text-list-item v-for="( item, key ) in datas" :key="key" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons"> </text-list-item>
     </template>
-    <van-cell v-for="item in list" :key="item" :title="item" />
     </van-list>
     <div class="white-place"></div>
     <van-popup v-model="onOff.showPop" position="right" :style="{ height: '100%', width: '80%' }">
@@ -93,8 +92,8 @@ export default {
       choose_datas: ['0-100','100-500','500-1000','1000-2000','2000-5000'],
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
       filterConstructionTypes: ['全部','待接单','施工中','已完成','超时单',],
-      filterConstructionType: '待接单',
-      chooseVal: '0-100',
+      filterConstructionType: '全部',
+      chooseVal: '',
       // 提交到后端的参数
       params: {},
       onOff:{
@@ -108,7 +107,7 @@ export default {
         // 订单类型，全部、超时单、已完成、未完成、施工中
         // 标签动作
         active: 0,
-        chooseDate: '近一个月',
+        chooseDate: '',
         betweenRealComplete: [
           '2020-12-01',
           '2022-01-01'
@@ -198,23 +197,23 @@ export default {
         amount: item.amount,
         con: [
           {
-            title: '车牌照号：',
+            title: '车牌照号',
             content: item.title,
           },
           {
-            title: '车型：',
+            title: '车型',
             content: item.mode,
           },
           {
-            title: '指定时间：',
+            title: '指定时间',
             content: item.complete_at,
           },
           {
-            title: '接单时间：',
+            title: '接单时间',
             content: item.receive_at,
           },
           {
-            title: '达成时间：',
+            title: '达成时间',
             content: item.real_complete_at,
           }
         ],
