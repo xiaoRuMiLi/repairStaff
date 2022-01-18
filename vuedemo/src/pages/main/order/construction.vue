@@ -7,32 +7,28 @@
       />
       <div class="circular image-title">
         <i class = "van-icon-share-o van-icon"></i>
-      </div>  
+      </div>
       <div class="rectangle image-title">
         <span>{{data.id}}</span>
-      </div>  
+      </div>
     </div>
     <div id = "content">
-      <div id="basic-info">
-        <div class="left">
-          <div class="car-number"> {{data.carNumber}}</div>
-          <div class="car-mode">{{data.carModel}}</div>
-          <div class="money">
-            <div class="flag">
-              $
-            </div>
-            <span> {{data.amount}} </span>
-          </div>
-          
-        </div>
-        <div class="right">
-          <i class="van-icon van-icon-arrow"></i>
-        </div>
-        
-      </div>
-      
+      <jin-basic-info
+      :carNumber="data.carNumber"
+      :carModel="data.carModel"
+      :amount = "data.amount"
+      >
+      </jin-basic-info>
+      <!-- 标记组 -->
+      <jin-marks :marks="data.marks">
+      </jin-marks>
+      <!-- 看板组 -->
+      <jin-board :datas = data.times btn="请接单">
+
+      </jin-board>
+
     </div>
-   
+
   </div>
 </template>
 <script>
@@ -40,12 +36,18 @@ import axios from 'axios'
 import { Popup, Image as VanImage } from 'vant';
 import { URL } from '@/web-config/apiUrl';
 import conf from '@/web-config/index';
+import JinBasicInfo from '@/components/JinBasicInfo';
+import JinMarks from '@/components/JinMarks';
+import JinBoard from '@/components/JinBoard';
 export default {
   name: 'construction',
   mixins : [ require ( "@/mixins" ).default ],
   components: {
     Popup,
-    'van-image': VanImage,   
+    'van-image': VanImage,
+    'jin-basic-info': JinBasicInfo,
+    'jin-marks': JinMarks,
+    'jin-board': JinBoard,
   },
   data () {
     return {
@@ -59,28 +61,34 @@ export default {
         finished: false,
       },
       inputs: {
-      
+
       },
       data: {
         id: '00000547',
         amount: 350,
         carNumber: '川F-PK685',
         carModel: '长安奥拓 大王子 2003 手动',
-        
-      
+        marks: [
+        '限定时间','VIP客户','车况较差','必须质检'
+        ],
+        times: [
+        '请在2021-10-01 10:00:00 前交付',
+        '在2021-10-01 10:00:00 完成接单',
+        '已在2021-10-01 10:00:00 完成了施工'
+        ]
       }
     }
 
   },
   methods: {
 
-   
+
   },
   watch: {
-   
+
   },
   mounted () {
-   
+
   },
   created () {
 
@@ -123,53 +131,7 @@ export default {
   border-radius: 5px;
   margin: 10px;
   height: 30px;
-  line-height: 30px; 
-}
-
-/* 基本信息 */
-#basic-info {
-  width: 100%;
-  padding: 20px;
-  position: relative;
-  text-align: left;
-
-}
-#basic-info .left {
-  text-align: left;
-  display: inline-block;
-
-}
-#basic-info .left .car-number {
-  font-size: 18px;
-  font-weight: 600;
-  padding: 0px 10px 10px 10px;
-
-}
-#basic-info .left .car-mode {
-  font-size: 16px;
-  font-weight: 600;
-  padding: 0px 10px 10px 10px;
-
-}
-#basic-info .left .money {
-  padding-left: 10px;
-
-}
-.money .flag {
-  display: inline;
-  color: #ff8917;
-  font-size: 18px;
-  font-weight: 600;
-
-}
-.money span {
-  color: #ee0a24;
-  font-size: 16px;
-  font-weight: 600;
-}
-#basic-info .right {
-  height: 100%;
-  display: inline-block;
+  line-height: 30px;
 }
 
 
