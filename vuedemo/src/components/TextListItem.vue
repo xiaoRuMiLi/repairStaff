@@ -166,12 +166,14 @@ export default {
     text-align: start;
 
 }
+/* 文字两端对齐的设置 */
 .text-container .lable> div {
 	text-align-last:justify;
 	text-align:justify;
 	text-justify:distribute-all-lines; /*这行必加，兼容ie浏览器*/
 	width: 100%;
 }
+/* 文字两端对齐必须添加一个无关的元素在文本后面，这里选择了i 元素，因为text-align:justify;对一行文本是不起作用de */
 .text-container .lable> div i {
 	/*display:inline-block;*/ /*padding-left: 100%;*/
 	width:100%;
