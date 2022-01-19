@@ -34,8 +34,17 @@
       :scoreTime="data.scoreTime"
       :scoreValue="data.scoreValue"
       :evaluate="data.evaluate"
-      > 
+      >
       </jin-customer>
+      <!-- 故障描述 -->
+      <div class="fault-description">
+        <div class="title">
+          故障描述
+        </div>
+        <div class="content">
+          {{data.faultDescription}}
+        </div>
+      </div>
 
     </div>
 
@@ -89,11 +98,12 @@ export default {
         '已在2021-10-01 10:00:00 完成了施工'
         ],
         imgSrc: "http://www.weixiubang.club/avatarImg/c74c7d9b1fe652744f18994debc95fb0.jpg",
-        customerName:"未知客户",
-        customerType:'未知客户类型',
-        scoreTime:'****-**-**',
-        scoreValue:"2",
+        customerName:"方汉雄",
+        customerType:'VIP',
+        scoreTime:'2022-01-01',
+        scoreValue: 2,
         evaluate:'该客户很忙，没有留下任何话!',
+        faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
       }
     }
 
@@ -150,6 +160,23 @@ export default {
   margin: 10px;
   height: 30px;
   line-height: 30px;
+}
+/* 故障描述 */
+.fault-description {
+  padding: 20px;
+  text-align: left;
+  font-size: 14px;
+
+}
+.fault-description .title {
+  font-size: 16px;
+  font-weight: 550;
+  padding-bottom: 10px;
+
+}
+.fault-description .content {
+  color: #999999;
+
 }
 
 

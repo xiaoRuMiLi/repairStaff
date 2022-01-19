@@ -96,10 +96,8 @@ export default {
     position: absolute;
     /* top: 50%; */
     bottom: 50%;
-    -webkit-transform: translateY(7px);
-    transform: translateY(7px);
+    transform: translate(-15px,7px);
     font-size: 15px;
     font-weight: 600;
-    transform: translateX(-15px);
   }
 </style>
