@@ -40,13 +40,19 @@
     }
     .jin-board-content .left {
         text-align: left;
+        width: 65%;
 
     }
     .jin-board-content .left .item {
         padding: 2px 0;
         color: #ffffff;
-        font-weight: 600;
-
+        font-weight: 550;
+        width: 100%;
+        font-size: 5px;
+        /* 超出文本显示省略号*/
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
     .jin-board-content .right {
         display: flex;

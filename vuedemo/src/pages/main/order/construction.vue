@@ -26,6 +26,16 @@
       <jin-board :datas = data.times btn="请接单">
 
       </jin-board>
+      <!-- 客户评价 -->
+      <jin-customer
+      :imgSrc="data.imgSrc"
+      :customerName="data.customerName"
+      :customerType="data.customerType"
+      :scoreTime="data.scoreTime"
+      :scoreValue="data.scoreValue"
+      :evaluate="data.evaluate"
+      > 
+      </jin-customer>
 
     </div>
 
@@ -39,6 +49,7 @@ import conf from '@/web-config/index';
 import JinBasicInfo from '@/components/JinBasicInfo';
 import JinMarks from '@/components/JinMarks';
 import JinBoard from '@/components/JinBoard';
+import JinCustomerScore from '@/components/JinCustomerScore';
 export default {
   name: 'construction',
   mixins : [ require ( "@/mixins" ).default ],
@@ -48,6 +59,7 @@ export default {
     'jin-basic-info': JinBasicInfo,
     'jin-marks': JinMarks,
     'jin-board': JinBoard,
+    'jin-customer': JinCustomerScore
   },
   data () {
     return {
@@ -75,7 +87,13 @@ export default {
         '请在2021-10-01 10:00:00 前交付',
         '在2021-10-01 10:00:00 完成接单',
         '已在2021-10-01 10:00:00 完成了施工'
-        ]
+        ],
+        imgSrc: "http://www.weixiubang.club/avatarImg/c74c7d9b1fe652744f18994debc95fb0.jpg",
+        customerName:"未知客户",
+        customerType:'未知客户类型',
+        scoreTime:'****-**-**',
+        scoreValue:"2",
+        evaluate:'该客户很忙，没有留下任何话!',
       }
     }
 
