@@ -45,14 +45,30 @@
           {{data.faultDescription}}
         </div>
       </div>
+      <!-- 流程进度 -->
+       <div class="img-title">
+        流程进度
+      </div>
+      <div style="padding:0 10px; font-size: 3px;">
+        <van-steps :active="active" active-icon="success" active-color="#38f" style="font-size: 1px;">
+          <van-step>登记</van-step>
+          <van-step>钣金</van-step>
+          <van-step>机修</van-step>
+          <van-step>电气</van-step>
+          <van-step>喷漆</van-step>
+        </van-steps>
+      </div>
       <!-- 维修列表 -->
-      <jin-repair-list 
+      <jin-repair-list
       :title="data.repairType"
       :amount="data.amount"
       :datas="data.repairDatas"
       >
       </jin-repair-list>
       <!-- 图片展示组 -->
+      <div class="img-title">
+        图片展示
+      </div>
       <jin-images-board
       :images = "data.images"
       :arrowDirection = "false"
@@ -64,7 +80,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { Popup, Image as VanImage } from 'vant';
+import { Popup, Image as VanImage, Step, Steps } from 'vant';
 import { URL } from '@/web-config/apiUrl';
 import conf from '@/web-config/index';
 import JinBasicInfo from '@/components/JinBasicInfo';
@@ -85,6 +101,8 @@ export default {
     'jin-customer': JinCustomerScore,
     'jin-repair-list': JinRepairList,
     'jin-images-board': JinImagesBoard,
+    'van-steps': Steps,
+    'van-step': Step,
   },
   data () {
     return {
@@ -97,6 +115,8 @@ export default {
         loading: true,
         finished: false,
       },
+      /* 流程进度 */
+      active: 4,
       inputs: {
 
       },
@@ -124,6 +144,7 @@ export default {
         repairDatas: [{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200}],
         images: [
         'http://weixiubang.club/img/1641457355528819422245769931160S.jpg',
+        'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fphotoblog%2F7%2F9%2F5%2F0%2F7950997%2F20097%2F5%2F1246732177709.jpg&refer=http%3A%2F%2Fimg.pconline.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1645279866&t=13d4cedcc517bcb1956b21d15300eed8',
         'http://weixiubang.club/img/16414577032652534036941679180714S.jpg',
         'http://weixiubang.club/img/16414576898124060718675273719397S.jpg',
         'http://weixiubang.club/img/16414576197466276825240428731308S.jpg',
@@ -202,6 +223,15 @@ export default {
 .fault-description .content {
   color: #999999;
 
+}
+/* 图片展示标题 */
+.img-title {
+  font-size: 16px;
+  font-weight: 550;
+  padding-bottom: 10px;
+  text-align: left;
+  padding-left: 20px;
+  color: #2c3e50;
 }
 .white-space {
   height: 300px;

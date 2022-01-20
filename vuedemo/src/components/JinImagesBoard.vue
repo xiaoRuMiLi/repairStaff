@@ -1,21 +1,27 @@
 <template>
 	<div class="images-board">
-		<div class="content">
-			<div class="img-container" v-for="(item,key) in images">
+		<div class="content" :class="{'short': arrow,'high': !arrow}">
+			<div class="img-container" @click="tapImg(key)" v-for="(item,key) in images">
 				<van-image
 				  :src="item"
+				  fit="cover"
+				  radius = "5"
+				  lazy-load
 				/>
-			</div>	
+			</div>
 		</div>
-		<div class="hidden-btn" @click="onOff.isHide = !onOff.isHide"><i class="van-icon" :class="direction"></i></div>
+		<div class="hidden-btn" @click="arrow = !arrow"><i class="van-icon van-icon-arrow-down" :class="{'rotate': arrow,'turn-rotate': !arrow}"></i></div>
 	</div>
 </template>
 <script >
-    import {Image as VanImage } from 'vant';
+    import Vue from 'vue';
+    import { Image as VanImage, ImagePreview, Lazyload } from 'vant';
+    Vue.use(Lazyload);
 	export default {
 		name: 'JinImagesBoard',
 		components: {
 			'van-image': VanImage,
+			[ImagePreview.Component.name]: ImagePreview.Component,
 		},
 		props: {
 			images: {
@@ -29,24 +35,31 @@
 		},
 		data () {
 			return {
-				onOff: {
-					/* true 向下 false 向上 */ 
-					arrow: this.arrowDirection,
-				}
+				/* true 向下 false 向上 */
+				arrow: this.arrowDirection,
 			}
 		},
 		computed: {
-			direction () {
-				var self = this;
-				if ( self.onOff.arrow ) {
-					return 'van-icon-arrow-down';
-				} else {
-					return 'van-icon-arrow-up';
-				}
-			}
+
 		},
-		watch {
-			
+		methods: {
+			tapImg(index){
+				let self = this;
+				console.log(index);
+				ImagePreview({
+				  images: this.images,
+				  closeable: true,
+				  startPosition: index,
+				});
+
+			},
+
+		},
+		watch: {
+			arrow( newVal ) {
+
+			}
+
 		}
 
 	}
@@ -73,4 +86,44 @@
 .hidden-btn {
 
 }
+.rotate {
+    transition: transform 0.2s;
+    -webkit-transition: transform 0.2s; /* Safari */
+    transform: rotateZ(180deg);
+    transform-origin: center;
+}
+.turn-rotate {
+    transition: transform 0.2s;
+    -webkit-transition: transform 0.2s; /* Safari */
+    transform: rotateZ(0deg);
+    transform-origin: center;
+}
+.short {
+	transition: all 5;
+	height: 22vw;
+}
+.high {
+	transition: all 5;
+	height: auto;
+}
+
+/* 动画 控制旋转 */
+/*.rotate {
+    animation: animal-rotate 5s;
+}
+.turn-rotate {
+    animation: turn-animal-rotate 5s;
+}
+@keyframes animal-rotate {
+	from {transform: rotate(0deg);}
+	to {transform: rotate(180deg);}
+}
+@keyframes turn-animal-rotate {
+	from {transform: rotate(0deg);}
+	to {transform: rotate(180deg);}
+}
+@keyframes hidden {
+	from {flex-wrap: wrap;}
+	to {flex-wrap: nowrap;}
+}*/
 </style>
