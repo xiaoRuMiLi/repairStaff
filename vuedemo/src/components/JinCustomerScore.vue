@@ -31,8 +31,6 @@
 </template>
 <script>
     import { Rate, Image as VanImage } from 'vant';
-
-
 	export default {
 		name: 'CustomerScore',
 		components: {
@@ -71,8 +69,8 @@
    }
    .img-div {
    	border-radius: 50%;
-    width: 10vw;
-    height: 10vw;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
    }
    .customer-score .head {

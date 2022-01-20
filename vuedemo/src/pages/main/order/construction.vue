@@ -45,9 +45,21 @@
           {{data.faultDescription}}
         </div>
       </div>
-
+      <!-- 维修列表 -->
+      <jin-repair-list 
+      :title="data.repairType"
+      :amount="data.amount"
+      :datas="data.repairDatas"
+      >
+      </jin-repair-list>
+      <!-- 图片展示组 -->
+      <jin-images-board
+      :images = "data.images"
+      :arrowDirection = "false"
+      >
+      </jin-images-board>
     </div>
-
+    <div class="white-space"> </div>
   </div>
 </template>
 <script>
@@ -59,6 +71,8 @@ import JinBasicInfo from '@/components/JinBasicInfo';
 import JinMarks from '@/components/JinMarks';
 import JinBoard from '@/components/JinBoard';
 import JinCustomerScore from '@/components/JinCustomerScore';
+import JinRepairList from '@/components/JinRepairList';
+import JinImagesBoard from '@/components/JinImagesBoard';
 export default {
   name: 'construction',
   mixins : [ require ( "@/mixins" ).default ],
@@ -68,7 +82,9 @@ export default {
     'jin-basic-info': JinBasicInfo,
     'jin-marks': JinMarks,
     'jin-board': JinBoard,
-    'jin-customer': JinCustomerScore
+    'jin-customer': JinCustomerScore,
+    'jin-repair-list': JinRepairList,
+    'jin-images-board': JinImagesBoard,
   },
   data () {
     return {
@@ -104,6 +120,16 @@ export default {
         scoreValue: 2,
         evaluate:'该客户很忙，没有留下任何话!',
         faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
+        repairType: '喷漆',
+        repairDatas: [{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200}],
+        images: [
+        'http://weixiubang.club/img/1641457355528819422245769931160S.jpg',
+        'http://weixiubang.club/img/16414577032652534036941679180714S.jpg',
+        'http://weixiubang.club/img/16414576898124060718675273719397S.jpg',
+        'http://weixiubang.club/img/16414576197466276825240428731308S.jpg',
+        'http://weixiubang.club/img/16414576372365602708627544697472S.jpg',
+        'http://weixiubang.club/img/16414576730421021993050698185062S.jpg',
+        ],
       }
     }
 
@@ -129,7 +155,6 @@ export default {
 
 }
 #content {
-  height: 500px;
   width: 100%;
   position: relative;
   top: -50px;
@@ -177,6 +202,9 @@ export default {
 .fault-description .content {
   color: #999999;
 
+}
+.white-space {
+  height: 300px;
 }
 
 
