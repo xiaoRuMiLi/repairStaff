@@ -86,44 +86,50 @@
 .hidden-btn {
 
 }
-.rotate {
-    transition: transform 0.2s;
-    -webkit-transition: transform 0.2s; /* Safari */
-    transform: rotateZ(180deg);
-    transform-origin: center;
-}
-.turn-rotate {
-    transition: transform 0.2s;
-    -webkit-transition: transform 0.2s; /* Safari */
-    transform: rotateZ(0deg);
-    transform-origin: center;
-}
+
 .short {
-	transition: all 5;
-	height: 22vw;
+	/*transition: all 5;
+	height: 22vw;*/
+	animation: animal-hidden 1s;
+	animation-fill-mode: forwards;
+	animation-iteration: 1;
+
 }
 .high {
-	transition: all 5;
-	height: auto;
+	/*transition: all 5;
+	height: auto;*/
+	animation: animal-show 1s;
+    animation-fill-mode: forwards;
+    animation-iteration: 1;
 }
 
 /* 动画 控制旋转 */
-/*.rotate {
-    animation: animal-rotate 5s;
+.rotate {
+    animation: animal-rotate 0.5s;
+    animation-fill-mode:forwards;
+    animation-iteration-count:1;
 }
 .turn-rotate {
-    animation: turn-animal-rotate 5s;
+    animation: turn-animal-rotate 0.5s;
+    animation-fill-mode:forwards;
+    animation-iteration-count:1;
 }
+
 @keyframes animal-rotate {
 	from {transform: rotate(0deg);}
 	to {transform: rotate(180deg);}
 }
 @keyframes turn-animal-rotate {
-	from {transform: rotate(0deg);}
-	to {transform: rotate(180deg);}
+	from {transform: rotate(180deg);}
+	to {transform: rotate(0deg);}
 }
-@keyframes hidden {
-	from {flex-wrap: wrap;}
-	to {flex-wrap: nowrap;}
-}*/
+@keyframes animal-hidden {
+	from { height: auto; }
+	to { height: 22vw; }
+		
+}
+@keyframes animal-show {
+    from {height: 22vw;}
+    to {height: auto}
+}
 </style>
