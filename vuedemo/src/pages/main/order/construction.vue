@@ -49,6 +49,8 @@
        <div class="img-title">
         流程进度
       </div>
+      <jin-work-progress>
+      </jin-work-progress>
       <div style="padding:0 10px; font-size: 3px;">
         <van-steps :active="active" active-icon="success" active-color="#38f" style="font-size: 1px;">
           <van-step>登记</van-step>
@@ -89,6 +91,7 @@ import JinBoard from '@/components/JinBoard';
 import JinCustomerScore from '@/components/JinCustomerScore';
 import JinRepairList from '@/components/JinRepairList';
 import JinImagesBoard from '@/components/JinImagesBoard';
+import JinWorkProgress from '@/components/JinWorkProgress';
 export default {
   name: 'construction',
   mixins : [ require ( "@/mixins" ).default ],
@@ -103,6 +106,7 @@ export default {
     'jin-images-board': JinImagesBoard,
     'van-steps': Steps,
     'van-step': Step,
+    'jin-work-progress': JinWorkProgress,
   },
   data () {
     return {
