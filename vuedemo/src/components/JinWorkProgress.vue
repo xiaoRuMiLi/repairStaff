@@ -38,6 +38,14 @@
             'van-image': VanImage,
         },
         props: {
+            startDt: {
+                type: String,
+                default: '2022-01-01 10:30:00',
+            },
+            endDt: {
+                type: String,
+                default: '2022-01-10 10:30:00',
+            },
             datas: {
                 type: Array,
                 default() {
@@ -63,7 +71,8 @@
         data () {
             return {
                 lis: this.datas,
-
+                startDtTimeStamp: TimeUtils.Jh_convertTimeStamp( this.startDt ),
+                endDtTimeStamp: TimeUtils.Jh_convertTimeStamp( this.endDt )
             }
         },
         computed: {
@@ -74,8 +83,10 @@
                     const realCompleteTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at);
                     const completeTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].complete_at);
                     const receiveTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].receive_at);
-
-                    return '20px';
+                    const creatTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].creat_at);
+                    const wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
+                    console.log((completeTimeStamp-creatTimeStamp)/wholeTimeStamp);
+                    return  Math.round( (completeTimeStamp - creatTimeStamp)/wholeTimeStamp * 100 ) + '%';  
                 }
 
 
@@ -148,6 +159,11 @@
    .progress {
     height: 10px;
     background-color: #999999;
+
+   }
+   .progress > div {
+    height: 10px;
+    background-color: red;
 
    }
    .jin-work-progress .right {

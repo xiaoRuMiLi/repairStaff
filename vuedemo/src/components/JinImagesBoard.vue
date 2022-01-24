@@ -64,7 +64,7 @@
 
 	}
 </script>
-<style scoped>
+<style scoped >
 .images-board {
 	padding: 20px;
 	overflow: hidden;

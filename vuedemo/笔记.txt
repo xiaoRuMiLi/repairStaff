@@ -28,3 +28,9 @@
    调试Vue项目的时候有时候出差错了，编辑后不断刷新感觉修改的没有反映到页面中，比如删除一个变量后，本来程序应该出错但是项目会记住你出错前的内容，致使被删除的变量在项目中任然会生效。
     
     
+npm使用
+    npm install moduleName # 安装模块到项目目录下只安装包到node_modules 不会写入dependencies节点devDependencies节点
+	npm install -g moduleName # -g 的意思是将模块安装到全局，具体安装到磁盘哪个位置，要看 npm config prefix 的位置。不会写入dependencies节点devDependencies节点	 
+	npm install -save moduleName # -save 的意思是将模块安装到项目目录下，并在package文件的dependencies节点写入依赖。这个是上线必须要使用的包使用该命令	 
+	npm install -save-dev moduleName # -save-dev 的意思是将模块安装到项目目录下，并在package文件的devDependencies节点写入依赖。开发中使用的包上线不需要使用的就用这个命令
+	传送门 https://www.cnblogs.com/limitcode/p/7906447.html
