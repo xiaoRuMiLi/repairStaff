@@ -11,13 +11,13 @@
                     </div>
                     <div class="worker-info">
                         <div class="name"><span>{{item.name}}</span><span class="worker-type">{{item.repair_type}}</span></div>
-                        <div class="date"><span>时间</span><span>{{item.real_complete_at}}</span></div>
+                        <div class="date"><span>达成时间</span><span>{{item.real_complete_at}}</span></div>
                     </div>
                 </div>
                 <div class="progress">
-                    <div class="prog1" :style="{width: getProgress1Width( key )}"> </div>
-                    <div class="prog2" :style="{width: getProgress2Width( key )}"> </div>
-                    <div class="prog3" :style="{width: getProgress3Width( key )}"> </div>
+                    <div class="prog1" v-if="item.creat_at != '' & item.creat_at != null & item.creat_at != 'null'" :style="getProgress1Width( key )"> </div>
+                    <div class="prog2" v-if="item.receive_at !='' & item.receive_at !=null & item.receive_at !='null'" :style="getProgress2Width( key )"> </div>
+                    <div class="prog3" v-if="item.real_complete_at !='' & item.real_complete_at !='null' & item.real_complete_at !=null" :style="getProgress3Width( key )"> </div>
                     <div class="begin"> </div>
                     <div class="over"> </div>
                 </div>
@@ -40,11 +40,11 @@
         props: {
             startDt: {
                 type: String,
-                default: '2022-01-01 10:30:00',
+                default: '2021-07-20 10:30:00',
             },
             endDt: {
                 type: String,
-                default: '2022-01-10 10:30:00',
+                default: '2021-07-24 10:30:00',
             },
             datas: {
                 type: Array,
@@ -53,13 +53,13 @@
                         {
                             name: '邓银剑',
                             imgSrc: "http://www.weixiubang.club/avatarImg/c74c7d9b1fe652744f18994debc95fb0.jpg",
-                        receive_at: "2021-07-22 11:33:43",
-                        complete_at: "2021-07-23 18:00:00",
-                        real_complete_at: "2021-07-22 11:33:44",
+                        receive_at: "2021-07-22 10:30:08",
+                        complete_at: "2021-07-23 10:30:00",
+                        real_complete_at: "2021-07-22 20:30:08",
                         remarks: "",
                         complete_type: 1,
                         repair_type: "钣金",
-                        creat_at: "2021-07-22 11:05:08",
+                        creat_at: "2021-07-21 10:30:08",
                         },
                    ]
                 }
@@ -76,35 +76,71 @@
             }
         },
         computed: {
+            /**
+             * [getProgress1Width 返回表示给定完成时间长度和起始点的长度条样式]
+             * @param  {[type]}  [description]
+             * @return {[type]}  [description]
+             */
             getProgress1Width( ){
                 var self = this;
                 return function( index ) {
-                    console.log( TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at));
-                    const realCompleteTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at);
+                    if ( !this.datas[index].complete_at || !this.datas[index].creat_at ) return;
                     const completeTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].complete_at);
-                    const receiveTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].receive_at);
                     const creatTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].creat_at);
                     const wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
-                    console.log((completeTimeStamp-creatTimeStamp)/wholeTimeStamp);
-                    return  Math.round( (completeTimeStamp - creatTimeStamp)/wholeTimeStamp * 100 ) + '%';  
+                    const width = Math.round( (completeTimeStamp - creatTimeStamp)/wholeTimeStamp * 100 ) + '%';
+                    const startPoint =  Math.round( ( 1-(this.endDtTimeStamp - creatTimeStamp)/wholeTimeStamp ) * 100 ) + '%';
+                    return {
+                        width: width,
+                        left: startPoint,
+                    }
+
                 }
 
 
 
 
             },
+            /**
+             * [getProgress2Width 返回接单到给定完成时间的进度条样式]
+             * @param  {[type]}  [description]
+             * @return {[type]}  [description]
+             */
             getProgress2Width( ){
                 var self = this;
                 return function( index ) {
-                    console.log( TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at));
-                    return '20px';
+                    if ( !this.datas[index].complete_at || !this.datas[index].receive_at ) return;
+                    const completeTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].complete_at);
+                    const receiveTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].receive_at);
+                    const wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
+                    const width = Math.round( (completeTimeStamp - receiveTimeStamp)/wholeTimeStamp * 100 ) + '%';
+                    const startPoint =  Math.round( ( 1-(this.endDtTimeStamp - receiveTimeStamp)/wholeTimeStamp ) * 100 ) + '%';
+                    return {
+                        width: width,
+                        left: startPoint,
+                    }
+
                 }
             },
             getProgress3Width( ){
                 var self = this;
+                /**
+                 * [超时时间进度条]
+                 * @param  {[type]} index [description]
+                 * @return {[type]}       [description]
+                 */
                 return function( index ) {
-                    console.log( TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at));
-                    return '20px';
+                    if ( !this.datas[index].complete_at || !this.datas[index].real_complete_at ) return;
+                    const realCompleteTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at);
+                    const completeTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].complete_at);
+                    const wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
+                    const width = Math.round( (realCompleteTimeStamp - completeTimeStamp)/wholeTimeStamp * 100 ) + '%';
+                    const startPoint =  Math.round( ( 1-( this.endDtTimeStamp- completeTimeStamp)/wholeTimeStamp ) * 100 ) + '%';
+                    return {
+                        width: width,
+                        left: startPoint,
+                    }
+
                 }
 
             }
@@ -123,6 +159,8 @@
     position: relative;
    }
    .left {
+    position: relative;
+    width: 80%;
 
    }
    .img-div {
@@ -155,16 +193,31 @@
    }
    .worker-info .date {
     color: #D3D3D3;
+    font-size: 14px;
+    font-weight: 500;
    }
    .progress {
     height: 10px;
-    background-color: #999999;
+    background-color: #dcdee0;
+    border-bottom: 2px solid black;
+    border-radius: 4px;
 
    }
    .progress > div {
     height: 10px;
     background-color: red;
+    position: absolute;
+    opacity: 0.8;
 
+   }
+   .progress > .prog1 {
+    background-color: green;
+   }
+   .progress > .prog2 {
+    background-color: #ffd01e;
+   }
+   .progress > .prog3 {
+    background-color: red;
    }
    .jin-work-progress .right {
     height: 100%;

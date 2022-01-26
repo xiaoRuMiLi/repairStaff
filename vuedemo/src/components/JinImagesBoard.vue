@@ -116,17 +116,17 @@
 }
 
 @keyframes animal-rotate {
-	from {transform: rotate(0deg);}
-	to {transform: rotate(180deg);}
-}
-@keyframes turn-animal-rotate {
 	from {transform: rotate(180deg);}
 	to {transform: rotate(0deg);}
+}
+@keyframes turn-animal-rotate {
+	from {transform: rotate(0deg);}
+	to {transform: rotate(180deg);}
 }
 @keyframes animal-hidden {
 	from { height: auto; }
 	to { height: 22vw; }
-		
+
 }
 @keyframes animal-show {
     from {height: 22vw;}

@@ -67,7 +67,7 @@
             }
         },
         methods: {
-            // onChange(event){} 用这个方法定义函数吗，和用箭头方法定义函数返回的this都是component组件，function定义则不会
+            // onChange(event){} 用这个方法定义函数，和用箭头方法定义函数返回的this都是component组件，function定义则不会
             buttonClick(eve){
                 // console.log('methods this is', this)
                 // data中的值通过$data可以获取.因为这里的this指向Component实例
