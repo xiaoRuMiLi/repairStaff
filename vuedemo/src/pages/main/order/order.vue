@@ -231,7 +231,7 @@ export default {
       params.page = pageNumber;
       self.onOff.loading = !0;
       console.log('params:', this.params );
-      this.get ( URL.api_searchConstruction, params ).then( (data) => {
+      this.get ( URL.api_constructionSearch, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
         if ( res.length < conf.numberPerPage ) self.onOff.finished = true;

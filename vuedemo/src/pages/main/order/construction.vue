@@ -58,6 +58,7 @@
           <van-step>机修</van-step>
           <van-step>电气</van-step>
           <van-step>喷漆</van-step>
+          <van-step>质检</van-step>
         </van-steps>
       </div>
       <!-- 维修列表 -->
@@ -112,13 +113,7 @@ export default {
     return {
       // 提交到后端的参数
       params: {},
-      onOff:{
-        // 弹出右侧弹层
-        showPop: !1,
-        // 列表下方读取中动画
-        loading: true,
-        finished: false,
-      },
+      onOff_loading: !1,
       /* 流程进度 */
       active: 4,
       inputs: {
@@ -160,6 +155,19 @@ export default {
 
   },
   methods: {
+    getData ( constructionId ) {
+      const self = this;
+      let params = {};
+      console.log( self.$route.query );
+      console.log( self.$route );
+      self.get( URL.api_constructionShow + constructionId , params ).then ( ( data ) => {
+        console.log( data );
+
+      } );
+
+
+
+    },
 
 
   },
@@ -167,6 +175,9 @@ export default {
 
   },
   mounted () {
+    const self = this;
+    let id = self.$route.params.id;
+    this.getData( id );
 
   },
   created () {

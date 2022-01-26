@@ -83,7 +83,7 @@ export default new Router({
 				    },
 				},
 				{
-				    path: 'construction',
+				    path: 'construction/:id',
 				    name: 'construction',
 				    component: () => import('@/pages/main/order/construction'),
 				    replace: false,

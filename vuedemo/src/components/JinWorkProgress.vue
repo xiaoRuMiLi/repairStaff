@@ -186,14 +186,14 @@
     justify-content: space-between;
    }
    .worker-info .name {
-    font-size: 16px;
+    font-size: 14px;
    }
    .score > div {
     display: inline-block;
    }
    .worker-info .date {
     color: #D3D3D3;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 500;
    }
    .progress {
@@ -211,7 +211,7 @@
 
    }
    .progress > .prog1 {
-    background-color: green;
+    background-color: #1989fa;
    }
    .progress > .prog2 {
     background-color: #ffd01e;

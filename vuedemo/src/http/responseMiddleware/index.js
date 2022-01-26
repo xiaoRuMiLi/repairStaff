@@ -30,7 +30,7 @@ const setDefaultVal = function ( obj , conf ) {
  * @return {[type]}      [description]
  */
 export function responseMiddle ( res ) {
-	// console.log(res);
+	console.log(res);
 	const url = res.config.url;
 	let data = null;
 	if (typeof res.data.data == 'object') {
@@ -57,11 +57,11 @@ export function responseMiddle ( res ) {
         		continue;
         	}
         	// 更改对象键名
-			if ( url in option & 'changeKey' in option[url] ) {
+			if ( url in option & option[url].hasOwnProperty('changeKey')) {
 		        resData = changeKey( item , option[url].changeKey )
 			}
 			// 添加默认值
-			if ( url in option & 'defaultVal' in option[url] ) {
+			if ( url in option & option[url].hasOwnProperty('defaultVal') ) {
 		        resData = setDefaultVal( resData , option[url].defaultVal );
 			}
 			resArr.push(resData);
@@ -72,12 +72,13 @@ export function responseMiddle ( res ) {
 	if ( isObj )
 	{
 		let item = typeof data == 'string'? JSON.parse( data ): data;
+		let resData = item;
 		// 更改对象键名
-		if ( url in option & 'changeKey' in option[url] ) {
+		if ( url in option && option[url].hasOwnProperty('changeKey') ) {
 	        resData = changeKey( item , option[url].changeKey )
 		}
 		// 添加默认值
-		if ( url in option & 'defaultVal' in option[url] ) {
+		if ( url in option && option[url].hasOwnProperty('defaultVal') ) {
 	        resData = setDefaultVal( item , option[url].defaultVal )
 		}
 		newRes.data.data = resData
