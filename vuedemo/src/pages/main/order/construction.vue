@@ -150,6 +150,7 @@ export default {
         'http://weixiubang.club/img/16414576372365602708627544697472S.jpg',
         'http://weixiubang.club/img/16414576730421021993050698185062S.jpg',
         ],
+        remarks: '这是一个备注'
       }
     }
 
@@ -162,12 +163,59 @@ export default {
       console.log( self.$route );
       self.get( URL.api_constructionShow + constructionId , params ).then ( ( data ) => {
         console.log( data );
-
+        self.data = self.formatData(data.data);
       } );
 
 
 
     },
+
+
+    formatData ( inp ) {
+      let result = {};
+      let makeMarks = ( da ) => {
+        let res = [ da.dispatch_mode ];
+        if ( da.inspect_type == 1 ) res.push('完工交检');
+        if ( da.complete_type == 1 ) res.push('限时交车');
+        return res;
+      }
+
+      let makeTimes = ( da ) => {
+        let str = `请在${da.complete_at}前交付`;
+        let res = new Array(str);
+        // 模板字符串需要使用 ` 反引号包裹起来用${}导入变量
+        if ( da.receive_at ) res.push( `已在${da.receive_at}完成接单` );
+        da.real_complete_at && res.push( `已在${da.real_complete_at}完成了施工` );
+        return res;
+      }
+      result = {
+        id: inp.id,
+        amount: inp.amount,
+        carNumber: inp.car_number,
+        carModel: inp.car_mode,
+        marks: makeMarks(inp),
+        times: makeTimes(inp),
+        imgSrc: "http://www.weixiubang.club/avatarImg/c74c7d9b1fe652744f18994debc95fb0.jpg",
+        customerName:"方汉雄",
+        customerType:'VIP',
+        scoreTime:'2022-01-01',
+        scoreValue: 2,
+        evaluate:'该客户很忙，没有留下任何话!',
+        faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
+        repairType: inp.repair_type,
+        repairDatas: inp.repair_content,
+        images: [
+        'http://weixiubang.club/img/1641457355528819422245769931160S.jpg',
+        'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fphotoblog%2F7%2F9%2F5%2F0%2F7950997%2F20097%2F5%2F1246732177709.jpg&refer=http%3A%2F%2Fimg.pconline.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1645279866&t=13d4cedcc517bcb1956b21d15300eed8',
+        'http://weixiubang.club/img/16414577032652534036941679180714S.jpg',
+        'http://weixiubang.club/img/16414576898124060718675273719397S.jpg',
+        'http://weixiubang.club/img/16414576197466276825240428731308S.jpg',
+        'http://weixiubang.club/img/16414576372365602708627544697472S.jpg',
+        'http://weixiubang.club/img/16414576730421021993050698185062S.jpg',
+        ],
+      }
+      return result;
+    }
 
 
   },
