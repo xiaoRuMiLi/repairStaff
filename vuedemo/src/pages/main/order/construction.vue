@@ -84,7 +84,8 @@
 <script>
 import axios from 'axios'
 import { Popup, Image as VanImage, Step, Steps } from 'vant';
-import { URL } from '@/web-config/apiUrl';
+import { URL } from '@/web-config/apiUrl'
+import { isUrl } from '@/utils/CheckUtils';
 import conf from '@/web-config/index';
 import JinBasicInfo from '@/components/JinBasicInfo';
 import JinMarks from '@/components/JinMarks';
@@ -93,6 +94,7 @@ import JinCustomerScore from '@/components/JinCustomerScore';
 import JinRepairList from '@/components/JinRepairList';
 import JinImagesBoard from '@/components/JinImagesBoard';
 import JinWorkProgress from '@/components/JinWorkProgress';
+// moudle 对象传送门https://www.cnblogs.com/tian-xie/p/7754186.html
 export default {
   name: 'construction',
   mixins : [ require ( "@/mixins" ).default ],
@@ -188,6 +190,24 @@ export default {
         da.real_complete_at && res.push( `已在${da.real_complete_at}完成了施工` );
         return res;
       }
+
+      let makePicture = ( da ) => {
+        console.log(isUrl);
+        let picture = da.repair.register.pictures;
+        let pictureArr = picture?(picture.split('|')): [];
+        picture = pictureArr.map( (item) => {
+          if (isUrl(item)) {
+            return item;
+          } else {
+            return conf.remoteImageFolder + item;
+          }
+
+
+        })
+        console.log('picture______',picture);
+        return picture;
+
+      }
       result = {
         id: inp.id,
         amount: inp.amount,
@@ -204,15 +224,7 @@ export default {
         faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
         repairType: inp.repair_type,
         repairDatas: inp.repair_content,
-        images: [
-        'http://weixiubang.club/img/1641457355528819422245769931160S.jpg',
-        'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fphotoblog%2F7%2F9%2F5%2F0%2F7950997%2F20097%2F5%2F1246732177709.jpg&refer=http%3A%2F%2Fimg.pconline.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1645279866&t=13d4cedcc517bcb1956b21d15300eed8',
-        'http://weixiubang.club/img/16414577032652534036941679180714S.jpg',
-        'http://weixiubang.club/img/16414576898124060718675273719397S.jpg',
-        'http://weixiubang.club/img/16414576197466276825240428731308S.jpg',
-        'http://weixiubang.club/img/16414576372365602708627544697472S.jpg',
-        'http://weixiubang.club/img/16414576730421021993050698185062S.jpg',
-        ],
+        images: makePicture(inp),
       }
       return result;
     }
