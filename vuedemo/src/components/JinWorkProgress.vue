@@ -10,7 +10,9 @@
                         />
                     </div>
                     <div class="worker-info">
-                        <div class="name"><span>{{item.name}}</span><span class="worker-type">{{item.repair_type}}</span></div>
+                        <div class="name"><span>{{item.name}}</span><span class="worker-type">{{item.repair_type}}{{
+                        item.real_complete_at?'已完成': item.receive_at?'施工中': '待接单'
+                        }}</span></div>
                         <div class="date"><span>达成时间</span><span>{{item.real_complete_at}}</span></div>
                     </div>
                 </div>
@@ -53,13 +55,11 @@
                         {
                             name: '邓银剑',
                             imgSrc: "http://www.weixiubang.club/avatarImg/c74c7d9b1fe652744f18994debc95fb0.jpg",
-                        receive_at: "2021-07-22 10:30:08",
-                        complete_at: "2021-07-23 10:30:00",
-                        real_complete_at: "2021-07-22 20:30:08",
-                        remarks: "",
-                        complete_type: 1,
-                        repair_type: "钣金",
-                        creat_at: "2021-07-21 10:30:08",
+                            receive_at: "2021-07-22 10:30:08",
+                            complete_at: "2021-07-23 10:30:00",
+                            real_complete_at: "2021-07-22 20:30:08",
+                            repair_type: "钣金",
+                            creat_at: "2021-07-21 10:30:08",
                         },
                    ]
                 }
@@ -71,13 +71,29 @@
         data () {
             return {
                 lis: this.datas,
-                startDtTimeStamp: TimeUtils.Jh_convertTimeStamp( this.startDt ),
-                endDtTimeStamp: TimeUtils.Jh_convertTimeStamp( this.endDt )
+                startDate: this.startDt,
+                endDate: this.endDt,
+                startDtTimeStamp: 0,
+                endDtTimeStamp: 0,
+                wholeTimeStamp: 0
+
+            }
+        },
+        watch: {
+            startDt: function( newVal ) {
+                this.startDtTimeStamp = TimeUtils.Jh_convertTimeStamp( newVal );
+                this.wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
+            },
+            endDt: function( newVal ) {
+                this.endDtTimeStamp =  TimeUtils.Jh_convertTimeStamp( newVal );
+                this.wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
             }
         },
         computed: {
+
+
             /**
-             * [getProgress1Width 返回表示给定完成时间长度和起始点的长度条样式]
+             * [getProgress1Width 返回表示给定完成时间长度和起始点的长度条样式 蓝色条。 灰色表示各工种合计维修时长]
              * @param  {[type]}  [description]
              * @return {[type]}  [description]
              */
@@ -87,9 +103,8 @@
                     if ( !this.datas[index].complete_at || !this.datas[index].creat_at ) return;
                     const completeTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].complete_at);
                     const creatTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].creat_at);
-                    const wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
-                    const width = Math.round( (completeTimeStamp - creatTimeStamp)/wholeTimeStamp * 100 ) + '%';
-                    const startPoint =  Math.round( ( 1-(this.endDtTimeStamp - creatTimeStamp)/wholeTimeStamp ) * 100 ) + '%';
+                    const width = Math.round( (completeTimeStamp - creatTimeStamp)/this.wholeTimeStamp * 100 ) + '%';
+                    const startPoint =  Math.round( ( 1-(this.endDtTimeStamp - creatTimeStamp)/this.wholeTimeStamp ) * 100 ) + '%';
                     return {
                         width: width,
                         left: startPoint,
@@ -102,19 +117,22 @@
 
             },
             /**
-             * [getProgress2Width 返回接单到给定完成时间的进度条样式]
+             * [getProgress2Width 返回接单到给定完成时间的进度条样式  黄色条]
              * @param  {[type]}  [description]
              * @return {[type]}  [description]
              */
             getProgress2Width( ){
                 var self = this;
                 return function( index ) {
-                    if ( !this.datas[index].complete_at || !this.datas[index].receive_at ) return;
-                    const completeTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].complete_at);
+
+                    if ( !this.datas[index].receive_at ) return;
+                    let now = new Date();
+                    let nowTimeStampt = now.getTime();
+                    let completeTimeStamp = this.datas[index].real_complete_at? TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at):nowTimeStampt;
                     const receiveTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].receive_at);
-                    const wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
-                    const width = Math.round( (completeTimeStamp - receiveTimeStamp)/wholeTimeStamp * 100 ) + '%';
-                    const startPoint =  Math.round( ( 1-(this.endDtTimeStamp - receiveTimeStamp)/wholeTimeStamp ) * 100 ) + '%';
+                    let  width = Math.round( (completeTimeStamp - receiveTimeStamp)/this.wholeTimeStamp * 100);
+                    width = width < 2?(2 + '%'): (width + '%');
+                    const startPoint =  Math.round( ( 1-(this.endDtTimeStamp - receiveTimeStamp)/this.wholeTimeStamp ) * 100 ) + '%';
                     return {
                         width: width,
                         left: startPoint,
@@ -125,7 +143,7 @@
             getProgress3Width( ){
                 var self = this;
                 /**
-                 * [超时时间进度条]
+                 * [超时时间进度条 红色条]
                  * @param  {[type]} index [description]
                  * @return {[type]}       [description]
                  */
@@ -133,9 +151,8 @@
                     if ( !this.datas[index].complete_at || !this.datas[index].real_complete_at ) return;
                     const realCompleteTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].real_complete_at);
                     const completeTimeStamp = TimeUtils.Jh_convertTimeStamp(this.datas[index].complete_at);
-                    const wholeTimeStamp = this.endDtTimeStamp - this.startDtTimeStamp;
-                    const width = Math.round( (realCompleteTimeStamp - completeTimeStamp)/wholeTimeStamp * 100 ) + '%';
-                    const startPoint =  Math.round( ( 1-( this.endDtTimeStamp- completeTimeStamp)/wholeTimeStamp ) * 100 ) + '%';
+                    const width = Math.round( (realCompleteTimeStamp - completeTimeStamp)/this.wholeTimeStamp * 100 ) + '%';
+                    const startPoint =  Math.round( ( 1-( this.endDtTimeStamp- completeTimeStamp)/this.wholeTimeStamp ) * 100 ) + '%';
                     return {
                         width: width,
                         left: startPoint,

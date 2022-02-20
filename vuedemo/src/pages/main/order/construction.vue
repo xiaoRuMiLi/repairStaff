@@ -37,7 +37,7 @@
       >
       </jin-customer>
       <!-- 故障描述 -->
-      <div class="fault-description">
+      <div class="fault-description" v-if="data.fault_info">
         <div class="title">
           故障描述
         </div>
@@ -49,7 +49,11 @@
        <div class="img-title">
         流程进度
       </div>
-      <jin-work-progress>
+      <jin-work-progress
+      :datas="data.workProgress"
+      :startDt="data.startDt"
+      :endDt="data.endDt"
+      >
       </jin-work-progress>
       <div style="padding:0 10px; font-size: 3px;">
         <van-steps :active="active" active-icon="success" active-color="#38f" style="font-size: 1px;">
@@ -152,6 +156,9 @@ export default {
         'http://weixiubang.club/img/16414576372365602708627544697472S.jpg',
         'http://weixiubang.club/img/16414576730421021993050698185062S.jpg',
         ],
+        workProgress: [],
+        startDt: '',
+        endDt: '',
         remarks: '这是一个备注'
       }
     }
@@ -225,7 +232,8 @@ export default {
             scoreTime: da.repair.created_at
           }
         } else {
-          let evaluate = da.evaluates[0];
+          // 显示最近的一个评价
+          let evaluate = da.evaluates[da.evaluates.length -1];
           return {
             name: evaluate.repair_client.name,
             avatarImg: evaluate.repair_client.avatarUrl,
@@ -236,10 +244,32 @@ export default {
           }
         }
       }
+      /**
+       * 抓取进度消息
+       */
+      let makeWorkProgress = function ( da )
+      {
+        let constructions = da.repair.constructions;
+        let res = constructions.map( (item) => {
+          return {
+            name: item.user.name,
+            imgSrc: item.user.avatarUrl,
+            receive_at: item.receive_at,
+            complete_at: item.complete_at,
+            real_complete_at: item.real_complete_at,
+            repair_type: item.repair_type,
+            creat_at: item.created_at,
+          }
+        })
+        return res;
+      }
       // h获取到图片数组
       let images = makePicture(inp);
       // 获取评价内容
       let evaluate = makeEvaluate(inp);
+      // 施工进度信息
+      let workProgress = makeWorkProgress(inp);
+      console.log(workProgress);
       result = {
         id: inp.id,
         amount: inp.amount,
@@ -253,10 +283,15 @@ export default {
         scoreTime: evaluate.scoreTime,
         scoreValue: evaluate.scoreValue,
         evaluate: evaluate.evaluate,
-        faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
+        faultDescription: inp.fault_info,
         repairType: inp.repair_type,
         repairDatas: inp.repair_content,
         images: images,
+        workProgress: workProgress,
+        // 整个维修给到的时间长度
+        startDt: inp.repair.created_at,
+        endDt: inp.repair.delivery_at,
+        remarks: '这是一个备注'
       }
       return result;
     }
