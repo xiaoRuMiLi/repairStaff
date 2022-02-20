@@ -5,7 +5,8 @@
 				<div class="img-div">
 				    <van-image
 				        fill="true"
-				        :src="imgSrc"
+				        :src="computedSrc"
+                :error-icon = "errorIcon"
 				    />
 				</div>
 				<div class="customer-info">
@@ -38,7 +39,9 @@
 			'van-image': VanImage,
 		},
 		props: {
-			imgSrc: {type: String, default: ''},
+			imgSrc: {type: String, default: 'http://weixiubang.club/repairManaSources/8a2ff5cac099d627235897098cf8b7e9.png'},
+      // 图片不存在时默认显示的图片
+      errorIcon: {type: String, default: 'http://weixiubang.club/repairManaSources/8a2ff5cac099d627235897098cf8b7e9.png'},
 			customerName: { type: String, default: '未知客户'},
 			customerType: {type: String, default: '未知客户类型'},
 			scoreTime: {type: String, default: '****-**-**'},
@@ -51,7 +54,16 @@
 
 			}
 
-		}
+		},
+    computed: {
+      computedSrc(){
+        if (!this.imgSrc){
+          return this.errorIcon;
+        } else {
+          return this.imgSrc;
+        }
+      }
+    }
 	}
 </script>
 <style scoped>
@@ -97,6 +109,7 @@
    }
    .customer-info .date {
     color: #D3D3D3;
+    font-size: 10px;
    }
    .evaluate {
     color: #999999;

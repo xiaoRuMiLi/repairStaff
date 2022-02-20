@@ -3,7 +3,7 @@
     <div id = "image">
       <van-image
         fill="true"
-        src="https://weixiubang.club/img/16416281297447702432274234209171S.jpg"
+        :src="data.images.length > 0 && data.images[0]"
       />
       <div class="circular image-title">
         <i class = "van-icon-share-o van-icon"></i>
@@ -85,7 +85,7 @@
 import axios from 'axios'
 import { Popup, Image as VanImage, Step, Steps } from 'vant';
 import { URL } from '@/web-config/apiUrl'
-import { isUrl } from '@/utils/CheckUtils';
+// import { isUrl } from '@/utils/CheckUtils';
 import conf from '@/web-config/index';
 import JinBasicInfo from '@/components/JinBasicInfo';
 import JinMarks from '@/components/JinMarks';
@@ -192,11 +192,12 @@ export default {
       }
 
       let makePicture = ( da ) => {
-        console.log(isUrl);
         let picture = da.repair.register.pictures;
         let pictureArr = picture?(picture.split('|')): [];
         picture = pictureArr.map( (item) => {
-          if (isUrl(item)) {
+          var patt = /^(http|https|ftp|update)+/;
+          if (patt.test(item)) {
+            console.log(item + '是URL');
             return item;
           } else {
             return conf.remoteImageFolder + item;
@@ -204,10 +205,41 @@ export default {
 
 
         })
-        console.log('picture______',picture);
+        picture = picture.filter( (item) => {
+          if( item != conf.remoteImageFolder) {
+            return item;
+          }
+        })
         return picture;
 
       }
+      let makeEvaluate = (da) => {
+        // 如果客户没有给与评价那么显示客户说里面的语言
+        if ( !da.evaluates || da.evaluates.length == 0 ){
+          return {
+            name: da.repair.repair_client.name,
+            avatarImg: da.repair.repair_client.avatarUrl,
+            scoreValue: 0,
+            clientType: da.repair.repair_client.type,
+            evaluate: da.repair.register.owner_say?da.repair.register.owner_say:'该客户很忙，没有留下任何话!',
+            scoreTime: da.repair.created_at
+          }
+        } else {
+          let evaluate = da.evaluates[0];
+          return {
+            name: evaluate.repair_client.name,
+            avatarImg: evaluate.repair_client.avatarUrl,
+            scoreValue: evaluate.score,
+            clientType: evaluate.repair_client.type,
+            evaluate: evaluate.info?evaluate.info:'该客户参与了评价，却什么都懒得说!',
+            scoreTime: evaluate.created_at,
+          }
+        }
+      }
+      // h获取到图片数组
+      let images = makePicture(inp);
+      // 获取评价内容
+      let evaluate = makeEvaluate(inp);
       result = {
         id: inp.id,
         amount: inp.amount,
@@ -215,16 +247,16 @@ export default {
         carModel: inp.car_mode,
         marks: makeMarks(inp),
         times: makeTimes(inp),
-        imgSrc: "http://www.weixiubang.club/avatarImg/c74c7d9b1fe652744f18994debc95fb0.jpg",
-        customerName:"方汉雄",
-        customerType:'VIP',
-        scoreTime:'2022-01-01',
-        scoreValue: 2,
-        evaluate:'该客户很忙，没有留下任何话!',
+        imgSrc: evaluate.avatarImg,
+        customerName: evaluate.name,
+        customerType: evaluate.clientType,
+        scoreTime: evaluate.scoreTime,
+        scoreValue: evaluate.scoreValue,
+        evaluate: evaluate.evaluate,
         faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
         repairType: inp.repair_type,
         repairDatas: inp.repair_content,
-        images: makePicture(inp),
+        images: images,
       }
       return result;
     }
