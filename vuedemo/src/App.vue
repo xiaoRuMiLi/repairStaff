@@ -1,8 +1,15 @@
 <template>
   <div id="app">
     <!--<img src="./assets/logo.png">-->
-    <router-view>
-      <Root></Root>
+    <keep-alive>
+      <router-view v-if="$route.meta.keepAlive">
+          <!-- 这里是会被缓存的视图组件，比如列表A页面 -->
+          <Root></Root>
+      </router-view>
+    </keep-alive>
+
+    <router-view v-if="!$route.meta.keepAlive">
+        <!-- 这里是不被缓存的视图组件，比如详情B页面-->
     </router-view>
   </div>
 </template>
@@ -16,7 +23,7 @@ export default {
   },
   data () {
     return {
-      
+
 
     }
   }

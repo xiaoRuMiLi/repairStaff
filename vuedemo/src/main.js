@@ -12,8 +12,8 @@ import './VueFilters';
 // import './mock';
 import { fetchPost, fetchGet } from './http';
 import './routeguard';
-import "./allcss.css";
-import "./font.css";
+// import "./allcss.css"; // 饿了吗的样式库
+// import "./font.css";
 import BaseNavBar from "./components/BaseNavBar.vue";
 import BaseTopTabs from "./components/BaseTopTabs.vue";
 import './config/vant/vant.js';
@@ -22,7 +22,9 @@ import JhRefreshView from "./components/JhRefreshView/index.vue";
 import BaseRefreshView from "./components/BaseRefreshView.vue";
 import BaiduMap from 'vue-baidu-map';
 import vuescroll from 'vuescroll';
-import less from 'less'
+import less from 'less';
+// import './config/less/global.less';
+
 // 配置文件挂载到Windows上//////////////////////////////////////////
 window.CONFIG = {
 	admin: require ( "./web-config/config-admin.json" ),

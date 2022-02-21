@@ -115,6 +115,13 @@ export default {
     'van-step': Step,
     'jin-work-progress': JinWorkProgress,
   },
+  // 当在相同路由中跳转，只是参数不同可以定义这个方法以重新执行读取数据
+  async beforeRouteUpdate(to, from) {
+    // 对路由变化做出响应...
+    console.log("切换了路由参数");
+    let id = to.params.id;
+    this.getData( id );
+  },
   data () {
     return {
       // 提交到后端的参数
@@ -123,7 +130,6 @@ export default {
       /* 流程进度 */
       active: 4,
       inputs: {
-
       },
       data: {
         id: '00000547',
@@ -131,14 +137,12 @@ export default {
         carNumber: '川F-PK685',
         carModel: '长安奥拓 大王子 2003 手动',
         marks: [
-        '限定时间','VIP客户','车况较差','必须质检'
+
         ],
         times: [
-        '请在2021-10-01 10:00:00 前交付',
-        '在2021-10-01 10:00:00 完成接单',
-        '已在2021-10-01 10:00:00 完成了施工'
+
         ],
-        imgSrc: "http://www.weixiubang.club/avatarImg/c74c7d9b1fe652744f18994debc95fb0.jpg",
+        imgSrc: " ",
         customerName:"方汉雄",
         customerType:'VIP',
         scoreTime:'2022-01-01',
@@ -148,13 +152,7 @@ export default {
         repairType: '喷漆',
         repairDatas: [{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200}],
         images: [
-        'http://weixiubang.club/img/1641457355528819422245769931160S.jpg',
-        'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fphotoblog%2F7%2F9%2F5%2F0%2F7950997%2F20097%2F5%2F1246732177709.jpg&refer=http%3A%2F%2Fimg.pconline.com.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1645279866&t=13d4cedcc517bcb1956b21d15300eed8',
-        'http://weixiubang.club/img/16414577032652534036941679180714S.jpg',
-        'http://weixiubang.club/img/16414576898124060718675273719397S.jpg',
-        'http://weixiubang.club/img/16414576197466276825240428731308S.jpg',
-        'http://weixiubang.club/img/16414576372365602708627544697472S.jpg',
-        'http://weixiubang.club/img/16414576730421021993050698185062S.jpg',
+
         ],
         workProgress: [],
         startDt: '',
@@ -204,20 +202,22 @@ export default {
         picture = pictureArr.map( (item) => {
           var patt = /^(http|https|ftp|update)+/;
           if (patt.test(item)) {
-            console.log(item + '是URL');
             return item;
           } else {
             return conf.remoteImageFolder + item;
           }
-
-
         })
         picture = picture.filter( (item) => {
           if( item != conf.remoteImageFolder) {
             return item;
           }
         })
-        return picture;
+        let images = da.repair.register.images || [];
+        images = images && images.map( (item) => {
+          return item.url;
+        })
+        console.log([...images,...picture]);
+        return [...picture, ...images];
 
       }
       let makeEvaluate = (da) => {

@@ -1,6 +1,6 @@
 <template>
 	<div class="father">
-		<div class="top-container">
+		<div class="top-container" @click="clickItem(id)">
 			<div class="left-con">
 				<div class="title">
 					<span>{{title}}</span>
@@ -38,6 +38,8 @@ export default {
 		'van-button': Button,
 	},
 	props: {
+		// 用来标记该项目
+		id: '',
 		title: {
 			type: [String],
 			default: 'title'
@@ -90,6 +92,9 @@ export default {
 			console.log( Event )
 			this.$emit( 'clickButton', index )
 
+		},
+		clickItem (id) {
+			this.$emit( 'clickItem', id )
 		}
 
 	},

@@ -21,16 +21,18 @@
       </van-search>
     </div>
     <div class="white-place"></div>
-    <van-list
-      v-model="onOff.loading"
-      :finished="onOff.finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-    <template slot="default">
-      <text-list-item v-for="( item, key ) in datas" :key="key" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons"> </text-list-item>
-    </template>
-    </van-list>
+    <div ref="wrapper">
+      <van-list
+        v-model="onOff.loading"
+        :finished="onOff.finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+      <template slot="default">
+        <text-list-item v-for="( item, key ) in datas" :key="key" :id="item.id" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons" @clickItem="clickItem"> </text-list-item>
+      </template>
+      </van-list>
+    </div>
     <div class="white-place"></div>
     <van-popup v-model="onOff.showPop" position="right" :style="{ height: '100%', width: '80%' }">
     <van-nav-bar
@@ -170,8 +172,41 @@ export default {
     }
 
   },
-  methods: {
+  /* 判断是否是从详情页过来的，如果是那么不刷新页面 */
+  beforeRouteEnter(to, from, next) {
+      if(from.name === 'construction') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
+          to.meta.isBack = true;
+      }
+      next();
+  },
+  // 如果是从详情页过来的，不用刷新页面
+  activated() {
+    if(!this.$route.meta.isBack) {
+      // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+      this.getDatas(); // ajax获取数据方法
+    }
+    // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+    this.$route.meta.isBack = false
+    let wrapperScrollTop = this.$refs.wrapper.scrollTop;
 
+
+    console.log('wrapperScrollTop', wrapperScrollTop);
+
+    console.log(this.$refs.wrapper)
+  },
+  methods: {
+    /**
+     * [clickItem 点击项目事件]
+     * @param  {[type]} id [description]
+     * @return {[type]}    [description]
+     */
+    clickItem( id ) {
+      let self = this;
+      console.log(id);
+      // 带有路径的对象
+      self.$router.push({ path: `construction/${id}` })
+
+    },
     /**
        选择施工单类型事件
      */
@@ -193,6 +228,7 @@ export default {
      */
     formatData ( item ) {
       let data = {
+        id: item.id,
         title: item.repair_type + '施工单',
         amount: item.amount,
         con: [
@@ -244,6 +280,7 @@ export default {
     {
       self.onOff.showPop = !1;
     },
+    /* 上滑执行的事件 */
     onLoad() {
       this.getDatas ();
       // 异步更新数据
@@ -321,9 +358,9 @@ export default {
 
   },
   mounted () {
+    // mouted中的方法代表dom已经加载完毕
     this.getDatas ();
-    console.log(CONFIG);
-    console.log(this.$route);
+    console.log('mounted 钩子函数');
   },
   created () {
 

@@ -74,6 +74,8 @@ export default new Router({
 				    meta : {
 				      	// 是否需要拦截 如果为真跳转到该路由需要守卫拦截,可能会出现无法正常跳转的现象
 				        intercept : false ,
+				        // 是否从详情页面回退到列表页面，控制是否刷新数据
+				        isBack: false,
 				        // 有无快速跳转标签
 				        noQuickTabs : true ,
 				        title: '施工单列表',
@@ -97,7 +99,7 @@ export default new Router({
 				        // 有无快速跳转标签
 				        noQuickTabs : true ,
 				        title: '施工单详情',
-		                keepAlive: false, // 需要被缓存
+		                keepAlive: false, // 不需要被缓存
 		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
 		                role : [ 5233 , 5232 , 5231 , 5230 ]
 				    },
@@ -117,7 +119,7 @@ export default new Router({
 				        // 有无快速跳转标签
 				        noQuickTabs : true ,
 				        title: '数据报表',
-		                keepAlive: false, // 需要被缓存
+		                keepAlive: false, // 不需要被缓存
 		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
 		                role : [ 5233 , 5232 , 5231 , 5230 ]
 				    },
