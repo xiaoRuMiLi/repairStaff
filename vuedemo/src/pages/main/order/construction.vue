@@ -3,7 +3,7 @@
     <div id = "image">
       <van-image
         fill="true"
-        :src="data.images.length > 0 && data.images[0]"
+        :src="data.images.length > 0? data.images[0]: ''"
       />
       <div class="circular image-title">
         <i class = "van-icon-share-o van-icon"></i>
@@ -56,13 +56,8 @@
       >
       </jin-work-progress>
       <div style="padding:0 10px; font-size: 3px;">
-        <van-steps :active="active" active-icon="success" active-color="#38f" style="font-size: 1px;">
-          <van-step>登记</van-step>
-          <van-step>钣金</van-step>
-          <van-step>机修</van-step>
-          <van-step>电气</van-step>
-          <van-step>喷漆</van-step>
-          <van-step>质检</van-step>
+        <van-steps :active="data.rateProgress.active" active-icon="success" active-color="#38f" style="font-size: 1px;">
+          <van-step v-for="(item, key) in data.rateProgress.data" :key="key">{{item}}</van-step>
         </van-steps>
       </div>
       <!-- 维修列表 -->
@@ -154,6 +149,7 @@ export default {
         images: [
 
         ],
+        rateProgress: { active:1 ,data:[] },
         workProgress: [],
         startDt: '',
         endDt: '',
@@ -245,7 +241,7 @@ export default {
         }
       }
       /**
-       * 抓取进度消息
+       * 抓取进度
        */
       let makeWorkProgress = function ( da )
       {
@@ -263,6 +259,33 @@ export default {
         })
         return res;
       }
+      /**
+       * [makeRateOfProgress 获取施工流程]
+       * @param  {[type]} da [description]
+       * @return {[type]}    [description]
+       */
+      let makeRateOfProgress = function ( da )
+      {
+        let constructions = da.repair.constructions;
+        let overWork = constructions.filter( (item) => {
+          if(item.real_complete_at) return item;
+        }).map( (item) => {
+          return item.repair_type;
+        });
+        let working = constructions.filter( (item) => {
+          if(!item.real_complete_at) return item;
+        }).map( (item) => {
+          return item.repair_type;
+        });
+        console.log( overWork, working);
+        return {
+          active: overWork.length,
+          data: ['登记',...overWork,...working, '质检'],
+        }
+
+
+
+      }
       // h获取到图片数组
       let images = makePicture(inp);
       // 获取评价内容
@@ -270,6 +293,8 @@ export default {
       // 施工进度信息
       let workProgress = makeWorkProgress(inp);
       console.log(workProgress);
+      // 流程进度信息
+      let rateProgress = makeRateOfProgress(inp);
       result = {
         id: inp.id,
         amount: inp.amount,
@@ -289,6 +314,7 @@ export default {
         images: images,
         workProgress: workProgress,
         // 整个维修给到的时间长度
+        rateProgress: rateProgress,
         startDt: inp.repair.created_at,
         endDt: inp.repair.delivery_at,
         remarks: '这是一个备注'
@@ -298,9 +324,7 @@ export default {
 
 
   },
-  watch: {
 
-  },
   mounted () {
     const self = this;
     let id = self.$route.params.id;
