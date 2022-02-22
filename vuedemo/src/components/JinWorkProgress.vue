@@ -174,6 +174,9 @@
     font-size: 14px;
     text-align: left;
     position: relative;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
    }
    .left {
     position: relative;
