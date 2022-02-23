@@ -76,6 +76,16 @@
       :arrowDirection = "false"
       >
       </jin-images-board>
+      <!-- 备注组 -->
+      <div class="img-title">
+        备注
+      </div>
+      <jin-remarks
+      :text="data.remarks"
+      :maxCharactersNumber=120
+      >
+      </jin-remarks>
+
     </div>
     <div class="white-space"> </div>
   </div>
@@ -93,6 +103,7 @@ import JinCustomerScore from '@/components/JinCustomerScore';
 import JinRepairList from '@/components/JinRepairList';
 import JinImagesBoard from '@/components/JinImagesBoard';
 import JinWorkProgress from '@/components/JinWorkProgress';
+import JinRemarksText from '@/components/JinRemarksText';
 // moudle 对象传送门https://www.cnblogs.com/tian-xie/p/7754186.html
 export default {
   name: 'construction',
@@ -109,6 +120,7 @@ export default {
     'van-steps': Steps,
     'van-step': Step,
     'jin-work-progress': JinWorkProgress,
+    'jin-remarks': JinRemarksText,
   },
   // 当在相同路由中跳转，只是参数不同可以定义这个方法以重新执行读取数据
   async beforeRouteUpdate(to, from) {

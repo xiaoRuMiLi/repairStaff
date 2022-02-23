@@ -23,6 +23,7 @@ import BaseRefreshView from "./components/BaseRefreshView.vue";
 import BaiduMap from 'vue-baidu-map';
 import vuescroll from 'vuescroll';
 import less from 'less';
+//import { ConfigProvider } from 'vant';
 // import './config/less/global.less';
 
 // 配置文件挂载到Windows上//////////////////////////////////////////
