@@ -81,7 +81,7 @@
         备注
       </div>
       <jin-remarks
-      :text="data.remarks"
+      :content="data.remarks"
       :maxCharactersNumber=120
       >
       </jin-remarks>
@@ -329,7 +329,7 @@ export default {
         rateProgress: rateProgress,
         startDt: inp.repair.created_at,
         endDt: inp.repair.delivery_at,
-        remarks: '这是一个备注'
+        remarks: inp.remarks,
       }
       return result;
     }

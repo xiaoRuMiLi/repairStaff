@@ -1,7 +1,10 @@
 <template>
     <div class="wrapper">
         <div class="content">
-            {{content}}
+            <span>{{content}}</span>
+        </div>
+        <div class="edit">
+            <van-button type="primary" size="mini" icon="edit" color="#1989fa">编辑</van-button>
         </div>
         <div class="bottom">
             <div class="num">
@@ -11,11 +14,13 @@
     </div>
 </template>
 <script>
+    import { Icon, Button } from 'vant';
     export default {
-
         name: 'remarks',
 
         components: {
+            Icon,
+            Button,
         },
 
         props: {
@@ -76,6 +81,10 @@
 .bottom {
     text-align: right;
     color: #c8c9cc;
+}
+.edit {
+    text-align: right;
+    color: #1989fa;
 }
 
 </style>
