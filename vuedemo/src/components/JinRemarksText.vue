@@ -4,23 +4,38 @@
             <span>{{content}}</span>
         </div>
         <div class="edit">
-            <van-button type="primary" size="mini" icon="edit" color="#1989fa">编辑</van-button>
+            <van-button type="primary" size="mini" icon="edit" color="#1989fa" @click="showPop">编辑</van-button>
         </div>
         <div class="bottom">
             <div class="num">
                 <span>{{charactersNumber}}</span><span>/{{maxCharactersNumber}}</span>
             </div>
         </div>
+        <van-popup v-model:show="show" position="bottom" :style="{ height: '40%' }" >
+            <slot name="default">
+                <div>
+                    <textarea name="" v-model="content" placeholder="输入备注信息！">
+
+                    </textarea>
+                </div>
+                <div>
+                <van-button type="default">取消</van-button>
+                <van-button type="primary">保存</van-button>
+                </div>
+
+            </slot>
+        </van-popup>
     </div>
 </template>
 <script>
-    import { Icon, Button } from 'vant';
+    import { Icon, Button, Popup } from 'vant';
     export default {
         name: 'remarks',
 
         components: {
             Icon,
             Button,
+            'van-popup': Popup,
         },
 
         props: {
@@ -37,6 +52,7 @@
 
         data() {
             return {
+                show: !0,
                 text: this.content,
 
             }
@@ -58,6 +74,10 @@
         unmounted() {},
 
         methods: {
+            showPop() {
+                this.show = !this.show;
+
+            },
 
         },
     }
