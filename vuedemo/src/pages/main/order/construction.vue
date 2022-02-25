@@ -45,9 +45,9 @@
           {{data.faultDescription}}
         </div>
       </div>
-      <!-- 流程进度 -->
+      <!-- 施工进度 -->
        <div class="img-title">
-        流程进度
+        施工进度
       </div>
       <jin-work-progress
       :datas="data.workProgress"
@@ -55,6 +55,10 @@
       :endDt="data.endDt"
       >
       </jin-work-progress>
+      <!-- 施工流程 -->
+       <div class="img-title">
+        施工流程
+      </div>
       <div style="padding:0 10px; font-size: 3px;">
         <van-steps :active="data.rateProgress.active" active-icon="success" active-color="#38f" style="font-size: 1px;">
           <van-step v-for="(item, key) in data.rateProgress.data" :key="key">{{item}}</van-step>
@@ -83,6 +87,7 @@
       <jin-remarks
       :content="data.remarks"
       :maxCharactersNumber=120
+      @on-change="changeRemarks"
       >
       </jin-remarks>
 
@@ -171,6 +176,9 @@ export default {
 
   },
   methods: {
+    changeRemarks ( val ) {
+      console.log(val);
+    },
     getData ( constructionId ) {
       const self = this;
       let params = {};

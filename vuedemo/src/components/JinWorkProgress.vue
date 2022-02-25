@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div class="jin-work-progress" v-for="(item,key) in datas" :key="key">
             <div class="left">
                 <div class="head">
@@ -28,6 +28,13 @@
             <div class="right">
                 <i class="van-icon van-icon-arrow"></i>
             </div>
+        </div>
+        <div class="illustrate">
+            <div><span>总时长</span><div class="illustrate-color" style="background-color: #dcdee0;"></div></div>
+            <div><span>派工时长</span><div class="illustrate-color" style="background-color: #1989fa;"></div></div>
+            <div><span>操作时长</span><div class="illustrate-color" style="background-color: #ffd01e;"></div></div>
+            <div><span>超时时长</span><div class="illustrate-color" style="background-color: #ee0a24;"></div></div>
+
         </div>
     </div>
 </template>
@@ -166,10 +173,13 @@
     }
 </script>
 <style scoped>
+   .container {
+     padding: 20px 20px 20px 20px;
+
+   }
    .jin-work-progress {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
     font-weight: 550;
     font-size: 14px;
     text-align: left;
@@ -181,6 +191,7 @@
    .left {
     position: relative;
     width: 80%;
+    padding: 10px 0;
 
    }
    .img-div {
@@ -219,7 +230,6 @@
    .progress {
     height: 10px;
     background-color: #dcdee0;
-    border-bottom: 2px solid black;
     border-radius: 4px;
 
    }
@@ -237,7 +247,7 @@
     background-color: #ffd01e;
    }
    .progress > .prog3 {
-    background-color: red;
+    background-color: #ee0a24;
    }
    .jin-work-progress .right {
     height: 100%;
@@ -252,5 +262,27 @@
     transform: translate(-15px,7px);
     font-size: 15px;
     font-weight: 600;
+  }
+  .illustrate {
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 0px;
+    color: #999999;
+
+  }
+  .illustrate span {
+    height: 15px;
+    line-height: 15px;
+
+  }
+  .illustrate .illustrate-color {
+    width: 20px;
+    border-radius: 5px;
+    height: 13px;
+
+  }
+  .illustrate > div {
+    display: flex;
+    align-items: center;
   }
 </style>

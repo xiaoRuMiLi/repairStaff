@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="jin-remarks">
         <div class="content">
             <span>{{content}}</span>
         </div>
@@ -13,14 +13,18 @@
         </div>
         <van-popup v-model:show="show" position="bottom" :style="{ height: '40%' }" >
             <slot name="default">
-                <div>
-                    <textarea name="" v-model="content" placeholder="输入备注信息！">
+                <div class="text-input">
+                    <textarea name="" rows="8" v-model="tex" placeholder="输入备注信息！">
 
                     </textarea>
                 </div>
-                <div>
-                <van-button type="default">取消</van-button>
-                <van-button type="primary">保存</van-button>
+                <div class="submit-button">
+                    <div class="button-container">
+                        <van-button type="default" style="width: 80%; border: 1px solid #1989fa;" @click="show=!show">取消</van-button>
+                    </div>
+                    <div class="button-container">
+                        <van-button type="primary" style="width: 80%; background-color: #1989fa;" @click="submitChange">保存</van-button>
+                    </div>
                 </div>
 
             </slot>
@@ -30,7 +34,7 @@
 <script>
     import { Icon, Button, Popup } from 'vant';
     export default {
-        name: 'remarks',
+        name: 'jinRemarks',
 
         components: {
             Icon,
@@ -47,14 +51,12 @@
                 type: Number,
                 default: 500,
             }
-
         },
 
         data() {
             return {
-                show: !0,
-                text: this.content,
-
+                show: !1,
+                tex: this.content,
             }
         },
 
@@ -62,10 +64,14 @@
             charactersNumber() {
                 return this.content.length;
             },
-
         },
 
-        watch: {},
+        watch: {
+            // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
+            content: function( newVal ) {
+                this.tex = newVal;
+            }
+        },
 
         created() {},
 
@@ -76,14 +82,18 @@
         methods: {
             showPop() {
                 this.show = !this.show;
-
+                this.tex = this.content;
+            },
+            submitChange () {
+                this.show = !1;
+                this.tex !== this.content && this.$emit( 'on-change', this.tex );
             },
 
         },
     }
 </script>
 <style scoped>
-.wrapper {
+.jin-remarks {
     width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -106,5 +116,27 @@
     text-align: right;
     color: #1989fa;
 }
+.text-input {
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.text-input textarea {
+    width: 100%;
+    border: 0;
+    box-sizing: border-box;
+}
+.submit-button {
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.button-container {
+    flex-grow: 1;
+}
+
+
 
 </style>
