@@ -92,6 +92,10 @@
       </jin-remarks>
 
     </div>
+    <!-- 上传弹窗组 -->
+    <jin-upload-pop>
+
+    </jin-upload-pop>
     <div class="white-space"> </div>
   </div>
 </template>
@@ -109,6 +113,7 @@ import JinRepairList from '@/components/JinRepairList';
 import JinImagesBoard from '@/components/JinImagesBoard';
 import JinWorkProgress from '@/components/JinWorkProgress';
 import JinRemarksText from '@/components/JinRemarksText';
+import JinImageUploadPop from '@/components/JinImageUploadPop';
 // moudle 对象传送门https://www.cnblogs.com/tian-xie/p/7754186.html
 export default {
   name: 'construction',
@@ -126,6 +131,7 @@ export default {
     'van-step': Step,
     'jin-work-progress': JinWorkProgress,
     'jin-remarks': JinRemarksText,
+    'jin-upload-pop': JinImageUploadPop,
   },
   // 当在相同路由中跳转，只是参数不同可以定义这个方法以重新执行读取数据
   async beforeRouteUpdate(to, from) {
@@ -176,6 +182,12 @@ export default {
 
   },
   methods: {
+
+    /**
+     * [changeRemarks 修改备注]
+     * @param  {[type]} val [description]
+     * @return {[type]}     [description]
+     */
     changeRemarks ( val ) {
       console.log(val);
     },
