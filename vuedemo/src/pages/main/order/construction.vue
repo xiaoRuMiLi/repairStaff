@@ -93,7 +93,9 @@
 
     </div>
     <!-- 上传弹窗组 -->
-    <jin-upload-pop>
+    <jin-upload-pop
+    :show.sync="onOff_imagePop"
+    >
 
     </jin-upload-pop>
     <div class="white-space"> </div>
@@ -145,6 +147,8 @@ export default {
       // 提交到后端的参数
       params: {},
       onOff_loading: !1,
+      // 底部出来图片上传弹窗
+      onOff_imagePop: !0,
       /* 流程进度 */
       active: 4,
       inputs: {

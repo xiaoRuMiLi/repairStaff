@@ -1,7 +1,7 @@
 <template>
 <div class="jin-image-upload-pop">
     <van-popup
-        v-model:show="show"
+        v-model:show="popShow"
         round
         position="bottom"
         :style="{ height: '50%' }"
@@ -62,6 +62,7 @@
                     // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
                     { url: 'https://cloud-image', isImage: true },
                 ],
+                popShow: this.show,
             }
 
         },
@@ -72,6 +73,9 @@
 
         watch: {
             // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
+            popShow (nval) {
+                this.$emit('update:show', nval);
+            }
 
         },
 
