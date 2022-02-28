@@ -96,7 +96,7 @@
           <van-button type="default" style="width: 80%; border: 1px solid #1989fa; color: #1989fa;" ></van-button>
         </div>-->
         <div class="button-con">
-          <van-button type="primary" icon="photo-o" style="background-color: #1989fa; color: white; width: 80%;" @click="onOff_imagePop=!onOff_imagePop" >添加图片</van-button>  
+          <van-button type="primary" icon="photo-o" style="background-color: #1989fa; color: white; width: 80%;" @click="onOff_imagePop=!onOff_imagePop" >添加图片</van-button>
         </div>
       </div>
     </div>
@@ -105,10 +105,11 @@
     <jin-upload-pop
     :show.sync="onOff_imagePop"
     explain = "上传图片时请保持横向"
+    @upload="uploadImage"
     >
 
     </jin-upload-pop>
-    
+
   </div>
 </template>
 <script>
@@ -163,6 +164,7 @@ export default {
       active: 4,
       inputs: {
       },
+      imageAccept: ['image/jpg','image/png','image/JPEG','image/jpeg'],
       data: {
         id: '00000547',
         amount: 350,
@@ -196,6 +198,40 @@ export default {
 
   },
   methods: {
+    uploadImage ( images ) {
+      var self = this;
+      console.log(images);
+      /*self.post( URL.api_imageUpload , images[0] ).then ( ( data ) => {
+          console.log( data );
+
+      } );*/
+      for (let i in images) {
+        console.log( images[i] );
+        let image = images[i].image.file;
+        console.log(image);
+        if (!this.imageAccept.includes(image.type)) {
+          return this.$notify('请上传 jpg/png 格式图片');
+        }
+          const param = new FormData();
+          param.append("image", image);
+          let name = {
+                name: "image",
+          };
+          axios.post(URL.api_imageUpload, param, name, {
+              headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
+                console.log(res)
+              /*if(res.data.code === 200){
+                console.log(res)
+                this.$toast('上传成功');
+              } else {
+                this.$toast('上传失败');
+              }*/
+           });
+
+      }
+
+
+    },
 
     /**
      * [changeRemarks 修改备注]

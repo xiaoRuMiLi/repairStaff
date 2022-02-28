@@ -23,7 +23,7 @@
                 </van-uploader>
                 <div class="button-wrapper">
                     <div class="button-con">
-                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >提交图片</van-button>  
+                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >提交图片</van-button>
                     </div>
                 </div>
             </div>
@@ -67,11 +67,10 @@
             },
             compressionRate: {
                 type: Object,
-                default: {width:170,height:230,size:80},
+                default: ()=> { return {width:270,height:230,size:80}},
             }
 
         },
-
         data() {
             return {
                 fileList: [
@@ -81,6 +80,7 @@
                     { url: 'https://cloud-image', isImage: true },
                 ],
                 popShow: this.show,
+
             }
 
         },
@@ -100,7 +100,11 @@
 
         },
 
-        created() {},
+        created() {
+            this.form = [];
+            // 对象被冻结后不可修改
+            // Object.freeze(this.form);
+        },
 
         mounted() {},
 
@@ -127,11 +131,18 @@
                 })
             },
             afterRead (file) {
+                var self = this;
                 // 此时可以自行将文件上传至服务器
                 console.log(file);
-
+                console.log(self);
+                self.form.push({image: file});
             },
-            
+            submit () {
+                var self = this;
+                this.$emit('upload', self.form);
+
+            }
+
         }
     }
 </script>

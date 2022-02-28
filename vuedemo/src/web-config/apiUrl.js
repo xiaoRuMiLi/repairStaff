@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-01-03 22:48:26
+* @Last Modified time: 2022-02-28 21:38:19
 */
 
 'use strict';
@@ -25,7 +25,8 @@ const URL = {
     api_constructionSearch: API_BASE_URL + '/api/v1/constructions', // 获取分页数组 - get
     /*----------------------------------- 施工单详情 -----------------------------------*/
     api_constructionShow: API_BASE_URL + '/api/v1/constructions/', // 获取详情 - get
-    /*----------------------------------- 我的 -----------------------------------*/
+    /*----------------------------------- 上传图片 -----------------------------------*/
+    api_imageUpload: API_BASE_URL + '/api/image/upload',
 }
 // export default 在其他文件引入时语法是 import 别名 from @/web-config/apiUrl 不能使用 import  { Url } from @/web-config/apiUrl. 要这样引用不能加default关键字
 export {
