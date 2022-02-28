@@ -4,19 +4,29 @@
         v-model:show="popShow"
         round
         position="bottom"
-        :style="{ height: '50%' }"
+        style="height: 50%;padding: 20px 0;"
     >
         <slot name="default">
-            <van-uploader
-            ref="uploader"
-            name="file"
-            :accept="acceptType"
-            :max-size="maxSize"
-            :before-read="beforeUpload"
-            :after-read="afterRead"
-            v-model="fileList"
-            >
-            </van-uploader>
+            <div class="wrapper">
+                <div class="explain">
+                    <span>{{explain}}</span>
+                </div>
+                <van-uploader
+                ref="uploader"
+                name="file"
+                :accept="acceptType"
+                :max-size="maxSize"
+                :before-read="beforeUpload"
+                :after-read="afterRead"
+                v-model="fileList"
+                >
+                </van-uploader>
+                <div class="button-wrapper">
+                    <div class="button-con">
+                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >提交图片</van-button>  
+                    </div>
+                </div>
+            </div>
         </slot>
     </van-popup>
 
@@ -50,6 +60,14 @@
             maxSize: {
                 type: Number,
                 default: 60000000000,
+            },
+            explain: {
+                type: String,
+                default: '',
+            },
+            compressionRate: {
+                type: Object,
+                default: {width:170,height:230,size:80},
             }
 
         },
@@ -75,6 +93,9 @@
             // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
             popShow (nval) {
                 this.$emit('update:show', nval);
+            },
+            show (nval) {
+                this.popShow = nval;
             }
 
         },
@@ -91,7 +112,7 @@
                 // 压缩
                 //  //  await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值
                // 如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理,为undefined
-                let file = await compressConversion(fileObject,{width:170,height:230,size:80});
+                let file = await compressConversion(fileObject,this.compressionRate);
                 return file;
             },
             beforeUpload(file) {
@@ -110,9 +131,20 @@
                 console.log(file);
 
             },
-            handleSuccess(res) {
-                console.log('handleSuccess：', res);
-            }
+            
         }
     }
 </script>
+
+<style scoped>
+.wrapper {
+    padding: 20px;
+}
+.explain {
+    padding: 30px 0;
+    color: #999999;
+}
+.button-wrapper {
+    margin-top: 50px;
+}
+</style>

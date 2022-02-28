@@ -90,15 +90,25 @@
       @on-change="changeRemarks"
       >
       </jin-remarks>
-
+      <!-- 按钮组 -->
+      <div class="button-wrapper">
+        <!--<div class="button-con">
+          <van-button type="default" style="width: 80%; border: 1px solid #1989fa; color: #1989fa;" ></van-button>
+        </div>-->
+        <div class="button-con">
+          <van-button type="primary" icon="photo-o" style="background-color: #1989fa; color: white; width: 80%;" @click="onOff_imagePop=!onOff_imagePop" >添加图片</van-button>  
+        </div>
+      </div>
     </div>
+    <div class="white-space"> </div>
     <!-- 上传弹窗组 -->
     <jin-upload-pop
     :show.sync="onOff_imagePop"
+    explain = "上传图片时请保持横向"
     >
 
     </jin-upload-pop>
-    <div class="white-space"> </div>
+    
   </div>
 </template>
 <script>
@@ -148,7 +158,7 @@ export default {
       params: {},
       onOff_loading: !1,
       // 底部出来图片上传弹窗
-      onOff_imagePop: !0,
+      onOff_imagePop: !1,
       /* 流程进度 */
       active: 4,
       inputs: {
@@ -437,6 +447,16 @@ export default {
 }
 .white-space {
   height: 300px;
+}
+.button-wrapper {
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  padding: 20px;
+  background-color: #ffffff;
+}
+.button-wrapper .button-con {
+  width: 100%;
 }
 
 
