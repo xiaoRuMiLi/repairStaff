@@ -23,7 +23,7 @@
                 </van-uploader>
                 <div class="button-wrapper">
                     <div class="button-con">
-                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >提交图片</van-button>
+                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交{{form.length}}张图片</van-button>
                     </div>
                 </div>
             </div>
@@ -68,18 +68,36 @@
             compressionRate: {
                 type: Object,
                 default: ()=> { return {width:270,height:230,size:80}},
+            },
+            imageAccept: {
+                type: Array,
+                default: function () {
+                    return ['image/jpg','image/png','image/JPEG','image/jpeg'];
+                }
+            },
+            files: {
+                type: Array,
+                default: function () {
+                    return [
+                        {
+                            url: 'https://img.yzcdn.cn/vant/leaf.jpg',
+                        },
+                        // Uploader 根据文件后缀来判断是否为图片文件
+                        // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
+                        {
+                            url: 'https://cloud-image', isImage: true
+                        },
+                    ];
+                }
             }
+
 
         },
         data() {
             return {
-                fileList: [
-                    { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
-                    // Uploader 根据文件后缀来判断是否为图片文件
-                    // 如果图片 URL 中不包含类型信息，可以添加 isImage 标记来声明
-                    { url: 'https://cloud-image', isImage: true },
-                ],
+                fileList: this.files,
                 popShow: this.show,
+                form: [],
 
             }
 
@@ -96,12 +114,19 @@
             },
             show (nval) {
                 this.popShow = nval;
+            },
+            files ( nval ) {
+                this.fileList = nval;
+            },
+            fileList ( nval ) {
+                this.$emit('update:files', nval);
             }
+
 
         },
 
         created() {
-            this.form = [];
+            // this.form = [];
             // 对象被冻结后不可修改
             // Object.freeze(this.form);
         },
@@ -121,9 +146,9 @@
             },
             beforeUpload(file) {
                 return new Promise((resolve, reject) => {
-                    if (file.type !== 'image/jpeg') {
-                      Toast('请上传 jpg 格式图片');
-                      reject();
+                    if (!this.imageAccept.includes(file.type)) {
+                        return this.$notify('请上传 jpg/png 格式图片');
+                        reject();
                     } else {
                         const img = this.uploadFiles(file)
                         resolve(img);
@@ -133,13 +158,18 @@
             afterRead (file) {
                 var self = this;
                 // 此时可以自行将文件上传至服务器
-                console.log(file);
-                console.log(self);
-                self.form.push({image: file});
+                self.form.push({
+                    image: file.file,
+                });
+                console.log(self.fileList)
+                self.fileList[self.fileList.length-1].status = '';
+                self.fileList[self.fileList.length-1].name = file.file.name;
+                self.fileList[self.fileList.length-1].message='待上传'
             },
             submit () {
                 var self = this;
                 this.$emit('upload', self.form);
+                self.form = [];
 
             }
 

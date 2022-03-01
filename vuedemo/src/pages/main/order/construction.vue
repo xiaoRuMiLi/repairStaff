@@ -3,7 +3,7 @@
     <div id = "image">
       <van-image
         fill="true"
-        :src="data.images.length > 0? data.images[0]: ''"
+        :src="data.loginImages.length > 0? data.loginImages[0]: ''"
       />
       <div class="circular image-title">
         <i class = "van-icon-share-o van-icon"></i>
@@ -76,7 +76,7 @@
         图片展示
       </div>
       <jin-images-board
-      :images = "data.images"
+      :images = "data.loginImages"
       :arrowDirection = "false"
       >
       </jin-images-board>
@@ -104,6 +104,7 @@
     <!-- 上传弹窗组 -->
     <jin-upload-pop
     :show.sync="onOff_imagePop"
+    :files.sync="data.images"
     explain = "上传图片时请保持横向"
     @upload="uploadImage"
     >
@@ -164,7 +165,6 @@ export default {
       active: 4,
       inputs: {
       },
-      imageAccept: ['image/jpg','image/png','image/JPEG','image/jpeg'],
       data: {
         id: '00000547',
         amount: 350,
@@ -185,9 +185,10 @@ export default {
         faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
         repairType: '喷漆',
         repairDatas: [{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200}],
-        images: [
+        loginImages: [
 
         ],
+        images: [],
         rateProgress: { active:1 ,data:[] },
         workProgress: [],
         startDt: '',
@@ -205,28 +206,36 @@ export default {
           console.log( data );
 
       } );*/
-      for (let i in images) {
+      for (let i=0; i < images.length; i++) {
+        console.log(i);
         console.log( images[i] );
-        let image = images[i].image.file;
-        console.log(image);
-        if (!this.imageAccept.includes(image.type)) {
-          return this.$notify('请上传 jpg/png 格式图片');
+        let image = images[i].image;
+        console.log(this.data.images);
+
+        let target = NaN
+        let targetItem = {}
+        for (let i=0; i<this.data.images.length; i++ ){
+          target = this.data.images[i].name == image.name?i :NaN;
         }
-          const param = new FormData();
-          param.append("image", image);
-          let name = {
-                name: "image",
-          };
-          axios.post(URL.api_imageUpload, param, name, {
-              headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
-                console.log(res)
-              /*if(res.data.code === 200){
-                console.log(res)
-                this.$toast('上传成功');
-              } else {
-                this.$toast('上传失败');
-              }*/
-           });
+        if (target!==NaN && this.data.images[target]) {
+          targetItem = this.data.images[target];
+          targetItem.status="uploading";
+        };
+        const param = new FormData();
+        param.append("image", image);
+        param.append("id", this.data.id);
+        param.append("model", 'construction');
+        axios.post(URL.api_imageUpload, param, {
+            headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
+              console.log(res)
+            if(res.data.success === true){
+              targetItem.status = "";
+              this.$toast('上传成功');
+            } else {
+              targetItem.status = "failed";
+              this.$toast('上传失败');
+            }
+         });
 
       }
 
@@ -244,10 +253,10 @@ export default {
     getData ( constructionId ) {
       const self = this;
       let params = {};
-      console.log( self.$route.query );
-      console.log( self.$route );
+      // console.log( self.$route.query );
+      // console.log( self.$route );
       self.get( URL.api_constructionShow + constructionId , params ).then ( ( data ) => {
-        console.log( data );
+        // console.log( data );
         self.data = self.formatData(data.data);
       } );
 
@@ -294,7 +303,7 @@ export default {
         images = images && images.map( (item) => {
           return item.url;
         })
-        console.log([...images,...picture]);
+        // console.log([...images,...picture]);
         return [...picture, ...images];
 
       }
@@ -359,17 +368,26 @@ export default {
         }).map( (item) => {
           return item.repair_type;
         });
-        console.log( overWork, working);
+        // console.log( overWork, working);
         return {
           active: overWork.length,
           data: ['登记',...overWork,...working, '质检'],
         }
-
-
-
       }
+      /**
+       * [makeImages 返回施工单绑定的图片]
+       * @param  {[type]} da [description]
+       * @return {[type]}    [description]
+       */
+      let makeImages = function ( da ) {
+        let images = da.images || [];
+        return images.map( function( item ) {
+          return { url: item.url};
+        })
+      }
+
       // h获取到图片数组
-      let images = makePicture(inp);
+      let loginImages = makePicture(inp);
       // 获取评价内容
       let evaluate = makeEvaluate(inp);
       // 施工进度信息
@@ -377,6 +395,9 @@ export default {
       console.log(workProgress);
       // 流程进度信息
       let rateProgress = makeRateOfProgress(inp);
+      //
+      let images = makeImages(inp);
+      console.log(images);
       result = {
         id: inp.id,
         amount: inp.amount,
@@ -393,13 +414,14 @@ export default {
         faultDescription: inp.fault_info,
         repairType: inp.repair_type,
         repairDatas: inp.repair_content,
-        images: images,
+        loginImages: loginImages,
         workProgress: workProgress,
         // 整个维修给到的时间长度
         rateProgress: rateProgress,
         startDt: inp.repair.created_at,
         endDt: inp.repair.delivery_at,
         remarks: inp.remarks,
+        images: images,
       }
       return result;
     }
