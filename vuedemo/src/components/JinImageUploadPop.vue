@@ -19,6 +19,7 @@
                 :before-read="beforeUpload"
                 :after-read="afterRead"
                 v-model="fileList"
+                @delete="del"
                 >
                 </van-uploader>
                 <div class="button-wrapper">
@@ -168,9 +169,11 @@
             },
             submit () {
                 var self = this;
-                this.$emit('upload', self.form);
+                this.$emit( 'upload', self.form );
                 self.form = [];
-
+            },
+            del (file) {
+                this.$emit( 'delete', file );
             }
 
         }

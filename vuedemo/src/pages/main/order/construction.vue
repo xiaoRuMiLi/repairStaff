@@ -107,6 +107,7 @@
     :files.sync="data.images"
     explain = "上传图片时请保持横向"
     @upload="uploadImage"
+    @delete = "deleteImage"
     >
 
     </jin-upload-pop>
@@ -199,41 +200,42 @@ export default {
 
   },
   methods: {
+    deleteImage ( file ) {
+      console.log(file,'被删除');
+
+    },
+    /**
+     * [uploadImage 上传图片]
+     * @param  {[type]} images [description]
+     * @return {[type]}        [description]
+     */
     uploadImage ( images ) {
       var self = this;
-      console.log(images);
-      /*self.post( URL.api_imageUpload , images[0] ).then ( ( data ) => {
-          console.log( data );
-
-      } );*/
       for (let i=0; i < images.length; i++) {
-        console.log(i);
-        console.log( images[i] );
         let image = images[i].image;
-        console.log(this.data.images);
-
         let target = NaN
-        let targetItem = {}
-        for (let i=0; i<this.data.images.length; i++ ){
-          target = this.data.images[i].name == image.name?i :NaN;
+        for (let s=0; s<this.data.images.length; s++ ){
+          target = this.data.images[s].name == image.name?s :NaN;
+          if (target!==NaN && this.data.images[target]) {
+            this.data.images[target].status="uploading";
+            self.data.images[target].message = '上传中...';
+            break;
+          };
         }
-        if (target!==NaN && this.data.images[target]) {
-          targetItem = this.data.images[target];
-          targetItem.status="uploading";
-        };
         const param = new FormData();
         param.append("image", image);
         param.append("id", this.data.id);
         param.append("model", 'construction');
+        param.append('name', image.name);
         axios.post(URL.api_imageUpload, param, {
             headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
-              console.log(res)
             if(res.data.success === true){
-              targetItem.status = "";
-              this.$toast('上传成功');
+              self.data.images[target].status = "";
+              self.data.images[target].url = res.data.url;
+              self.$toast('上传成功');
             } else {
-              targetItem.status = "failed";
-              this.$toast('上传失败');
+              self.data.images[target].status = "failed";
+              self.$toast('上传失败');
             }
          });
 
