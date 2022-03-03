@@ -4,7 +4,7 @@
             <div class="item" v-for="(item,key) in datas" :key="key">{{item}}</div>
         </div>
         <div class="right">
-            <div class="btn">{{btn}}</div><i class="van-icon van-icon-arrow"></i>
+            <div class="btn" @click="buttonClick">{{btn}}</div><i class="van-icon van-icon-arrow"></i>
         </div>
 
     </div>
@@ -21,7 +21,13 @@
                 type: String,
                 default: '详情',
             }
+        },
+        methods: {
+            buttonClick () {
+                this.$emit('button-click');
+            }
         }
+
 
     }
 </script>

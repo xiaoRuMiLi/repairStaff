@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-02-28 21:38:19
+* @Last Modified time: 2022-03-03 22:09:57
 */
 
 'use strict';
@@ -25,6 +25,8 @@ const URL = {
     api_constructionSearch: API_BASE_URL + '/api/v1/constructions', // 获取分页数组 - get
     /*----------------------------------- 施工单详情 -----------------------------------*/
     api_constructionShow: API_BASE_URL + '/api/v1/constructions/', // 获取详情 - get
+    /*----------------------------------- 施工单标记接单时间为当前时间 -----------------------------------*/
+    api_constructionSetReceiveAtToNow: API_BASE_URL + '/api/v1/construction_setReceiveAtToNow/',/*{id}, // 获取详情 - get
     /*----------------------------------- 上传图片 -----------------------------------*/
     api_imageUpload: API_BASE_URL + '/api/image/upload',
 }

@@ -23,7 +23,10 @@
       <jin-marks :marks="data.marks">
       </jin-marks>
       <!-- 看板组 -->
-      <jin-board :datas = data.times btn="请接单">
+      <jin-board
+      :datas = data.times
+      btn="请接单"
+      @button-click="receiveTap">
 
       </jin-board>
       <!-- 客户评价 -->
@@ -200,6 +203,20 @@ export default {
 
   },
   methods: {
+    receiveTap ()
+    {
+      let self = this;
+      let id = self.$route.params.id;
+      self.get(URL.api_constructionSetReceiveAtToNow + id).then( res => {
+        res.data &&
+        console.log(res);
+      })
+    },
+    /**
+     * [deleteImage 删除图片]
+     * @param  {[type]} file [description]
+     * @return {[type]}      [description]
+     */
     deleteImage ( file ) {
       console.log(file,'被删除');
 
@@ -226,7 +243,6 @@ export default {
         param.append("image", image);
         param.append("id", this.data.id);
         param.append("model", 'construction');
-        param.append('name', image.name);
         axios.post(URL.api_imageUpload, param, {
             headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
             if(res.data.success === true){

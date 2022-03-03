@@ -33,6 +33,9 @@ export function responseMiddle ( res ) {
 	console.log(res);
 	const url = res.config.url;
 	let data = null;
+    if (!res.data.data) {
+        return res;
+    }
 	if (typeof res.data.data == 'object') {
 		data = res.data.data;
 	} else {
