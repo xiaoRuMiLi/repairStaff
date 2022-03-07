@@ -32,7 +32,7 @@
     </div>
 </template>
 <script>
-    import { Icon, Button, Popup } from 'vant';
+    import { Icon, Button, Popup, Toast } from 'vant';
     export default {
         name: 'jinRemarks',
 
@@ -49,7 +49,7 @@
             },
             maxCharactersNumber: {
                 type: Number,
-                default: 500,
+                default: 140,
             }
         },
 
@@ -86,6 +86,10 @@
             },
             submitChange () {
                 this.show = !1;
+                if (this.tex.length > this.maxCharactersNumber) {
+                    Toast('超过了最大输入字符');
+                    return ;
+                }
                 this.tex !== this.content && this.$emit( 'on-change', this.tex );
             },
 

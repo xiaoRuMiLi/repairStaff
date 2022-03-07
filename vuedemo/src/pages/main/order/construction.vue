@@ -89,7 +89,7 @@
       </div>
       <jin-remarks
       :content="data.remarks"
-      :maxCharactersNumber=120
+      :maxCharactersNumber=140
       @on-change="changeRemarks"
       >
       </jin-remarks>
@@ -213,7 +213,6 @@ export default {
        * 从返回信息中生成时间相关的内容
        */
       const makeTimes = function ( da ) {
-        console.log(da);
         let created = `${da.createrName}于${da.created_at}创建了施工单`;
         let str = `请在${da.complete_at}前交付`;
         let res = new Array(created,str);
@@ -226,12 +225,12 @@ export default {
     },
 
     comReceiveText () {
-      if (!this.data.receive_at) 
-      { 
+      if (!this.data.receive_at)
+      {
         return '接单';
       }
       if (!this.data.real_complete_at)
-      { 
+      {
         return '完成';
       }
       return '已完成'
@@ -270,7 +269,7 @@ export default {
       self.get(URL.api_constructionSetReceiveAtToNow + id).then( res => {
         if (res.data) {
           self.data.receive_at = res.data.receive_at;
-        }      
+        }
       })
     },
     /**
@@ -283,7 +282,7 @@ export default {
       self.get(URL.api_constructionSetRealCompleteAtToNow + id).then( res => {
         if (res.data) {
           self.data.real_complete_at = res.data.real_complete_at;
-        } 
+        }
       })
     },
     /**
@@ -292,8 +291,10 @@ export default {
      * @return {[type]}      [description]
      */
     deleteImage ( file ) {
-      console.log(file,'被删除');
-
+      const id = file.id;
+      this.post(URL.api_imageDelete + id).then( res => {
+        console.log(res)
+      })
     },
     /**
      * [uploadImage 上传图片]
@@ -340,7 +341,13 @@ export default {
      * @return {[type]}     [description]
      */
     changeRemarks ( val ) {
+      const self = this;
       console.log(val);
+      let id = this.$route.params.id;
+      this.post( URL.api_constructionSetRemarks + id ,{ remarks: val}).then( res => {
+        console.log(res)
+        self.data.remarks = res.data && res.data.remarks;
+      })
     },
     getData ( constructionId ) {
       const self = this;
@@ -355,7 +362,7 @@ export default {
 
 
     },
-    
+
     formatData ( inp ) {
       let result = {};
       let makeMarks = ( da ) => {
@@ -463,7 +470,7 @@ export default {
       let makeImages = function ( da ) {
         let images = da.images || [];
         return images.map( function( item ) {
-          return { url: item.url};
+          return { url: item.url, id: item.id };
         })
       }
 
@@ -476,7 +483,7 @@ export default {
       // 流程进度信息
       let rateProgress = makeRateOfProgress(inp);
       //
-      let images = makeImages(inp);    
+      let images = makeImages(inp);
       result = {
         id: inp.id,
         amount: inp.amount,
@@ -532,7 +539,7 @@ export default {
   width: 100%;
   position: relative;
   top: -50px;
-  background-color: #ffff;
+  background-color: var(--van-white);
   border-radius: 40px 40px 0 0;
 }
 .image-title {

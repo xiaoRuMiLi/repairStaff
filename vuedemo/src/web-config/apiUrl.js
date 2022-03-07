@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-03 22:09:57
+* @Last Modified time: 2022-03-07 23:24:38
 */
 
 'use strict';
@@ -29,8 +29,13 @@ const URL = {
     api_constructionSetReceiveAtToNow: API_BASE_URL + '/api/v1/construction_setReceiveAtToNow/',/*{id}, // 获取详情 - get
     /*----------------------------------- 施工单标记实际完成时间为当前时间 -----------------------------------*/
     api_constructionSetRealCompleteAtToNow: API_BASE_URL + '/api/v1/construction_setRealCompleteAtToNow/',/*{id}, // 获取详情 - get
+    /*----------------------------------- 施工单修改备注 -----------------------------------*/
+    api_constructionSetRemarks: API_BASE_URL + '/api/v1/construction_set_remarks/',/*{id}, //  - post
+
     /*----------------------------------- 上传图片 -----------------------------------*/
     api_imageUpload: API_BASE_URL + '/api/image/upload',
+    /*----------------------------------- 删除图片 -----------------------------------*/
+    api_imageDelete: API_BASE_URL + '/api/v1/image_delete/',
 }
 // export default 在其他文件引入时语法是 import 别名 from @/web-config/apiUrl 不能使用 import  { Url } from @/web-config/apiUrl. 要这样引用不能加default关键字
 export {

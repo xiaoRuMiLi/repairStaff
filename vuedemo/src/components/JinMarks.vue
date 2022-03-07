@@ -24,7 +24,7 @@
 
   }
   .mark .mark-item {
-    background-color: #6AA3C1;
+    background-color: var(--van-blue);
     border-radius: 3px;
     padding: 5px;
     margin: 5px;
