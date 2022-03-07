@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { Button, Icon, Lazyload } from 'vant'
+import { Button, Icon, Lazyload, Toast, Dialog, Notify } from 'vant'
 import 'vant/lib/index.css'
 import store from './store'
 import './VuePrototype';
@@ -33,7 +33,8 @@ window.CONFIG = {
 //console.log("当前环境变量："+process.env.NODE_ENV) 和   console.log("当前环境路径："+process.env.VUE_APP_URL);
 Vue.prototype.$Post = fetchPost
 Vue.prototype.$Get = fetchGet
-Vue.use(Button).use(Icon).use(Lazyload)
+Vue.use(Button).use(Icon).use(Lazyload).use(Toast).use(Dialog).use(Notify);
+
 Vue.component('BaseNavBar', BaseNavBar)
 Vue.component('BaseTopTabs', BaseTopTabs)
 Vue.component('JhRefreshView', JhRefreshView)

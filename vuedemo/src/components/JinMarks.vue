@@ -24,14 +24,13 @@
 
   }
   .mark .mark-item {
-    border: 1px solid #6AA3C1;
-    background-color: #ffffff;
+    background-color: #6AA3C1;
     border-radius: 3px;
-    padding: 3px;
+    padding: 5px;
     margin: 5px;
     height: 15px;
     line-height: 15px;
-    color: #1989fa;
+    color: #ffffff;
   }
   .mark span {
 

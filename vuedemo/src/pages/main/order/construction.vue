@@ -24,8 +24,8 @@
       </jin-marks>
       <!-- 看板组 -->
       <jin-board
-      :datas = data.times
-      btn="请接单"
+      :datas = "comTimes"
+      :btn="comReceiveText"
       @button-click="receiveTap">
 
       </jin-board>
@@ -119,7 +119,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { Popup, Image as VanImage, Step, Steps } from 'vant';
+import { Popup, Image as VanImage, Step, Steps, Dialog } from 'vant';
 import { URL } from '@/web-config/apiUrl'
 // import { isUrl } from '@/utils/CheckUtils';
 import conf from '@/web-config/index';
@@ -184,6 +184,11 @@ export default {
         customerName:"方汉雄",
         customerType:'VIP',
         scoreTime:'2022-01-01',
+        receive_at: '',
+        complete_at: '',
+        real_complete_at: '',
+        created_at: '',
+        createrName: '',
         scoreValue: 2,
         evaluate:'该客户很忙，没有留下任何话!',
         faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
@@ -202,14 +207,83 @@ export default {
     }
 
   },
+  computed: {
+    comTimes () {
+        /**
+       * 从返回信息中生成时间相关的内容
+       */
+      const makeTimes = function ( da ) {
+        console.log(da);
+        let created = `${da.createrName}于${da.created_at}创建了施工单`;
+        let str = `请在${da.complete_at}前交付`;
+        let res = new Array(created,str);
+        // 模板字符串需要使用 ` 反引号包裹起来用${}导入变量
+        if ( da.receive_at ) res.push( `已在${da.receive_at}完成接单` );
+        da.real_complete_at && res.push( `已在${da.real_complete_at}完成了施工` );
+        return res;
+      }
+      return makeTimes(this.data)
+    },
+
+    comReceiveText () {
+      if (!this.data.receive_at) 
+      { 
+        return '接单';
+      }
+      if (!this.data.real_complete_at)
+      { 
+        return '完成';
+      }
+      return '已完成'
+    }
+
+  },
   methods: {
-    receiveTap ()
+    /**
+     * [receiveTap 点击接单按钮]
+     * @return {[type]} [description]
+     */
+    receiveTap () {
+      const self = this;
+      console.log(self.data);
+      if ( !self.data.receive_at ) {
+        /** 如果没有接单执行接单操作 */
+        self.receiveSave();
+        return ;
+      }
+      if ( !self.data.real_complete_at ) {
+        /** 如果没有点击完成执行标记完成操作操作 */
+        self.realCompleteAtSave();
+        return;
+      }
+      // Toast('已经标记了完成，请勿重复操作');
+      Dialog({ message: '已经标记了完成，请勿重复操作' });
+
+    },
+    /**
+     * 标记接单时间
+     */
+    receiveSave ()
     {
       let self = this;
       let id = self.$route.params.id;
       self.get(URL.api_constructionSetReceiveAtToNow + id).then( res => {
-        res.data &&
-        console.log(res);
+        if (res.data) {
+          self.data.receive_at = res.data.receive_at;
+        }      
+      })
+    },
+    /**
+     * 标记完成时间
+     */
+    realCompleteAtSave ()
+    {
+      let self = this;
+      let id = self.$route.params.id;
+      self.get(URL.api_constructionSetRealCompleteAtToNow + id).then( res => {
+        if (res.data) {
+          self.data.real_complete_at = res.data.real_complete_at;
+        } 
       })
     },
     /**
@@ -281,8 +355,7 @@ export default {
 
 
     },
-
-
+    
     formatData ( inp ) {
       let result = {};
       let makeMarks = ( da ) => {
@@ -291,16 +364,6 @@ export default {
         if ( da.complete_type == 1 ) res.push('限时交车');
         return res;
       }
-
-      let makeTimes = ( da ) => {
-        let str = `请在${da.complete_at}前交付`;
-        let res = new Array(str);
-        // 模板字符串需要使用 ` 反引号包裹起来用${}导入变量
-        if ( da.receive_at ) res.push( `已在${da.receive_at}完成接单` );
-        da.real_complete_at && res.push( `已在${da.real_complete_at}完成了施工` );
-        return res;
-      }
-
       let makePicture = ( da ) => {
         let picture = da.repair.register.pictures;
         let pictureArr = picture?(picture.split('|')): [];
@@ -404,25 +467,27 @@ export default {
         })
       }
 
-      // h获取到图片数组
+      // 获取到图片数组
       let loginImages = makePicture(inp);
       // 获取评价内容
       let evaluate = makeEvaluate(inp);
       // 施工进度信息
       let workProgress = makeWorkProgress(inp);
-      console.log(workProgress);
       // 流程进度信息
       let rateProgress = makeRateOfProgress(inp);
       //
-      let images = makeImages(inp);
-      console.log(images);
+      let images = makeImages(inp);    
       result = {
         id: inp.id,
         amount: inp.amount,
         carNumber: inp.car_number,
         carModel: inp.car_mode,
         marks: makeMarks(inp),
-        times: makeTimes(inp),
+        receive_at: inp.receive_at,
+        complete_at: inp.complete_at,
+        real_complete_at: inp.real_complete_at,
+        created_at: inp.created_at,
+        createrName: inp.creater? inp.creater.name: null,
         imgSrc: evaluate.avatarImg,
         customerName: evaluate.name,
         customerType: evaluate.clientType,
@@ -534,6 +599,7 @@ export default {
 .button-wrapper .button-con {
   width: 100%;
 }
+
 
 
 </style>

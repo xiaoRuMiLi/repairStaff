@@ -10,7 +10,7 @@ const isDevelop = process.env.NODE_ENV === "development";
 
 const getStatusErr = ( error, toast = true ) =>
 {
-    console.log(error);
+    console.log('error.response____',error.response);
     // console.log(error.message);
     // console.log(error.response);
     // console.log(error.response.status);
@@ -63,7 +63,7 @@ const getStatusErr = ( error, toast = true ) =>
     }
     if ( toast )
     {
-        Toast(error.message);
+        Toast(error.message + ' 。 Message： ' + error.response.data.message);
     }
     return {
         code: error.response.status,

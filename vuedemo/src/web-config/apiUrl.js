@@ -27,6 +27,8 @@ const URL = {
     api_constructionShow: API_BASE_URL + '/api/v1/constructions/', // 获取详情 - get
     /*----------------------------------- 施工单标记接单时间为当前时间 -----------------------------------*/
     api_constructionSetReceiveAtToNow: API_BASE_URL + '/api/v1/construction_setReceiveAtToNow/',/*{id}, // 获取详情 - get
+    /*----------------------------------- 施工单标记实际完成时间为当前时间 -----------------------------------*/
+    api_constructionSetRealCompleteAtToNow: API_BASE_URL + '/api/v1/construction_setRealCompleteAtToNow/',/*{id}, // 获取详情 - get
     /*----------------------------------- 上传图片 -----------------------------------*/
     api_imageUpload: API_BASE_URL + '/api/image/upload',
 }
