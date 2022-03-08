@@ -320,10 +320,13 @@ export default {
         param.append("model", 'construction');
         axios.post(URL.api_imageUpload, param, {
             headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
+            console.log(res);
             if(res.data.success === true){
               self.data.images[target].status = "";
               self.data.images[target].url = res.data.url;
+              self.data.images[target].id = res.data.id;
               self.$toast('上传成功');
+              console.log(self.data.images);
             } else {
               self.data.images[target].status = "failed";
               self.$toast('上传失败');

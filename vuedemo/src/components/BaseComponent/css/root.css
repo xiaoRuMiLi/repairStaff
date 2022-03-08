@@ -1,15 +1,5 @@
-.base-submit-btn {
-  margin: 20px 15px;
-  height: 40px;
-  line-height: 40px;
-  border-radius: 5px;
-  background: #4252dd;
-  font-size: 17px;
-  text-align: center;
-  color: white;
-}
 /* 添加这段样式后，Primary Button 会变成红色, 定义全局样式，所有的组件都遵循 */
-:global {
+:root {
   --van-black: #000;
   --van-white: #ffffff;
   --van-gray-1: #f7f8fa;

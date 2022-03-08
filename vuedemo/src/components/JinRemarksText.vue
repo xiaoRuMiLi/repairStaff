@@ -33,15 +33,14 @@
 </template>
 <script>
     import { Icon, Button, Popup, Toast } from 'vant';
+    import './BaseComponent/index.js';
     export default {
         name: 'jinRemarks',
-
         components: {
             Icon,
             Button,
             'van-popup': Popup,
         },
-
         props: {
             content: {
                 type: String,

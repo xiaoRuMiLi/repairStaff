@@ -15,15 +15,13 @@ import './routeguard';
 // import "./font.css";
 import BaseNavBar from "./components/BaseNavBar.vue";
 import BaseTopTabs from "./components/BaseTopTabs.vue";
-import './config/vant/vant.js';
+import './config/vant/vant.js'; // 全局调用的组件定义
 import './config/css/global.css';
-import JhRefreshView from "./components/JhRefreshView/index.vue";
-import BaseRefreshView from "./components/BaseRefreshView.vue";
+import JhRefreshView from "./components/JhRefreshView/index.vue";// 下拉刷新控制
+// import BaseRefreshView from "./components/BaseRefreshView.vue";
 import BaiduMap from 'vue-baidu-map';
 import vuescroll from 'vuescroll';
-import less from 'less';
 //import { ConfigProvider } from 'vant';
-// import './config/less/global.less';
 
 // 配置文件挂载到Windows上//////////////////////////////////////////
 window.CONFIG = {
@@ -36,10 +34,9 @@ Vue.prototype.$Get = fetchGet
 Vue.component('BaseNavBar', BaseNavBar)
 Vue.component('BaseTopTabs', BaseTopTabs)
 Vue.component('JhRefreshView', JhRefreshView)
-Vue.component('BaseRefreshView', BaseRefreshView)
+// Vue.component('BaseRefreshView', BaseRefreshView)
 
 Vue.use(vuescroll);
-Vue.use(less)
 
 Vue.use(BaiduMap, {
   ak: ''  //  在此输入你自己的百度地图ak
