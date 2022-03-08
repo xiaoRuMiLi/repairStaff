@@ -41,5 +41,11 @@ export default {
   background-color: #f6f8fd;
   overflow: hidden;
 }
+/* 修改按钮默认颜色 */
+.van-button--primary {
+  background-color: var(--van-blue);
+  border-color: var(--van-blue);
+  border-radius: var(--van-border-radius-md);
+}
 
 </style>

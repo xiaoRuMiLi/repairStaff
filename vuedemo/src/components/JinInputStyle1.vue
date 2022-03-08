@@ -5,9 +5,9 @@
 	     </div>
 	    <div class="content">
 	    	<!-- v-model 本质上不过是语法糖。它负责监听用户的输入事件以更新数据，并对一些极端场景进行一些特殊处理。v-model 会忽略所有表单元素的 value、checked、selected 特性的初始值而总是将 Vue 实例的数据作为数据来源-->
-	    	<input type="text" name="inputValue" v-model="val" :placeholder="placeholder">
+	    	<input :type="type" name="inputValue" v-model="val" :placeholder="placeholder">
 	    </div>
-	</div>	
+	</div>
 </template>
 <script>
 	import { Icon, Button, Popup, Toast } from 'vant';
@@ -20,6 +20,10 @@
             'van-popup': Popup,
         },
         props: {
+            type: {
+                type: String,
+                default: 'text'
+            },
         	title: {
         		type: String,
         		default: '标题',
@@ -41,12 +45,12 @@
         data() {
             return {
             	val: this.value,
-                
+
             }
         },
 
         computed: {
-           
+
         },
 
         watch: {
@@ -58,7 +62,7 @@
             	this.val = newVal;
             }
 
-           
+
         },
 
         created() {},
@@ -68,7 +72,7 @@
         unmounted() {},
 
         methods: {
-            
+
 
         },
     }
@@ -77,28 +81,31 @@
 .jin-input-style1-wrapper {
 	background-color: var(--van-white);
 	text-align: left;
-	position:absolute;
+	position: relative;
 	box-sizing: border-box;
 	width: 100%;
+    padding: var(--van-padding-md) 0;
 }
 .title {
-    color: var(--van-text-color);
+    color: var(--van-gray-7);
     font-size: var(--van-font-size-md);
     width: 100%;
-    padding: var(--van-padding-md) 0;
+    padding-bottom: var(--van-padding-md);
+    font-weight: var(--van-font-weight-bold-2);
 }
 .content {
 	width: 100%;
-	padding: var(--van-padding-md) 0;
 }
 .wrapper input {
 	color: var(--van-text-color-2);
 	font-size: var(--van-font-size-md);
-	line-height: var(--van-line-height-md);
-	height: var(--van-line-height-md);
+	line-height: 50px;
+	height: 50px;
 	width: 100%;
 	box-sizing: border-box;
-
+    border-radius: var(--van-border-radius-lg);
+    border: 1px solid var(--van-text-color-3);
+    padding: var(--van-padding-md);
 }
-	
+
 </style>

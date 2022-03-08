@@ -16,6 +16,7 @@
   --van-orange-dark: #ed6a0c;
   --van-orange-light: #fffbe8;
   --van-green: #07c160;
+  --van-yellow: #ffcd34;
 
   /** Gradient Colors*/
   --van-gradient-red: linear-gradient(to right, #ff6034, #ee0a24);
@@ -49,7 +50,9 @@
   --van-font-size-sm: 12px;
   --van-font-size-md: 14px;
   --van-font-size-lg: 16px;
+  --van-font-size-xl: 22px;
   --van-font-weight-bold: 500;
+  --van-font-weight-bold-2: 550;
   --van-line-height-xs: 14px;
   --van-line-height-sm: 18px;
   --van-line-height-md: 20px;
@@ -72,5 +75,6 @@
   --van-border-radius-sm: 2px;
   --van-border-radius-md: 4px;
   --van-border-radius-lg: 8px;
+  --van-border-radius-xl: 30px;
   --van-border-radius-max: 999px;
 }

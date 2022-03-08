@@ -1,0 +1,126 @@
+<template>
+    <div class="jin-back-ground-wrapper">
+        <div class="go-back">
+            <i class="van-icon van-icon-arrow-left"></i>
+        </div>
+        <div class="text-group">
+            <div class="title">
+                <span>
+                   {{title}}
+                </span>
+            </div>
+            <div class="content">
+                <span>{{content}}</span>
+                <span>
+                    <strong>{{remindText}}</strong>
+                </span>
+            </div>
+
+        </div>
+        <!-- 右上角圆圈装饰 -->
+        <div class="circle"></div>
+
+    </div>
+</template>
+<style scoped>
+.jin-back-ground-wrapper {
+    padding: var(--van-padding-lg);
+    background-color: var(--van-blue);
+    font-size: var(--van-font-size-md);
+    color: var(--van-white);
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    height: 300px;
+    overflow: hidden;
+}
+.go-back {
+    font-weight: var(--van-font-weight-bold-2);
+    text-align: left;
+    height: var(--van-line-height-lg);
+    line-height: var(--van-line-height-lg);
+    padding: var(--van-padding-lg) 0;
+    font-weight: var(--van-font-weight-bold);
+    font-size: var(--van-font-size-lg);
+
+}
+.text-group {
+    padding-bottom: var(--van-padding-md);
+    text-align: left;
+}
+.text-group .title {
+    font-size: var(--van-font-size-xl);
+    padding: var(--van-padding-md) 0;
+}
+.text-group .content {
+    font-size: var(--van-font-size-md);
+}
+.content strong {
+    color: var(--van-yellow);
+    font-size: var(--van-font-size-lg);
+    border-bottom: 1px solid;
+}
+.circle {
+    position: absolute;
+    border: 40px solid #26262524;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    top: -50px;
+    right: -50px;
+
+}
+</style>
+<script>
+    import { Toast } from 'vant';
+    import './BaseComponent/index.js';
+    export default {
+        name: 'jinBackGround',
+        components: {
+
+        },
+        props: {
+            title: {
+                type: String,
+                default: 'title',
+            },
+            remindText: {
+                type: String,
+                default: '马上注册',
+            },
+            content: {
+                type: String,
+                default: 'content',
+            },
+
+        },
+
+        data() {
+            return {
+
+
+            }
+        },
+
+        computed: {
+
+        },
+
+        watch: {
+            // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
+
+        },
+
+        created() {},
+
+        mounted() {},
+
+        unmounted() {},
+
+        methods: {
+
+
+        },
+    }
+</script>
+
