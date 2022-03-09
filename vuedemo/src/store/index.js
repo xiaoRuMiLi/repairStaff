@@ -3,13 +3,16 @@ import Vuex from 'vuex'
 
 Vue.use ( Vuex )
 export default new Vuex.Store ( {
+    // ... strict: true 在严格模式下，无论何时发生了状态变更且不是由 mutation 函数引起的，将会抛出错误。这能保证所有的状态变更都能被调试工具跟踪到。
+    // 错误 do not mutate vuex store state outside mutation handlers
+    strict: true,
     state : {
         userInfo : {} , //用户信息
         otherInfo : {} , //其他信息
         language : {} ,//语言
         briefInfo : {}
     } ,
-    /* 
+    /*
     Vuex 允许我们在store中定义“getter”（可以认为是store的计算属性）。就像计算属性一样，getter的返回值会根据它的依赖被缓存起来，且只有当它的依赖值发生了改变才会被重新计算，
     可以理解类似于Vue中computed。
     使用方法：文档中 this.$store.getters.getUserInfo， 直接用store原形调用 store.getters.getUserInfo
@@ -58,7 +61,7 @@ export default new Vuex.Store ( {
             } else {
                 second = time.getTime ();
             }
-            /* 
+            /*
                 为什么使用Vue.set()
                 vue.set 是全局方法，该方法对响应式的数组和对象的修改也会触发响应，如果只是赋值语句对象的内存地址没有改变，就不不会触发视图更新
                 Vue.set( target, key, value )
@@ -110,7 +113,7 @@ export default new Vuex.Store ( {
     } ,
     actions : {
         //actions 是异步方法，mutations所有的都是同步方法
-        upVuex ( context , data ) { 
+        upVuex ( context , data ) {
         //自定义触发mutations里函数的方法，context与store 实例具有相同方法和属性
         // this.$store.conmit（ 方法名， 参数） 方法 是执行 mutations 里面定义的方法，mutations 相当于是setter方法，参数传入调用的方法的第二个参数
             context.commit ( data.mutations , data.value );

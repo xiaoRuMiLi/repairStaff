@@ -1,5 +1,5 @@
 import Vue from 'vue';
-
+// VUE.filter 是过滤掉某些方法的意思，使某些VUE上的方法无效
 //首字母大写
 function capitalize ( value ) {
     if ( !value ) return ''

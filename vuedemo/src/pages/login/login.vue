@@ -43,12 +43,15 @@
 </template>
 <script >
 	import { Icon, Button, Popup, Toast } from 'vant';
+    /* setLocal 保存数据到本地 getLocal 获取数据 clearLocal 清除数据*/
+    import { setLocal , getLocal , clearLocal } from "@/function";
+
     // import '@/config/css/global.css';
     import JinInputStyle1 from '@/components/JinInputStyle1';
     import JinBackGround from '@/components/JinBackGround';
     import JinRemberMe from '@/components/JinRemberMe';
-    import validation from '@/function/formValidation';
     import { validator } from '@/function/index';
+    import { URL } from '@/web-config/apiUrl'
     export default {
         name: 'login',
         mixins: [require( '@/mixins').default],
@@ -65,6 +68,12 @@
             	name: '',
                 passWord: '',
                 isChecked: true,
+                historicalAccount : {
+                    admin : "admin" ,
+                    tourist : "tourist" ,
+                    users : "users" ,
+                    other : "other"
+                }
             }
         },
 
@@ -79,27 +88,65 @@
 
         created() {},
 
-        mounted() {},
+        mounted() {
+            // 挂载语言到store
+            let language = require ( "@/language/zh-CN.json" );
+            // this.$store.state.language = language
+            this.$store.commit("setLanguage",language);
+            let userMemory = getLocal("userMemory");
+            this.ruleForm = getLocal ( "loginForm" );
+            this.historicalAccount = getLocal ( "historicalAccount" );
+            if (this.$isTrue(userMemory)) {
+                if ( false ) {
+                    // this.setOtherInfo ( userMemory.otherInfo );
+                } else {
+                    this.setWebConfig ();
+                }
+            }
+
+        },
 
         unmounted() {},
 
+        beforeDestroy () {
+            let that = this;
+            /* setLocal 保存数据到本地*/
+            setLocal ( "userMemory" , {
+                userInfo : that.userInfo ,
+                otherInfo : that.otherInfo ,
+                language : that.language
+            } );
+            setLocal ( "loginForm" , that.ruleForm );
+        },
+
         methods: {
             submit () {
-                console.log(this.name,this.passWord,this.isChecked);
-                console.log(validation);
                 try
                 {
-                    validator(validation.numType,Number(this.name),
+                    validator( 'mail', this.name,
                         function(item){
-                            // console.log(item,' instanceof is');
                             if (item instanceof Error) throw item;
-                            console.log('验证正确')
-                        })
+                    },)
+                    validator( 'password', this.passWord,
+                        function(item){
+                            if (item instanceof Error) throw item;
+                    },)
+                    console.log(this.name,this.passWord,this.isChecked);
+                    this.login();
                 }catch(err){
-                    console.log(err.message);
+                    this.$notify(err.message)
                 }
 
+
             },
+            async setWebConfig () {
+                // let config = await this.$Get(`/web-config/config-admin.json`);
+                let config = require ( "@/web-config/config-admin.json" );
+                this.setOtherInfo ( config );
+                this.$setIco ( this.otherInfo.webIco );
+                this.resizeHandler ();
+            } ,
+
             forgetPw () {
                 console.log('forget password');
             },
@@ -112,13 +159,14 @@
             /* 登陆 */
             login () {
                 let that = this;
-                this.post ( "/user/login" , {
-                    username : that.ruleForm.username ,
-                    password : that.ruleForm.password
+                this.post ( URL.api_login , {
+                    email : that.name ,
+                    password : that.passWord
                 } ).then ( res => {
+                    console.log(res);
                     if ( res.code == 200 ) {
                         let data = res.data;
-                        that.$set ( that.historicalAccount , that.ruleForm.username , that.ruleForm.password );
+                        that.$set ( that.historicalAccount , that.name , that.passWord );
                         that.setUserInfo ( {
                             userName : data.username ,
                             // headerTitle: data.Nickname,

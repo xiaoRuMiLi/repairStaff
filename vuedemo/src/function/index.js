@@ -1,5 +1,6 @@
 import Vue from "vue";
 // 常用的函数在这里
+import validation from '@/function/formValidation';// 表单验证规则
 
 export function getNumberOfDays ( date1 , date2 ) {//获得天数
     //date1：开始日期，date2结束日期  时间戳相减，然后除以天数
@@ -297,13 +298,39 @@ export function formData ( item ) {
 }
 /**
  * [validator 自己写的验证方法，formVali这个验证器配置是配合饿了吗form表单使用的，所以自己写了一个验证方法]
- * @param  {[type]}   validators [description]
+ * @param  {[type]}   rule
+ * [
+      factors: [msgUnInput],
+        mode: [msgUnSelect],
+        title: [msgUnSelect],
+        name: [msgUnInput],
+        preiod: [msgUnSelect],
+        outputduty: [msgUnSelect],
+        code: [msgUnInput],
+        sourcecode: [msgUnInput],
+        outputcode: [msgUnInput],
+        Zongid: [msgUnSelect],
+        Pid: [msgUnSelect],
+        Type: [msgUnSelect],
+        type: [msgUnSelect],
+        Status: [msgUnSelect],
+        numType: [msgNumType, msgUnInput],
+        numTType: [msgTNumType, msgUnInput],
+        mail: [msgMail, msgUnInput],
+        postel: [msgPostel, msgUnInput],
+        tel: [msgTel, msgUnInput],
+        cardId: [msgCardID, msgUnInput],
+        input: [msgUnRegInput],
+        select: [msgUnSelect],
+        boolean: [msgBool],
+        object: [msgObj],
+    ]
  * @param  {[type]}   value      [description]
  * @param  {Function} callback   [description]
  * @param  {[type]}   dom        [description]
  * @return {[type]}              [description]
  */
-export  function validator ( validators, value, callback=null, dom = null ) {
+export  function validator ( rule, value, callback=null, dom = null ) {
     let doEvent = function (dom,arr) {
         if (!dom || !arr) return;
         for(let i = 0; i < arr.length; i++){
@@ -311,22 +338,23 @@ export  function validator ( validators, value, callback=null, dom = null ) {
             dom && typeof(dom[item]) =='function' && dom[item]();
         }
     }
+    let validators = validation && rule in validation && validation[rule];
     if ( !Array.isArray(validators) ) throw new Error('validators must is a array');
-    console.log('do validator');
+    //console.log('do validator');
     for ( let i=0; i<validators.length; i++ ) {
-        console.log('do validator length is', i);
+        //console.log('do validator length is', i);
         let item =validators[i];
         let validator = item.validator? item.validator: false;
         let msg = item.message? item.message: '';
         let trigger = item.trigger? item.trigger: false;
         let required = item.required? item.required: false;
         let type = item.type? item.type: false;
-        console.log('______',msg,type,required);
+        //console.log('______',msg,type,required);
         if( required && !value){
             doEvent(dom,trigger);
-            callback(new Error('参数是必须输入的'));
+            callback(new Error('缺少必需的参数'));
         }
-        console.log('typeof(value);',typeof(value));
+        //console.log('typeof(value);',typeof(value));
         if( type && typeof(value) != type){
             doEvent(dom,trigger);
             callback(new Error('参数的类型不匹配'));

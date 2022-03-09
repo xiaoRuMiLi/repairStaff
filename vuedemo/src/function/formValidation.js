@@ -1,7 +1,5 @@
 import store from '@/store';
-
 const language = store.getters.getLanguage;
-console.log('language_______',language)
 
 let regularTel = (rule, value, callback) => {
     // let p= /^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$|(0\d{10})$/;
@@ -85,6 +83,17 @@ let regularText = (rule, value, callback) => {
     }
 };
 
+let regularPassWord = (rule, value, callback) => {
+    let patten = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).*$/;
+    if (!value || value == "") {
+        callback(new Error(language.pleasePassWord));
+    } else if (!patten.test(value)) {
+        callback(new Error(language.illegalPassWord));
+    } else {
+        callback();
+    }
+};
+
 let msgUnSelect = { required: true, message: language.unselected, trigger: ['blur'] };//必须选择
 let msgUnRegInput = { validator: regularText, trigger: ['blur'] };//必须选择
 let msgUnInput = { required: true, message: language.uninput, trigger: ['blur'] };//必须输入
@@ -96,6 +105,7 @@ let msgTel = { validator: regularTel, trigger: ['blur'] };//电话或者手机
 let msgCardID = { validator: regularCardID, trigger: ['blur'] };//身份证号
 let msgBool = { validator: regularBool, trigger: ['blur'] };//boolean
 let msgObj = { validator: regularObj, trigger: ['blur'] };//object
+let msgPassWord = { validator: regularPassWord, trigger: ['blur']}; //密码格式 最少6位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符
 
 let formVali = {
     factors: [msgUnInput],
@@ -118,6 +128,7 @@ let formVali = {
     postel: [msgPostel, msgUnInput],
     tel: [msgTel, msgUnInput],
     cardId: [msgCardID, msgUnInput],
+    password: [msgPassWord],
     input: [msgUnRegInput],
     select: [msgUnSelect],
     boolean: [msgBool],

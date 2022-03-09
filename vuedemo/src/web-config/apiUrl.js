@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-07 23:24:38
+* @Last Modified time: 2022-03-09 21:56:08
 */
 
 'use strict';
@@ -31,6 +31,11 @@ const URL = {
     api_constructionSetRealCompleteAtToNow: API_BASE_URL + '/api/v1/construction_setRealCompleteAtToNow/',/*{id}, // 获取详情 - get
     /*----------------------------------- 施工单修改备注 -----------------------------------*/
     api_constructionSetRemarks: API_BASE_URL + '/api/v1/construction_set_remarks/',/*{id}, //  - post
+
+
+
+    /*----------------------------------- 登陆 -----------------------------------*/
+    api_login: API_BASE_URL + '/api/v1/loginApi2',/*{id}, //  - post
 
     /*----------------------------------- 上传图片 -----------------------------------*/
     api_imageUpload: API_BASE_URL + '/api/image/upload',

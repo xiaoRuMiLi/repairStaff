@@ -30,24 +30,21 @@ window.CONFIG = {
 //console.log("当前环境变量："+process.env.NODE_ENV) 和   console.log("当前环境路径："+process.env.VUE_APP_URL);
 Vue.prototype.$Post = fetchPost
 Vue.prototype.$Get = fetchGet
-
 Vue.component('BaseNavBar', BaseNavBar)
 Vue.component('BaseTopTabs', BaseTopTabs)
 Vue.component('JhRefreshView', JhRefreshView)
 // Vue.component('BaseRefreshView', BaseRefreshView)
 
 Vue.use(vuescroll);
-
 Vue.use(BaiduMap, {
   ak: ''  //  在此输入你自己的百度地图ak
 })
 Vue.config.productionTip = false
-
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store, // 需要使用store 需要在这里加入到配置中，要不然this.$store 提示为undefined
   components: { App },
   template: '<App/>'
 })

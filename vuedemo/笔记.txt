@@ -27,7 +27,71 @@
 填坑
    调试Vue项目的时候有时候出差错了，编辑后不断刷新感觉修改的没有反映到页面中，比如删除一个变量后，本来程序应该出错但是项目会记住你出错前的内容，致使被删除的变量在项目中任然会生效。
 
+import
+    引用获取一个json 对象
+         json = require ( "./web-config/config-admin.json" )
+Vue
+    $set 方法
+        在开发过程中，我们时常会遇到这样一种情况：当vue的data里边声明或者已经赋值过的对象或者数组（数组里边的值是对象）时，向对象中添加新的属性，如果更新此属性的值，是不会更新视图的。
+		根据官方文档定义：如果在实例创建之后添加新的属性到实例上，它不会触发视图更新。
+		当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty 把这些属性全部转为 getter/setter。
+		受现代 JavaScript 的限制 (以及废弃 Object.observe)，Vue 不能检测到对象属性的添加或删除。由于 Vue 会在初始化实例时对属性执行 getter/setter 转化过程，所以属性必须在 data 对象上存在才能让 Vue 转换它，这样才能让它是响应的。
 
+        解决方案
+			官方定义：
+			Vue 不允许在已经创建的实例上动态添加新的根级响应式属性 (root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上：
+
+			Vue.set(vm.obj, 'e', 0)
+			您还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名：
+
+			this.$set(this.obj,'e',02)
+
+			有时你想向已有对象上添加一些属性，例如使用 Object.assign() 或 _.extend() 方法来添加属性。但是，添加到对象上的新属性不会触发更新。在这种情况下可以创建一个新的对象，让它包含原对象的属性和新的属性：
+
+			// 代替 Object.assign(this.obj, { a: 1, e: 2 })
+			this.obj= Object.assign({}, this.obj, { a: 1, e: 2 })
+
+        链接：https://www.jianshu.com/p/71b1807b1815
+
+
+store
+    store好处
+        比如我要把用户的登陆信息放到状态管理里面去，因为在应用的其他页面可能要获取用户信息。如果用户修改了登陆信息也可以随时获取到
+        在page a 中调用了this.$store.commit("setLanguage",language)给language赋值
+        在page b 中执行以下语句
+        import store from '@/store';
+        const language = store.getters.getLanguage;
+        language 任然是有值的，也就是说不同页面获取到的是同一个对象内容
+    基本使用方法
+        getters方法
+            就是供外部可以获取，this.$store.getters.getMessage  这样的方式使状态不会暴露在外面
+		actions方法
+		    就是提交mutations触发的状态改变，唯一不同的是actions方法里可以做异步的处理而mutations只能做同步的状态改变。
+            this.$store.dispatch 是触发action中的方法，
+		    this.$store.dispatch('setMessage',data)
+        mutations 方法
+            这个是触发mutations中的方法，其中data为payload
+		    this.$store.commit('setMessage',data)
+    加入到文档中
+	    需要使用store 需要在这里加入到配置中，要不然this.$store 提示为undefined
+		new Vue({
+		  el: '#app',
+		  router,
+		  store, // 加入到这里
+		  components: { App },
+		  template: '<App/>'
+		})
+	严格模式
+		开启严格模式，仅需在创建 store 的时候传入 strict: true；
+		const store = new Vuex.Store({
+		  // ...
+		  strict: true
+		})
+		在严格模式下，无论何时发生了状态变更且不是由 mutation 函数引起的，将会抛出错误。这能保证所有的状态变更都能被调试工具跟踪到。
+        非严格模式可以这样改变state的状态 this.$store.state.language = language
+        严格模式下只能这样 this.$store.commit("setLanguage",language) 要不就会报错，do not mutate vuex store state outside mutation handlers
+
+    https://blog.csdn.net/maidu_xbd/article/details/89140696
 npm使用
     npm install moduleName # 安装模块到项目目录下只安装包到node_modules 不会写入dependencies节点devDependencies节点
 	npm install -g moduleName # -g 的意思是将模块安装到全局，具体安装到磁盘哪个位置，要看 npm config prefix 的位置。不会写入dependencies节点devDependencies节点
@@ -39,7 +103,7 @@ npm使用
     npm run dev 报错
         错误码
 	        webpack-dev-server --inline --progress --config build/webpack.dev.conf.js
-	        webpack-dev-server --inline --progress --config build/webpack.dev.conf.js  webpack-dev-server' 不是内部或外部命   
+	        webpack-dev-server --inline --progress --config build/webpack.dev.conf.js  webpack-dev-server' 不是内部或外部命
         原因：
             新版的webpack-dev-server 3.1.14 存在问题。
 
