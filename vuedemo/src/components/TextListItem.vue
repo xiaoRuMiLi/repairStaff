@@ -25,7 +25,7 @@
         </div>
         <div class="bottom">
         	<div class="buttons" v-for="(item, index) in buttons">
-        		<van-button plain hairline type="primary" color="#1989fa" size="mini" @click="onClick(index)">{{item}}</van-button>
+        		<van-button plain hairline type="primary" color="#fff" size="mini" @click="onClick(index)">{{item}}</van-button>
         	</div>
         </div>
 	</div>

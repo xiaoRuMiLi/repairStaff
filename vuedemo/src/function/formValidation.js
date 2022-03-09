@@ -1,6 +1,7 @@
 import store from '@/store';
 
 const language = store.getters.getLanguage;
+console.log('language_______',language)
 
 let regularTel = (rule, value, callback) => {
     // let p= /^((0\d{2,3})-)?(\d{7,8})(-(\d{3,}))?$|(0\d{10})$/;
@@ -122,4 +123,5 @@ let formVali = {
     boolean: [msgBool],
     object: [msgObj],
 }
+
 export default formVali;

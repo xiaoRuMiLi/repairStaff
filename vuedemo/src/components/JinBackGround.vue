@@ -1,7 +1,7 @@
 <template>
     <div class="jin-back-ground-wrapper">
         <div class="go-back">
-            <i class="van-icon van-icon-arrow-left"></i>
+            <i class="van-icon van-icon-arrow-left" @click="goBack"></i>
         </div>
         <div class="text-group">
             <div class="title">
@@ -11,7 +11,7 @@
             </div>
             <div class="content">
                 <span>{{content}}</span>
-                <span>
+                <span @click="textTap">
                     <strong>{{remindText}}</strong>
                 </span>
             </div>
@@ -118,8 +118,14 @@
         unmounted() {},
 
         methods: {
-
-
+            goBack () {
+                this.$emit('goBack');
+                this.$router.go(-1);
+                // console.log(this.$router);
+            },
+            textTap () {
+                this.$emit('textTap');
+            }
         },
     }
 </script>

@@ -295,6 +295,49 @@ export function formData ( item ) {
     }
     return form;
 }
+/**
+ * [validator 自己写的验证方法，formVali这个验证器配置是配合饿了吗form表单使用的，所以自己写了一个验证方法]
+ * @param  {[type]}   validators [description]
+ * @param  {[type]}   value      [description]
+ * @param  {Function} callback   [description]
+ * @param  {[type]}   dom        [description]
+ * @return {[type]}              [description]
+ */
+export  function validator ( validators, value, callback=null, dom = null ) {
+    let doEvent = function (dom,arr) {
+        if (!dom || !arr) return;
+        for(let i = 0; i < arr.length; i++){
+            let item = arr[i];
+            dom && typeof(dom[item]) =='function' && dom[item]();
+        }
+    }
+    if ( !Array.isArray(validators) ) throw new Error('validators must is a array');
+    console.log('do validator');
+    for ( let i=0; i<validators.length; i++ ) {
+        console.log('do validator length is', i);
+        let item =validators[i];
+        let validator = item.validator? item.validator: false;
+        let msg = item.message? item.message: '';
+        let trigger = item.trigger? item.trigger: false;
+        let required = item.required? item.required: false;
+        let type = item.type? item.type: false;
+        console.log('______',msg,type,required);
+        if( required && !value){
+            doEvent(dom,trigger);
+            callback(new Error('参数是必须输入的'));
+        }
+        console.log('typeof(value);',typeof(value));
+        if( type && typeof(value) != type){
+            doEvent(dom,trigger);
+            callback(new Error('参数的类型不匹配'));
+        }
+        if( typeof(validator) == 'function' ){
+            doEvent(dom,trigger);
+            validator('rule',value,callback);
+        }
+    }
+
+}
 
 /*-----------------cookie---------------------*/
 

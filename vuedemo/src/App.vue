@@ -46,6 +46,7 @@ export default {
   background-color: var(--van-blue);
   border-color: var(--van-blue);
   border-radius: var(--van-border-radius-md);
+  color: var(--van-white);
 }
 
 </style>

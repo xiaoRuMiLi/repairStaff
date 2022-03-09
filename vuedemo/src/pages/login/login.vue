@@ -5,6 +5,7 @@
         title="谢谢你的登录"
         content= '是否已经注册过账号?'
         remindText= '立即注册'
+        @textTap = "toRegiste"
         />
         <div class="content-father">
             <div class="content">
@@ -27,11 +28,13 @@
                 <jin-rember-me
                 leftText="记住我"
                 rightText="找回密码"
-                :isChecked.sync="isChecked"
+                :checked.sync="isChecked"
+                @rightTap = "forgetPw"
+                @checkedChange = "remberChange"
                 />
                 <!-- 按钮 -->
                 <div class="button-container">
-                     <van-button type="primary" size="large" text="立即登录"></van-button>
+                     <van-button type="primary" size="large" text="立即登录" @click="submit"></van-button>
 
                 </div>
             </div>
@@ -44,6 +47,8 @@
     import JinInputStyle1 from '@/components/JinInputStyle1';
     import JinBackGround from '@/components/JinBackGround';
     import JinRemberMe from '@/components/JinRemberMe';
+    import validation from '@/function/formValidation';
+    import { validator } from '@/function/index';
     export default {
         name: 'login',
         mixins: [require( '@/mixins').default],
@@ -57,10 +62,9 @@
         },
         data() {
             return {
-            	name: 'name',
-                passWord: 'passWord',
-                isChecked: false,
-
+            	name: '',
+                passWord: '',
+                isChecked: true,
             }
         },
 
@@ -80,6 +84,62 @@
         unmounted() {},
 
         methods: {
+            submit () {
+                console.log(this.name,this.passWord,this.isChecked);
+                console.log(validation);
+                try
+                {
+                    validator(validation.numType,Number(this.name),
+                        function(item){
+                            // console.log(item,' instanceof is');
+                            if (item instanceof Error) throw item;
+                            console.log('验证正确')
+                        })
+                }catch(err){
+                    console.log(err.message);
+                }
+
+            },
+            forgetPw () {
+                console.log('forget password');
+            },
+            remberChange ( val ) {
+                console.log('remberChange is', val);
+            },
+            toRegiste () {
+                console.log('to registe');
+            },
+            /* 登陆 */
+            login () {
+                let that = this;
+                this.post ( "/user/login" , {
+                    username : that.ruleForm.username ,
+                    password : that.ruleForm.password
+                } ).then ( res => {
+                    if ( res.code == 200 ) {
+                        let data = res.data;
+                        that.$set ( that.historicalAccount , that.ruleForm.username , that.ruleForm.password );
+                        that.setUserInfo ( {
+                            userName : data.username ,
+                            // headerTitle: data.Nickname,
+                            // headerTitle: that.language.subject,
+                            userId : data.userid ,
+                            userToken : data.token ,
+                            userRole : data.userrole ,
+                            // userProject: data.Project,
+                            // projectId: that.$isTrue(res.Expand) ? res.Expand.Id : null,
+                            // cooperativePartner: that.language.ABC
+                        } );
+                        that.lastUserInfo ();
+                        /*1.this.$router.push()描述：跳转到不同的url，但这个方法会向history栈添加一个记录，点击后退会返回到上一个页面。
+                        2.this.$router.replace()描述：同样是跳转到指定的url，但是这个方法不会向history里面添加新的记录，点击返回，会跳转到上上一个页面。上一个记录是不存在的。
+                        3.this.$router.go(n)相对于当前页面向前或向后跳转多少个页面,类似 window.history.go(n)。n可为正数可为负数。正数返回上一个页面*/
+                        that.$router.replace ( { name : "list" } );
+                    }
+                } );
+            }
+
+
 
 
         },

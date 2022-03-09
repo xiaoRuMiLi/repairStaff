@@ -1,14 +1,14 @@
 <template>
     <div class="jin-rember-me-wrapper">
         <div class="left-container">
-            <van-checkbox v-model="isChecked" shape="square"></van-checkbox>
+            <van-checkbox v-model="isChecked" shape="square" @change="checkedChange"></van-checkbox>
             <div class="rember-me">
                 <span>{{leftText}}</span>
             </div>
         </div>
 
         <div class="right-container">
-            <div class="forget">
+            <div class="forget" @click="rightTap">
                 <span>{{rightText}}</span>
             </div>
         </div>
@@ -91,8 +91,12 @@
         unmounted() {},
 
         methods: {
-
-
+            rightTap () {
+                this.$emit('rightTap');
+            },
+            checkedChange () {
+                this.$emit('checkedChange', this.isChecked );
+            }
         },
     }
 </script>
