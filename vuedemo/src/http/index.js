@@ -48,6 +48,8 @@ axios.interceptors.response.use ( ( res ) => {
     return Promise.reject (statusCode.getStatusErr(error));
     //return Promise.reject ( error );
 } );
+
+
 function mes () {
     /* ELEMENT.Message ( {
         message : store.state.language.serveError ,
@@ -55,7 +57,9 @@ function mes () {
         duration : 3000 ,
         customClass : "messageBox"
     } );*/
+    console.log('在访问服务器的时候出现了一个错误')
 }
+
 
 //返回一个Promise(发送post请求)
 export function fetchPost ( url , params , form ) {

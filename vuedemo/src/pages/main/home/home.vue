@@ -90,9 +90,7 @@ export default {
 
   },
   mounted () {
-    console.log(CONFIG)
-    
-   
+     
   } 
 }
 </script>

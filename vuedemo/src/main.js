@@ -10,6 +10,7 @@ import './VueFilters';
 /* 使用vue的时候，后台可能不能及时作出接口，那么就需要我们前端自己模拟数据，使用mockjs可以进行模拟数据。 */
 // import './mock';
 import { fetchPost, fetchGet } from './http';
+import { setLocal , getLocal , clearLocal } from "@/function";
 import './routeguard';
 // import "./allcss.css"; // 饿了吗的样式库
 // import "./font.css";
@@ -23,10 +24,6 @@ import BaiduMap from 'vue-baidu-map';
 import vuescroll from 'vuescroll';
 //import { ConfigProvider } from 'vant';
 
-// 配置文件挂载到Windows上//////////////////////////////////////////
-window.CONFIG = {
-	admin: require ( "./web-config/config-admin.json" ),
-}
 //console.log("当前环境变量："+process.env.NODE_ENV) 和   console.log("当前环境路径："+process.env.VUE_APP_URL);
 Vue.prototype.$Post = fetchPost
 Vue.prototype.$Get = fetchGet
@@ -41,6 +38,28 @@ Vue.use(BaiduMap, {
 })
 Vue.config.productionTip = false
 /* eslint-disable no-new */
+/* 读取localstage 数据到store */
+let userMemory = getLocal("userMemory");
+//console.log('userMemory is true: ', Vue.$isTrue(userMemory));
+if (userMemory) {  
+    store.dispatch ( "upVuex" , {
+        mutations : "setOtherInfo" ,
+        value : userMemory.otherInfo
+    } );
+    store.dispatch ( "upVuex" , {
+        mutations : "setUserInfo" ,
+        value : userMemory.userInfo
+    } );
+    store.dispatch ( "upVuex" , {
+        mutations : "setBriefInfo" ,
+        value : userMemory.briefInfo // 简要信息
+    } );
+    store.dispatch ( "upVuex" , {
+        mutations : "setLanguage" ,
+        value : userMemory.language // 简要信息
+    } );
+} 
+     
 new Vue({
   el: '#app',
   router,

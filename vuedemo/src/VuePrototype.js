@@ -51,7 +51,7 @@ Vue.prototype.$setTitle = function ( t ) {
     document.getElementsByTagName ( 'head' )[ 0 ].appendChild ( title );
 }
 Vue.prototype.$setIco = function ( i ) {
-    //设置网页的图标
+    //设置网页的图标,就是在上方窗口栏左边标志，默认是Vue的标志
     let link = document.querySelector ( "link[rel*='icon']" ) || document.createElement ( 'link' );
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';

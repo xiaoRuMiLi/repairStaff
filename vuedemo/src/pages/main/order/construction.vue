@@ -357,9 +357,9 @@ export default {
       let params = {};
       // console.log( self.$route.query );
       // console.log( self.$route );
-      self.get( URL.api_constructionShow + constructionId , params ).then ( ( data ) => {
+      self.get( URL.api_constructionShow + constructionId , params ).then ( ( res ) => {
         // console.log( data );
-        self.data = self.formatData(data.data);
+        self.data = self.formatData(res.data);
       } );
 
 
