@@ -104,10 +104,10 @@
             this.historicalAccount = getLocal ( "historicalAccount" );
             console.log('userMemory is true: ', this.$isTrue(userMemory));
 
-            if (this.$isTrue(userMemory)) {  
+            if (this.$isTrue(userMemory)) {
                 this.setOtherInfo ( userMemory.otherInfo );
             } else {
-                this.setWebConfig (); 
+                this.setWebConfig ();
             }
 
 
@@ -122,9 +122,9 @@
             console.log('执行了beforeDestroy')
             let that = this;
             /* setLocal 保存数据到本地
-               使用的window.localStorage, 
+               使用的window.localStorage,
                params 1 为保存的键名
-               param 2 为保存的值 
+               param 2 为保存的值
             */
             setLocal ( "userMemory" , {
                 userInfo : that.userInfo ,
@@ -139,9 +139,9 @@
             saveInfo () {
                 let that = this;
                 /* setLocal 保存数据到本地
-                   使用的window.localStorage, 
+                   使用的window.localStorage,
                    params 1 为保存的键名
-                   param 2 为保存的值 
+                   param 2 为保存的值
                 */
                 setLocal ( "userMemory" , {
                     userInfo : that.userInfo ,
@@ -190,7 +190,7 @@
                 let config = require ( "@/web-config/config-admin.json" );
                 this.setOtherInfo ( config );
                 this.$setIco ( this.otherInfo.webIco );
-                
+
             } ,
 
             forgetPw () {
@@ -209,7 +209,7 @@
                     email : that.ruleForm.email ,
                     password : that.ruleForm.password
                 } ).then ( res => {
-                    // console.log(res);
+                    console.log(res);
                     if ( res.code == 200 ) {
                         let data = res.data;
                         /*增加修改this.data中的响应数据对象或者数组，因为普通增加属性方式并不会改变数组或者对象的内存地址。

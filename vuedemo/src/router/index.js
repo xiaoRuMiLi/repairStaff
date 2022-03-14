@@ -107,7 +107,7 @@ export default new Router({
 				{
 				    path: 'chart',
 				    name: 'chart',
-				    component: () => import('@/pages/demolist/echarts/Echarts1'),
+				    component: () => import('@/pages/main/chart/Echarts1'),
 				    replace: false,
 				    /** @type {Object} [重定向]
 				    redirect : {

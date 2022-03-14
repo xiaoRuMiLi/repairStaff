@@ -57,7 +57,7 @@ export default {
 
   },
   mounted () {
-    console.log('配置信息')
+    /*console.log('配置信息')
     console.log(getLocal("userMemory"))
     console.log(getLocal("loginForm"))
     console.log(getLocal("historicalAccount"))
@@ -65,7 +65,7 @@ export default {
     console.log(this.userInfo)
     console.log(this.otherInfo)
     console.log(this.language)
-    console.log(this.briefInfo)
+    console.log(this.briefInfo)*/
 
   },
 

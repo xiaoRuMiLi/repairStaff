@@ -29,6 +29,7 @@ axios.interceptors.request.use ( ( config ) => {
     newConfig.headers.Authorization = `${token ? token : ''}`
     // 接收json
     newConfig.headers.Accept = 'application/json';
+     // console.log("newConfig is______________ ", newConfig);
     return newConfig;
 } , ( error ) => {
     NProgress.done ();
