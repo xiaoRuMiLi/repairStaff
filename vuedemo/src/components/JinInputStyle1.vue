@@ -79,33 +79,33 @@
 </script>
 <style scoped>
 .jin-input-style1-wrapper {
-	background-color: var(--van-white);
+	background-color: var(--com-white);
 	text-align: left;
 	position: relative;
 	box-sizing: border-box;
 	width: 100%;
-    padding: var(--van-padding-md) 0;
+    padding: var(--com-padding-md) 0;
 }
 .title {
-    color: var(--van-gray-7);
-    font-size: var(--van-font-size-md);
+    color: var(--com-gray-7);
+    font-size: var(--com-font-size-md);
     width: 100%;
-    padding-bottom: var(--van-padding-md);
-    font-weight: var(--van-font-weight-bold-2);
+    padding-bottom: var(--com-padding-md);
+    font-weight: var(--com-font-weight-bold-2);
 }
 .content {
 	width: 100%;
 }
 .wrapper input {
-	color: var(--van-text-color-2);
-	font-size: var(--van-font-size-md);
+	color: var(--com-text-color-2);
+	font-size: var(--com-font-size-md);
 	line-height: 50px;
 	height: 50px;
 	width: 100%;
 	box-sizing: border-box;
-    border-radius: var(--van-border-radius-lg);
-    border: 1px solid var(--van-text-color-3);
-    padding: var(--van-padding-md);
+    border-radius: var(--com-border-radius-lg);
+    border: 1px solid var(--com-text-color-3);
+    padding: var(--com-padding-md);
 }
 
 </style>

@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-09 21:56:08
+* @Last Modified time: 2022-03-15 21:34:11
 */
 
 'use strict';
@@ -31,8 +31,8 @@ const URL = {
     api_constructionSetRealCompleteAtToNow: API_BASE_URL + '/api/v1/construction_setRealCompleteAtToNow/',/*{id}, // 获取详情 - get
     /*----------------------------------- 施工单修改备注 -----------------------------------*/
     api_constructionSetRemarks: API_BASE_URL + '/api/v1/construction_set_remarks/',/*{id}, //  - post
-
-
+    /*----------------------------------- 按月获取近两年施工单金额合计 -----------------------------------*/
+    api_constructionGetTotalGroupByMoon: API_BASE_URL + '/api/v1/get_total_group_by_moon',
 
     /*----------------------------------- 登陆 -----------------------------------*/
     api_login: API_BASE_URL + '/api/v1/loginApi2',/*{id}, //  - post

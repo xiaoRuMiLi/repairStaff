@@ -60,11 +60,11 @@ export function responseMiddle ( res ) {
         		continue;
         	}
         	// 更改对象键名
-			if ( url in option & option[url].hasOwnProperty('changeKey')) {
+			if ( url in option && option[url].hasOwnProperty('changeKey')) {
 		        resData = changeKey( item , option[url].changeKey )
 			}
 			// 添加默认值
-			if ( url in option & option[url].hasOwnProperty('defaultVal') ) {
+			if ( url in option && option[url].hasOwnProperty('defaultVal') ) {
 		        resData = setDefaultVal( resData , option[url].defaultVal );
 			}
 			resArr.push(resData);

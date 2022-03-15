@@ -24,10 +24,10 @@
 </template>
 <style scoped>
 .jin-back-ground-wrapper {
-    padding: var(--van-padding-lg);
-    background-color: var(--van-blue);
-    font-size: var(--van-font-size-md);
-    color: var(--van-white);
+    padding: var(--com-padding-lg);
+    background-color: var(--com-blue);
+    font-size: var(--com-font-size-md);
+    color: var(--com-white);
     width: 100%;
     position: relative;
     box-sizing: border-box;
@@ -35,29 +35,29 @@
     overflow: hidden;
 }
 .go-back {
-    font-weight: var(--van-font-weight-bold-2);
+    font-weight: var(--com-font-weight-bold-2);
     text-align: left;
-    height: var(--van-line-height-lg);
-    line-height: var(--van-line-height-lg);
-    padding: var(--van-padding-lg) 0;
-    font-weight: var(--van-font-weight-bold);
-    font-size: var(--van-font-size-lg);
+    height: var(--com-line-height-lg);
+    line-height: var(--com-line-height-lg);
+    padding: var(--com-padding-lg) 0;
+    font-weight: var(--com-font-weight-bold);
+    font-size: var(--com-font-size-lg);
 
 }
 .text-group {
-    padding-bottom: var(--van-padding-md);
+    padding-bottom: var(--com-padding-md);
     text-align: left;
 }
 .text-group .title {
-    font-size: var(--van-font-size-xl);
-    padding: var(--van-padding-md) 0;
+    font-size: var(--com-font-size-xl);
+    padding: var(--com-padding-md) 0;
 }
 .text-group .content {
-    font-size: var(--van-font-size-md);
+    font-size: var(--com-font-size-md);
 }
 .content strong {
-    color: var(--van-yellow);
-    font-size: var(--van-font-size-lg);
+    color: var(--com-yellow);
+    font-size: var(--com-font-size-lg);
     border-bottom: 1px solid;
 }
 .circle {

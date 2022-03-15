@@ -577,5 +577,8 @@
   "rent" : "房租" ,
   "property" : "物业" ,
   "orgRechargeRecord" : "充值记录" ,
-  "requestAddress" : "请求地址"
+  "requestAddress" : "请求地址",
+
+  "monthlyTotalOfConstructionOrdersInThePastTwoYears": "近两年的施工单金额按月合计"
+
 }

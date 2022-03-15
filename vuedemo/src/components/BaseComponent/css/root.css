@@ -1,80 +1,80 @@
 /* 添加这段样式后，Primary Button 会变成红色, 定义全局样式，所有的组件都遵循 */
 :root {
-  --van-black: #000;
-  --van-white: #ffffff;
-  --van-gray-1: #f7f8fa;
-  --van-gray-2: #f2f3f5;
-  --van-gray-3: #ebedf0;
-  --van-gray-4: #dcdee0;
-  --van-gray-5: #c8c9cc;
-  --van-gray-6: #969799;
-  --van-gray-7: #646566;
-  --van-gray-8: #323233;
-  --van-red: #ee0a24;
-  --van-blue: #1989fa;
-  --van-orange: #ff976a;
-  --van-orange-dark: #ed6a0c;
-  --van-orange-light: #fffbe8;
-  --van-green: #07c160;
-  --van-yellow: #ffcd34;
+  --com-black: #000;
+  --com-white: #ffffff;
+  --com-gray-1: #f7f8fa;
+  --com-gray-2: #f2f3f5;
+  --com-gray-3: #ebedf0;
+  --com-gray-4: #dcdee0;
+  --com-gray-5: #c8c9cc;
+  --com-gray-6: #969799;
+  --com-gray-7: #646566;
+  --com-gray-8: #323233;
+  --com-red: #ee0a24;
+  --com-blue: #1989fa;
+  --com-orange: #ff976a;
+  --com-orange-dark: #ed6a0c;
+  --com-orange-light: #fffbe8;
+  --com-green: #07c160;
+  --com-yellow: #ffcd34;
 
   /** Gradient Colors*/
-  --van-gradient-red: linear-gradient(to right, #ff6034, #ee0a24);
-  --van-gradient-orange: linear-gradient(to right, #ffd01e, #ff8917);
+  --com-gradient-red: linear-gradient(to right, #ff6034, #ee0a24);
+  --com-gradient-orange: linear-gradient(to right, #ffd01e, #ff8917);
 
   /* Component Colors*/
-  --van-primary-color: var(--van-blue);
-  --van-success-color: var(--van-green);
-  --van-danger-color: var(--van-red);
-  --van-warning-color: var(--van-orange);
-  --van-text-color: var(--van-gray-8);
-  --van-text-color-2: var(--van-gray-6);
-  --van-text-color-3: var(--van-gray-5);
-  --van-text-link-color: #576b95;
-  --van-active-color: var(--van-gray-2);
-  --van-active-opacity: 0.6;
-  --van-disabled-opacity: 0.5;
-  --van-background-color: var(--van-gray-1);
-  --van-background-color-light: var(--van-white);
+  --com-primary-color: var(--com-blue);
+  --com-success-color: var(--com-green);
+  --com-danger-color: var(--com-red);
+  --com-warning-color: var(--com-orange);
+  --com-text-color: var(--com-gray-8);
+  --com-text-color-2: var(--com-gray-6);
+  --com-text-color-3: var(--com-gray-5);
+  --com-text-link-color: #576b95;
+  --com-active-color: var(--com-gray-2);
+  --com-active-opacity: 0.6;
+  --com-disabled-opacity: 0.5;
+  --com-background-color: var(--com-gray-1);
+  --com-background-color-light: var(--com-white);
 
   /* Padding*/
-  --van-padding-base: 4px;
-  --van-padding-xs: 8px;
-  --van-padding-sm: 12px;
-  --van-padding-md: 16px;
-  --van-padding-lg: 24px;
-  --van-padding-xl: 32px;
+  --com-padding-base: 4px;
+  --com-padding-xs: 8px;
+  --com-padding-sm: 12px;
+  --com-padding-md: 16px;
+  --com-padding-lg: 24px;
+  --com-padding-xl: 32px;
 
   /* Font*/
-  --van-font-size-xs: 10px;
-  --van-font-size-sm: 12px;
-  --van-font-size-md: 14px;
-  --van-font-size-lg: 16px;
-  --van-font-size-xl: 22px;
-  --van-font-weight-bold: 500;
-  --van-font-weight-bold-2: 550;
-  --van-line-height-xs: 14px;
-  --van-line-height-sm: 18px;
-  --van-line-height-md: 20px;
-  --van-line-height-lg: 22px;
-  --van-base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+  --com-font-size-xs: 10px;
+  --com-font-size-sm: 12px;
+  --com-font-size-md: 14px;
+  --com-font-size-lg: 16px;
+  --com-font-size-xl: 22px;
+  --com-font-weight-bold: 500;
+  --com-font-weight-bold-2: 550;
+  --com-line-height-xs: 14px;
+  --com-line-height-sm: 18px;
+  --com-line-height-md: 20px;
+  --com-line-height-lg: 22px;
+  --com-base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
     Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB',
     'Microsoft Yahei', sans-serif;
-  --van-price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue,
+  --com-price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue,
     Arial, sans-serif;
 
   /* Animation*/
-  --van-animation-duration-base: 0.3s;
-  --van-animation-duration-fast: 0.2s;
-  --van-animation-timing-function-enter: ease-out;
-  --van-animation-timing-function-leave: ease-in;
+  --com-animation-duration-base: 0.3s;
+  --com-animation-duration-fast: 0.2s;
+  --com-animation-timing-function-enter: ease-out;
+  --com-animation-timing-function-leave: ease-in;
 
   /* Border*/
-  --van-border-color: var(--van-gray-3);
-  --van-border-width-base: 1px;
-  --van-border-radius-sm: 2px;
-  --van-border-radius-md: 4px;
-  --van-border-radius-lg: 8px;
-  --van-border-radius-xl: 30px;
-  --van-border-radius-max: 999px;
+  --com-border-color: var(--com-gray-3);
+  --com-border-width-base: 1px;
+  --com-border-radius-sm: 2px;
+  --com-border-radius-md: 4px;
+  --com-border-radius-lg: 8px;
+  --com-border-radius-xl: 30px;
+  --com-border-radius-max: 999px;
 }

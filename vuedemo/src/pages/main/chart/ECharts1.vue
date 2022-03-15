@@ -20,9 +20,11 @@
 
 <script>
 import * as echarts from "echarts";
+import { URL } from '@/web-config/apiUrl'
 
 export default {
   name: "hello",
+  mixins : [ require ( "@/mixins" ).default],
   data() {
     return {
       title: "柱状图-异步加载",
@@ -162,54 +164,98 @@ export default {
           barMaxWidth: 6,
         },
       ];
-      for (var i = 0; i < dataArr.length; i++) {
-        var dic = dataArr[i];
-        dic["type"] = "bar";
-        dic["label"] = {
-          show: true, //开启显示
-          position: "top", //在上方显示
-          distance: i == 0 ? 5 : 10,
-          // rotate: 15, // 旋转
-          //offset: [20, 0], // 偏移
-          formatter: function (val) {
-            if (val.value !== 0) {
-              return val.value;
-            } else {
-              return "";
+
+      this.get(URL.api_constructionGetTotalGroupByMoon).then( res=> {
+          console.log(res);
+          let data = res.data.map( item => {
+            let year = this.$isFalse(item.date)? 'null': item.date.split('-')[0];
+            let moon = this.$isFalse(item.date)? 'null': item.date.split('-')[1];
+            return {
+              total: item.total,
+              year: year,
+              moon: moon,
             }
-          },
-          fontSize: 12,
-          color: "black",
-        };
-      }
-      var chartData = {
-        title: "某地区蒸发量和降水量",
-        legendData: ["蒸发量", "降水量"],
-        xData: [
-          "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",
-        ],
-        seriesData: dataArr,
-      };
-      console.log('dataArr____',dataArr);
-      /**0:
-      barGap: 0 // 间隙
-      barMaxWidth: 6 // 条形宽度
-      data: (12) [2, 4.9, 7, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20, 6.4, 3.3]
-      label:
-        color: "black" // 标签颜色
-        distance: 5 // 标签和条形的距离，position为top 指在条形上方5
-        fontSize: 12 // 字体大小
-        formatter: ƒ formatter(val) // 对数据进行map操作
-        position: "top"
-        show: true // 是否显示
-      [[Prototype]]: Object
-      name: "蒸发量"
-      type: "bar"
-      [[Prototype]]: Object
-      1: {name: '降水量', data: Array(12), barGap: 0, barMaxWidth: 6, type: 'bar', …}
-      length: 2
-      */
-      this.myChart.setOption(this.getOption1(chartData), true);
+          })
+          let years = Array.from(new Set(data.map( item=> {
+            return item.year;
+          })));
+          let dataArr = years.map ( item=> {
+            let rArray = [];
+            // 按月份获取，缺失数据的月份用0来代替
+            for ( let i = 1; i < 13; i++)
+            {
+              let currentMoonData = data.filter( obj => {
+                if(obj.year == item && obj.moon == i)
+                {
+                  return true;
+                }
+              })
+              rArray.push(currentMoonData.length > 0? currentMoonData[0].total: 0 );
+            }
+            return {
+              name: item,
+              data: rArray,
+              barGap: 0,
+              barMaxWidth: 6,
+            }
+          })
+
+          // 补全一些设置
+          for (var i = 0; i < dataArr.length; i++) {
+            var dic = dataArr[i];
+            dic["type"] = "bar";
+            dic["label"] = {
+              show: true, //开启显示
+              position: "top", //在上方显示
+              distance: i == 0 ? 5 : 10,
+              // rotate: 15, // 旋转
+              //offset: [20, 0], // 偏移
+              formatter: function (val) {
+                if (val.value !== 0) {
+                  return val.value;
+                } else {
+                  return "";
+                }
+              },
+              fontSize: 12,
+              color: "black",
+            };
+          }
+          console.log('language:',this.language.monthlyTotalOfConstructionOrdersInThePastTwoYears);
+          var chartData = {
+            title: this.language.monthlyTotalOfConstructionOrdersInThePastTwoYears,
+            legendData: years,
+            xData: [
+              "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",
+            ],
+            seriesData: dataArr,
+          };
+          console.log('dataArr____',dataArr);
+          /**0:
+          barGap: 0 // 间隙
+          barMaxWidth: 6 // 条形宽度
+          data: (12) [2, 4.9, 7, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20, 6.4, 3.3]
+          label:
+            color: "black" // 标签颜色
+            distance: 5 // 标签和条形的距离，position为top 指在条形上方5
+            fontSize: 12 // 字体大小
+            formatter: ƒ formatter(val) // 对数据进行map操作
+            position: "top"
+            show: true // 是否显示
+          [[Prototype]]: Object
+          name: "蒸发量"
+          type: "bar"
+          [[Prototype]]: Object
+          1: {name: '降水量', data: Array(12), barGap: 0, barMaxWidth: 6, type: 'bar', …}
+          length: 2
+          */
+          this.myChart.setOption(this.getOption1(chartData), true);
+
+      }).catch( err=>{
+        console.log(err)
+      })
+
+
     },
   },
 };

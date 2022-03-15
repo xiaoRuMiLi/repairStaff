@@ -16,30 +16,30 @@
 </template>
 <style scoped>
     .jin-rember-me-wrapper {
-        padding: var(--van-padding-md) 0;
-        background-color: var(--van-background-color-light);
+        padding: var(--com-padding-md) 0;
+        background-color: var(--com-background-color-light);
         display: flex;
         justify-content: space-between;
-        font-size: var(--van-font-size-sm);
+        font-size: var(--com-font-size-sm);
     }
     .left-container {
         display: flex;
 
     }
     .left-container span {
-        color: var(--van-text-color-2);
+        color: var(--com-text-color-2);
     }
     .right-container span {
-        color: var(--van-text-link-color);
+        color: var(--com-text-link-color);
     }
     .rember-me, .forget {
-        padding: var(--van-padding-sm);
+        padding: var(--com-padding-sm);
     }
 
 </style>
 <script>
     import { Checkbox, CheckboxGroup } from 'vant';
-    import './BaseComponent/index.js';
+    import './Basecomponent/index.js';
     export default {
         name: 'jinRemberMe',
         components: {
