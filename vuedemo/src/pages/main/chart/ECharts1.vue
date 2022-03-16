@@ -1,12 +1,16 @@
 <template>
-  <div>
-
+  <div class="wrapper">
     <div id="myChart" class="charts"></div>
-    <div class="btn" @click="onClick">获取数据</div>
+    <div class="btn-wrapper">
+      <div class="btn" @click="onClick">获取数据</div>
+    </div>
   </div>
 </template>
 
-<style>
+<style scoped>
+.wrapper {
+  padding-top: 20px;
+}
 .charts {
   width: 100vw;
   height: 400px;
@@ -14,7 +18,14 @@
 .btn {
   width: 100px;
   height: 30px;
-  background: yellow;
+  background: var(--van-blue);
+  line-height: 30px;
+  text-align: center;
+  color: var(--van-white);
+}
+.btn-wrapper {
+  padding: 20px;
+  text-align: center;
 }
 </style>
 
