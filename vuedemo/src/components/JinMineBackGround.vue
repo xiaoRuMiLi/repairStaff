@@ -1,7 +1,7 @@
 <template>
     <div class="jin-back-ground-wrapper">
         <div class="go-back">
-            <i class="van-icon van-icon-arrow-left" @click="goBack"></i>
+            <i v-show="!hideBack" class="van-icon van-icon-arrow-left" @click="goBack"></i>
         </div>
         <div class="middle-container">
             <div class="text-group">
@@ -18,18 +18,18 @@
                 </div>
 
             </div>
-            <div class="avatar">
+            <div class="avatar" @click="avatarTap">
                 <van-image
                   round
                   width="60px"
                   height="60px"
                   :src="avatar"
                 />
-                <i class="van-icon van-icon-edit" @click="goBack"></i>
+                <i class="van-icon van-icon-edit"></i>
             </div>
         </div>
         <div class="bottom-content">
-            <div v-for="(item,key) in numbers" :key="key + item.tit" class="bot-item">
+            <div v-for="(item,key) in numbers" :key="key + item.tit" class="bot-item" @click="numTap(key)">
                 <div class="bot-content">{{item.con}}</div>
                 <div class="bot-title">{{item.tit}}</div>
             </div>
@@ -61,7 +61,7 @@
     text-align: left;
     height: var(--com-line-height-lg);
     line-height: var(--com-line-height-lg);
-    padding: var(--com-padding-lg) 0;
+    padding: var(--com-padding-sm) 0;
     font-weight: var(--com-font-weight-bold);
     font-size: var(--com-font-size-lg);
 
@@ -72,6 +72,7 @@
 .text-group {
     padding-bottom: var(--com-padding-md);
     text-align: left;
+    margin-right: 25px;
 }
 .text-group .title {
     font-size: var(--com-font-size-xl);
@@ -145,6 +146,7 @@
              'van-image': VanImage,
         },
         props: {
+            hideBack: Boolean,
             title: {
                 type: String,
                 default: 'title',
@@ -213,6 +215,13 @@
             },
             textTap () {
                 this.$emit('textTap');
+            },
+            numTap ( index ) {
+                // console.log(index);
+                this.$emit('numTap',index);
+            },
+            avatarTap () {
+                this.$emit('avatarTap');
             }
         },
     }

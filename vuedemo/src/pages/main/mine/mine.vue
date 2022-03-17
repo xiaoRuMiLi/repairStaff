@@ -1,27 +1,34 @@
 <template>
     <div class="wrapper">
         <!-- 背景图区域 -->
+        <!-- hideBack 等同于:hideBack = "true" -->
         <jin-background
-        title="谢谢你的登录"
-        content= '是否已经注册过账号?'
-        remindText= '立即注册'
+        :title="language.thanksForUsing"
+        :content= "language.dear + userInfo.userName + language.questionsWelcome"
+        :remindText= 'language.makeComplaints'
+        :avatar="userInfo.avatarUrl"
         @textTap = "toRegiste"
         :numbers = "nums"
+        hideBack
         />
         <div class="content-father">
             <div class="content">
+                <van-cell-group>
+                    <div class="title" >{{language.setUp}}</div>
+                    <van-cell title-class="cell-title" is-link title="账户信息" value="" />
+                    <van-cell title-class="cell-title" is-link title="退出登录" value=""/>
+                </van-cell-group>
 
             </div>
         </div>
     </div>
 </template>
 <script >
-    import { Icon, Button, Popup, Toast } from 'vant';
+    import { Icon, Button, Toast, Cell, CellGroup } from 'vant';
     /* setLocal 保存数据到本地 getLocal 获取数据 clearLocal 清除数据*/
     import { setLocal , getLocal , clearLocal, validator } from "@/function";
 
     // import '@/config/css/global.css';
-    import JinInputStyle1 from '@/components/JinInputStyle1';
     import JinMineBackGround from '@/components/JinMineBackGround';
     import JinRemberMe from '@/components/JinRemberMe';
     import { URL } from '@/web-config/apiUrl'
@@ -31,8 +38,8 @@
         components: {
             Icon,
             Button,
-            'van-popup': Popup,
-            'jin-input-style1': JinInputStyle1,
+            Cell,
+            CellGroup,
             'jin-background': JinMineBackGround,
             'jin-rember-me': JinRemberMe,
         },
@@ -227,6 +234,16 @@
 </script>
 
 <style scoped>
+.title {
+    color: var(--com-text-color-3);
+    font-size: var(--com-font-size-lg);
+    font-weight: var(--com-font-weight-bold-2);
+    padding: var(--com-padding-md);
+}
+.cell-title {
+    color: var(--com-text-color);
+    font-weight: var(--com-font-weight-bold);
+}
 .wrapper {
     background-color: var(--van-white);
 }

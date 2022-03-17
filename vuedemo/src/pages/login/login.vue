@@ -218,6 +218,7 @@
                         // console.log('that.historicalAccount is ',that.historicalAccount);
                         that.setUserInfo ( {
                             userName : data.user_info.name ,
+                            avatarUrl: data.user_info.avatarUrl,
                             // headerTitle: data.Nickname,
                             // headerTitle: that.language.subject,
                             userId : data.user_info.id ,
