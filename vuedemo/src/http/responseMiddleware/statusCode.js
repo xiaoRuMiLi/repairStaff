@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 21:17:16
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-01-11 21:54:16
+* @Last Modified time: 2022-03-18 21:05:08
 */
 'use strict';
 const { Toast } = require('vant');
@@ -10,7 +10,7 @@ const isDevelop = process.env.NODE_ENV === "development";
 
 const getStatusErr = ( error, toast = true ) =>
 {
-    console.log('error.response____',error.response);
+    console.log('error____',error);
     // console.log(error.message);
     // console.log(error.response);
     // console.log(error.response.status);

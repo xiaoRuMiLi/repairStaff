@@ -36,7 +36,7 @@
             },
             arr: {
                 type: Array,
-                default: ['近两个月','近一个月','近二十天','近十天'],
+                default: ()=> { return ['近两个月','近一个月','近二十天','近十天'] },
             },
             minDate: {
                 type: Date,

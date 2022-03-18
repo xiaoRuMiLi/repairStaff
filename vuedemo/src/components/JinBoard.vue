@@ -74,6 +74,7 @@
         border-radius: 20px 2px 20px 2px;
         line-height: 30px;
         background-image: linear-gradient(90deg, #a2a2a2, #ffcd34);
+        text-align: center;
 
     }
     .jin-board-content .right i {

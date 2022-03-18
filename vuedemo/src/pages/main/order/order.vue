@@ -112,13 +112,13 @@ export default {
         chooseDate: '',
         betweenRealComplete: [
           '2020-12-01',
-          '2022-01-01'
+          '2050-01-01'
         ],
         searchVal: '',
         // 筛选价格区间
         betweenAmount: [
           0,
-          10000
+          100000
         ],
       },
       datas: [
@@ -202,7 +202,6 @@ export default {
      */
     clickItem( id ) {
       let self = this;
-      console.log(id);
       // 带有路径的对象
       self.$router.push({ path: `construction/${id}` })
 
@@ -253,10 +252,10 @@ export default {
             content: item.real_complete_at,
           }
         ],
-        buttons: [
+        /*buttons: [
           'no1',
           'no2',
-        ],
+        ],*/
         rightTitle: item.real_complete_at? '已完成': '未完成'
       }
       return data;
@@ -266,7 +265,7 @@ export default {
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
       params.page = pageNumber;
       self.onOff.loading = !0;
-      console.log('params:', this.params );
+      // console.log('params:', this.params );
       this.get ( URL.api_constructionSearch, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
@@ -276,9 +275,21 @@ export default {
         //self.onOff.finished = true;
       })
     },
+    /* 取消筛选 */
     onClickLeft ()
     {
       self.onOff.showPop = !1;
+      this.inputs.betweenRealComplete =[
+        '2020-12-01',
+        '2050-01-01'
+      ]
+      /**active: 0,
+      chooseDate: '',
+      // 筛选价格区间
+      betweenAmount: [
+        0,
+        100000
+      ],*/
     },
     /* 上滑执行的事件 */
     onLoad() {
@@ -360,7 +371,6 @@ export default {
   mounted () {
     // mouted中的方法代表dom已经加载完毕
     this.getDatas ();
-    console.log('mounted 钩子函数');
   },
   created () {
 

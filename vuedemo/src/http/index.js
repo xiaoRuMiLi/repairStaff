@@ -7,6 +7,8 @@ import { formData } from '@/function'
 import { requestMiddle } from '@/http/requestMiddleware'
 import { responseMiddle } from '@/http/responseMiddleware'
 import statusCode from '@/http/responseMiddleware/statusCode'
+// 判断权限的响应拦截器
+import '@/http/responseMiddleware/requireAuth'
 axios.defaults.timeout = 20000;                        //响应时间
 axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=UTF-8';        //配置请求头
 // axios.defaults.onUploadProgress = function (p) {
@@ -42,6 +44,7 @@ axios.interceptors.response.use ( ( res ) => {
     NProgress.done ();
     // 增加了键名转换和默认值处理的中间件
     let newRes = responseMiddle( res );
+    // 因为这里返回的是res.data,所以注册多个拦截器的话，这个只能是最后一个拦截器
     return Promise.resolve ( newRes.data );
 } , ( error ) => {
     NProgress.done ();

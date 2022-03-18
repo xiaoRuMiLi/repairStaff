@@ -605,6 +605,7 @@ export default {
   box-sizing: border-box;
   padding: 20px;
   background-color: #ffffff;
+  text-align: center;
 }
 .button-wrapper .button-con {
   width: 100%;

@@ -234,8 +234,12 @@
                         2.this.$router.replace()描述：同样是跳转到指定的url，但是这个方法不会向history里面添加新的记录，点击返回，会跳转到上上一个页面。上一个记录是不存在的。
                         3.this.$router.go(n)相对于当前页面向前或向后跳转多少个页面,类似 window.history.go(n)。n可为正数可为负数。正数返回上一个页面*/
                         this.saveInfo()
-                        that.$router.replace ( { name : "home" } );
-                        // this.console()
+                        // 判断有没有上一页，如果有跳转到上一页，否则跳到主页
+                        if (this.$route.query.goindex === 'true') {
+                            that.$router.replace ( { name : "home" });
+                        } else {
+                            this.$router.back(-1)
+                        }
                     }
                 } );
             }
