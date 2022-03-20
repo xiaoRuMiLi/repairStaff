@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-15 21:34:11
+* @Last Modified time: 2022-03-20 21:05:41
 */
 
 'use strict';
@@ -36,6 +36,8 @@ const URL = {
 
     /*----------------------------------- 登陆 -----------------------------------*/
     api_login: API_BASE_URL + '/api/v1/loginApi2',/*{id}, //  - post
+    /*----------------------------------- 退出登陆 -----------------------------------*/
+    api_loginOut: API_BASE_URL + '/api/v1/login_out',
 
     /*----------------------------------- 上传图片 -----------------------------------*/
     api_imageUpload: API_BASE_URL + '/api/image/upload',
