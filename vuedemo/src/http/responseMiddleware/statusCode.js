@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 21:17:16
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-18 21:05:08
+* @Last Modified time: 2022-03-21 21:59:31
 */
 'use strict';
 const { Toast } = require('vant');
@@ -35,6 +35,9 @@ const getStatusErr = ( error, toast = true ) =>
                 break;
             case 404:
                 error.message = "Not Found/无此请求(404)";
+                break;
+            case 405:
+                error.message = "不允许当前用户访问该资源";
                 break;
             case 408:
                 error.message = "Request Timeout/请求超时(408)";

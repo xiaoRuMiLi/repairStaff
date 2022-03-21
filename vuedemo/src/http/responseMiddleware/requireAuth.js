@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-03-18 20:38:06
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-18 21:13:31
+* @Last Modified time: 2022-03-21 22:43:35
 */
 
 'use strict';
@@ -23,6 +23,7 @@ export const getErr = ( error, toast = true ) =>
             router.push({name: 'login'});
         }
     }
+    return error; // 添加多个拦截器记得要返回error,其它拦截器才能获取到这个参数
 }
 //返回状态判断(添加响应拦截器)
 axios.interceptors.response.use ( ( res ) => {

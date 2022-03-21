@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-20 21:05:41
+* @Last Modified time: 2022-03-21 22:52:04
 */
 
 'use strict';
@@ -40,7 +40,7 @@ const URL = {
     api_loginOut: API_BASE_URL + '/api/v1/login_out',
 
     /*----------------------------------- 上传图片 -----------------------------------*/
-    api_imageUpload: API_BASE_URL + '/api/image/upload',
+    api_imageUpload: API_BASE_URL + '/api/v1/image/upload',
     /*----------------------------------- 删除图片 -----------------------------------*/
     api_imageDelete: API_BASE_URL + '/api/v1/image_delete/',
 }
