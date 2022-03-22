@@ -154,9 +154,10 @@ export default {
   // 当在相同路由中跳转，只是参数不同可以定义这个方法以重新执行读取数据
   async beforeRouteUpdate(to, from) {
     // 对路由变化做出响应...
-    console.log("切换了路由参数");
+    // console.log("切换了路由参数");
     let id = to.params.id;
-    this.getData( id );
+    this.data.id = id;
+    this.getData( this.data.id );
   },
   data () {
     return {
@@ -345,8 +346,7 @@ export default {
      */
     changeRemarks ( val ) {
       const self = this;
-      console.log(val);
-      let id = this.$route.params.id;
+      let id = this.data.id;
       this.post( URL.api_constructionSetRemarks + id ,{ remarks: val}).then( res => {
         console.log(res)
         self.data.remarks = res.data && res.data.remarks;
