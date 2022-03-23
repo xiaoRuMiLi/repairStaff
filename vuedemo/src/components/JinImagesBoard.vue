@@ -84,6 +84,7 @@
     /* flex-grow: 1;*/
 }
 .hidden-btn {
+	text-align: center;
 
 }
 

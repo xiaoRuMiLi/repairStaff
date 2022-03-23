@@ -191,4 +191,7 @@
 .button-wrapper {
     margin-top: 50px;
 }
+.button-con {
+    text-align: center;
+}
 </style>
