@@ -39,6 +39,7 @@
 </template>
 <script >
     import { Image as VanImage } from 'vant';
+    import './BaseComponent/index.js';
     export default {
         name: 'JinChatListItem',
         components: {
@@ -87,14 +88,22 @@
 <style scoped>
     .jin-chat-list-item {
         background-color: var(--com-background-color);
-        padding-bottom: 1px solid var(--com-text-color-3);
+        border-bottom: 1px solid var(--com-text-color-3);
         position: relative;
         box-sizing: border-box;
+        padding: var(--com-padding-md) 0;
+        margin: 0 var(--com-padding-md);
+    }
+    .wrapper {
+        display: flex;
     }
     .left {
         display: flex;
         width: 70%;
 
+    }
+    .right {
+        text-align: right;
     }
     .avatar-container {
         width: 60px;
@@ -105,28 +114,37 @@
         overflow: hidden;
     }
     .content-container .name {
-        font-size: var(--com-font-size-md);
-        color: var(--com-text-color-2);
+        font-size: var(--com-font-size-lg);
+        color: var(--com-text-color-1);
+        padding: 5px;
 
     }
     .content-container .message {
-        font-size: var(--com-font-size-xs);
-        color: var(--com-text-color-3);
+        font-size: var(--com-font-size-sm);
+        color: var(--com-text-color-2);
         text-overflow: ellipsis;
         overflow: hidden;
+        padding: 5px;
+        white-space: nowrap;
 
     }
     .message-number {
-
+       padding: 5px 0;
+       border-radius: var(--com-padding-base);
+       background-color: var(--com-danger-color);
+       text-align: center;
+       max-width: 50%;
+       margin-left: auto;
 
     }
     .message-number span {
-        background-color: var(--com-danger-color);
-        border-radius: 50%;
+        color: var(--com-white);
+        font-size: 10px;
     }
     .date-time {
         font-size: var(--com-font-size-xs);
-        color: var(--com-text-color-3);
+        color: var(--com-text-color-2);
+        padding: 5px 0;
 
     }
 
