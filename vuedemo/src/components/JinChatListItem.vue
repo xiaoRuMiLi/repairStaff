@@ -23,7 +23,7 @@
             </div>
             <div class="right">
 
-                <div class="message-number">
+                <div v-if="count" class="message-number">
                     <span>{{count}}</span>
 
                 </div>
@@ -130,16 +130,16 @@
     }
     .message-number {
        padding: 5px 0;
-       border-radius: var(--com-padding-base);
-       background-color: var(--com-danger-color);
-       text-align: center;
-       max-width: 50%;
        margin-left: auto;
 
     }
     .message-number span {
         color: var(--com-white);
         font-size: 10px;
+        border-radius: var(--com-padding-base);
+        background-color: var(--com-danger-color);
+        padding: 5px;
+        text-align: center;
     }
     .date-time {
         font-size: var(--com-font-size-xs);
