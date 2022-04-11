@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-03-21 22:52:04
+* @Last Modified time: 2022-04-11 20:05:06
 */
 
 'use strict';
@@ -43,6 +43,9 @@ const URL = {
     api_imageUpload: API_BASE_URL + '/api/v1/image/upload',
     /*----------------------------------- 删除图片 -----------------------------------*/
     api_imageDelete: API_BASE_URL + '/api/v1/image_delete/',
+
+    /*----------------------------------- 消息 -----------------------------------*/
+    api_messageSearch: API_BASE_URL + '/api/v1/message/search',
 }
 // export default 在其他文件引入时语法是 import 别名 from @/web-config/apiUrl 不能使用 import  { Url } from @/web-config/apiUrl. 要这样引用不能加default关键字
 export {
