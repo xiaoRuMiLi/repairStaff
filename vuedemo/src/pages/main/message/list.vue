@@ -3,15 +3,15 @@
     <div class="fixed">
       <van-tabs v-model="inputs.active" @click="changeType">
         <van-tab title="全部"></van-tab>
-        <van-tab title="待答复"></van-tab>
-        <van-tab title="待查收"></van-tab>
-        <van-tab title="已完成"></van-tab>
+        <van-tab title="未读消息"></van-tab>
+        <van-tab title="待回复"></van-tab>
+        <van-tab title="已回复"></van-tab>
       </van-tabs>
       <van-search
         v-model="inputs.searchVal"
         show-action
-        label="关键词"
-        placeholder="输入车牌,车型,施工单号,修理类型"
+        label="内容"
+        placeholder="输入信息内容关键词"
         @search="onSearch"
       >
       </van-search>
@@ -81,13 +81,7 @@ export default {
         finished: false,
       },
       datas: [
-      {
-        name: '风清扬',
-        avatar: 'https://weixiubang.club/avatarImg/wheresmyperry.png',
-        message: '请看到这个消息的人，立即回复！谢谢！！',
-        count: '需要回复',
-        dateTime: '2022-04-08 12:59:00',
-      }
+
       ],
       inputs: {
         active: 1,
@@ -135,7 +129,7 @@ export default {
   methods: {
       /* 上滑执行的事件 */
     onLoad() {
-      // this.getDatas ();
+      this.getDatas ();
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
     },
@@ -146,7 +140,7 @@ export default {
     onSearch () {
       var self = this;
       if ( !self.inputs.searchVal.trim()) return;
-      self.params = {construction_type: self.inputs.active, search: self.inputs.searchVal},
+      self.params = {message_type: self.inputs.active, content: self.inputs.searchVal},
       self.datas = [];
       self.onOff.finished = !1;
       this.getDatas()
@@ -158,7 +152,7 @@ export default {
     searchEmpty () {
       let self = this;
       self.inputs.searchVal = "";
-      delete self.params.search;
+      delete self.params.content;
 
     },
     /**
@@ -179,7 +173,8 @@ export default {
     {
       let self = this;
       /* 清空其它的所有限制 */
-
+      self.datas = [];
+      self.searchEmpty();
       self.onOff.finished = !1;
       this.getDatas()
 
@@ -191,7 +186,13 @@ export default {
      */
     formatData ( item ) {
 
-      return {};
+      return {
+        name: item.creater && item.creater.name,
+        avatar: item.creater && item.creater.avatarUrl,
+        message: item.content,
+        count: Array('无需回复','需要回复')[item.must_reply],
+        dateTime: item.created_at,
+      };
     },
 
 
@@ -199,8 +200,9 @@ export default {
       self = this
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
       params.page = pageNumber;
+      params.message_type = self.inputs.active;
       self.onOff.loading = !0;
-      // console.log('params:', this.params );
+      console.log('params:', this.params );
       this.get ( URL.api_messageSearch, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
