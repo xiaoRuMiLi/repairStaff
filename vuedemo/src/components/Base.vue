@@ -7,7 +7,7 @@
     import { Toast } from 'vant';
     import './BaseComponent/index.js';
     export default {
-        name: '',
+        name: 'Base',
         components: {
 
         },
@@ -54,7 +54,7 @@
         },
 
         watch: {
-            // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
+        // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
 
 
 
