@@ -165,7 +165,7 @@ export default new Router({
 				    },
 				},
 				{
-				    path: 'message/detail',
+				    path: 'message/detail/:id',
 				    name: 'messageDetail',
 				    component: () => import('@/pages/main/message/detail'),
 				    replace: false,

@@ -32,6 +32,8 @@
         :dateTime="item.dateTime"
         :count="item.count"
         :avatar = "item.avatar"
+        :id = "item.id"
+        @tap="clickItem"
         >
         </chat-list-item>
 
@@ -187,6 +189,7 @@ export default {
     formatData ( item ) {
 
       return {
+        id: item.id,
         name: item.creater && item.creater.name,
         avatar: item.creater && item.creater.avatarUrl,
         message: item.content,
@@ -211,6 +214,13 @@ export default {
         this.onOff.loading = false;
         //self.onOff.finished = true;
       })
+    },
+    clickItem( id ) {
+      let self = this;
+      console.log(id);
+      // 带有路径的对象
+      self.$router.push({ path: `/message/detail/${id}` });
+
     }
   }
 }

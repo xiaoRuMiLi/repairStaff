@@ -13,7 +13,7 @@
                     </div>
                     <div v-if=" Array.isArray(item.images) && item.images.length > 0" class="image">
                     <div class="image-container">
-                        <div v-for="(i,key) in item.images" class="image-item">
+                        <div v-for="(i,key) in item.images" class="image-item" @click="tapImg(key,item.images)">
                             <van-image
                               :src="i"
                               fit="cover"
@@ -46,7 +46,7 @@
                     </div>
                     <div v-if=" Array.isArray(item.images) && item.images.length > 0" class="image">
                     <div class="image-container">
-                        <div v-for="(i,key) in item.images" class="image-item">
+                        <div v-for="(i,key) in item.images" class="image-item" @click="tapImg(key,item.images)">
                             <van-image
                               :src="i"
                               fit="cover"
@@ -79,13 +79,14 @@
 </template>
 <script>
     import Vue from 'vue';
-    import { Toast, Image as VanImage, Lazyload } from 'vant';
+    import { Toast, Image as VanImage, Lazyload, ImagePreview } from 'vant';
     import './BaseComponent/index.js';
     Vue.use(Lazyload);
     export default {
         name: 'JinChatPannel',
         components: {
             VanImage,
+            [ImagePreview.Component.name]: ImagePreview.Component,
 
         },
         props: {
@@ -110,6 +111,7 @@
                         onLeft: !1,
                         content: ' 合并带条件的属性,有时候你可能有多个属性基于同一条件才会包含到资源响应中，',
                         images: [
+
                         ],
                         date: '2022-01-01 12:00:00'
                     }
@@ -150,6 +152,17 @@
         unmounted() {},
 
         methods: {
+            tapImg(index,images)
+            {
+                let self = this;
+                console.log(index);
+                ImagePreview({
+                  images: images,
+                  closeable: true,
+                  startPosition: index,
+                });
+
+            },
 
 
         },
@@ -173,16 +186,26 @@
 .right-item {
     width: 80%;
     border-radius: 5px;
-    background-color: white;
+    background-color: var(--com-blue-grey);
     padding: var(--com-padding-sm);
     margin-left: auto;
     margin-top: 20px;
+}
+.right-item .user{
+    color: var(--com-white);
+}
+.right-item .text{
+    color: var(--com-text-color-3);
+}
+.right-item .date{
+    color: var(--com-text-color-2);
 }
 .user {
     font-size: var(--com-font-size-lg);
     color: var(--com-text-color);
 }
 .content {
+    background-color: var(--com-background-color);
 
 
 }
@@ -194,6 +217,7 @@
     display: flex;
     box-sizing: border-box;
     flex-direction: row;
+    flex-wrap: wrap;
 
 }
 .image-item {
@@ -219,7 +243,7 @@
 }
 .button {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     text-align: right;
 }
 

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <jin-chat-panel>
+    <jin-chat-panel
+    :datas="datas"
+    >
 
     </jin-chat-panel>
-
-
-
   </div>
 </template>
 <script>
@@ -32,10 +31,13 @@ export default {
     // console.log("切换了路由参数");
     let id = to.params.id;
     this.data.id = id;
-    this.getData( this.data.id );
+    this.getDatas( this.data.id );
   },
+
   data () {
     return {
+      id: 0,
+      datas: [],
 
 
     }
@@ -45,12 +47,32 @@ export default {
 
   },
   mounted () {
-
+    this.id = this.$route.params.id;
+    this.getDatas(this.id);
+    console.log(this.userInfo);
   },
   created () {
 
   },
   methods: {
+    formatData: function (item) {
+      let createrName = 'creater' in item? (typeof item.creater == 'object' && item.creater!=null)? item.creater.name: null: null;
+      return {
+        name: createrName,
+        onLeft: createrName == this.userInfo.userName? !1: !0,
+        content: item.content,
+        images: item.images.map((i)=>i.url),
+        date: item.created_at,
+      }
+    },
+    getDatas: function ( id ) {
+      let self = this;
+      self.get( URL.api_getMessagesByMorph + id ).then( (data)=>{
+        var datas = typeof data == 'string'? JSON.parse( data ): data;
+        var res = datas.data
+        self.datas = res.map( this.formatData );
+      })
+    }
 
   },
 }

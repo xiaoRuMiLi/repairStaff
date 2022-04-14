@@ -1,6 +1,6 @@
 <template>
     <div class="jin-chat-list-item">
-        <div class="wrapper">
+        <div class="wrapper" @click="click(id)">
             <div class="left">
                 <div class="avatar-container">
                     <van-image
@@ -47,6 +47,10 @@
 
         },
         props: {
+            id: {
+                type: [String, Number],
+                required: true,
+            },
             avatar: String,
             name: String,
             message: String,
@@ -78,6 +82,9 @@
         unmounted() {},
 
         methods: {
+            click: function( id ) {
+                this.$emit('tap',id);
+            }
 
 
         },
