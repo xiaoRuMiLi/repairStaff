@@ -25,9 +25,6 @@
 
                     </div>
                     <div class="date-container">
-                        <div class="date">
-                            <span>{{item.date}}</span>
-                        </div>
                         <div class="button">
                             <van-button type="primary" size="mini">回复</van-button>
                         </div>
@@ -36,36 +33,38 @@
                     </div>
 
                 </div>
-                <div v-else class="right-item">
-                    <div class='user'>
-                        <span v-text="item.name"></span>
-                    </div>
-                    <div class="text">
-                    {{item.content}}
+                <div v-else style="text-align: right;">
+                    <div class="right-item">
+                        <div class='user'>
+                            <span v-text="item.name"></span>
+                        </div>
+                        <div class="text">
+                        {{item.content}}
 
-                    </div>
-                    <div v-if=" Array.isArray(item.images) && item.images.length > 0" class="image">
-                    <div class="image-container">
-                        <div v-for="(i,key) in item.images" class="image-item" @click="tapImg(key,item.images)">
-                            <van-image
-                              :src="i"
-                              fit="cover"
-                              radius = "5"
-                              lazy-load
-                            />
+                        </div>
+                        <div v-if=" Array.isArray(item.images) && item.images.length > 0" class="image">
+                        <div class="image-container">
+                            <div v-for="(i,key) in item.images" class="image-item" @click="tapImg(key,item.images)">
+                                <van-image
+                                  :src="i"
+                                  fit="cover"
+                                  radius = "5"
+                                  lazy-load
+                                />
+                            </div>
+                        </div>
+
+                        </div>
+                        <div class="date-container">
+                            <div class="button">
+
+                            </div>
                         </div>
                     </div>
 
-                    </div>
-                    <div class="date-container">
-                        <div class="date">
-                            <span>{{item.date}}</span>
-                        </div>
-                        <div class="button">
-
-                        </div>
-                    </div>
-
+                </div>
+                <div class="date">
+                    <span>{{item.date}}</span>
                 </div>
 
 
@@ -175,21 +174,24 @@
 }
 .item {
     position: relative;
+    padding: var(--com-padding-sm) 0;
 }
 .left-item {
-    width: 80%;
+    max-width: 80%;
     border-radius: 5px;
     background-color: white;
     padding: var(--com-padding-sm);
     margin-top: 20px;
+    display: inline-block;
 }
 .right-item {
-    width: 80%;
+    max-width: 80%;
     border-radius: 5px;
     background-color: var(--com-blue-grey);
     padding: var(--com-padding-sm);
     margin-left: auto;
     margin-top: 20px;
+    display: inline-block;
 }
 .right-item .user{
     color: var(--com-white);
@@ -229,10 +231,16 @@
     line-height: var(--com-font-size-xl);
     padding: var(--com-padding-sm) 0;
     color: var(--com-text-color-2);
+    /* 对连续过长的字母和数字进行强制换行*/
+    word-wrap: break-word;  /* 作用机制：首先新起一行来放置长单词，新的行还是放不下这个长单词则会对长单词进行强制断句，相当于仅对连续单词和数字断行，不包括空白*/
+
+    /* 对整个文本设置换行*/
+    word-break: break-all;  /* 作用机制：将整个文本包括空白在内视作一串，如果遇到边界，则强制换行*/
 }
 .date {
     padding-bottom: var(--com-padding-sm);
     color: var(--com-text-color-3);
+    text-align: center;
 
 }
 .right-item .date {

@@ -5,6 +5,15 @@
     >
 
     </jin-chat-panel>
+    <!-- 上传弹窗组 -->
+    <jin-message-creat-pop
+    :show.sync="onOff_messagePop"
+    :files.sync="inputImages"
+    explain = "上传图片时请保持横向"
+    @submit="uploadImage"
+    @delete = "deleteImage"
+    >
+    </jin-message-creat-pop>
   </div>
 </template>
 <script>
@@ -14,6 +23,7 @@ import { URL } from '@/web-config/apiUrl'
 // import { isUrl } from '@/utils/CheckUtils';
 import conf from '@/web-config/index';
 import JinChatPanel from '@/components/JinChatPanel.vue';
+import JinMessageCreatPop from '@/components/JinMessageCreatPop';
 
 // moudle 对象传送门https://www.cnblogs.com/tian-xie/p/7754186.html
 export default {
@@ -23,6 +33,7 @@ export default {
     Popup,
     'van-image': VanImage,
     'jin-chat-panel': JinChatPanel,
+    'jin-message-creat-pop': JinMessageCreatPop
 
   },
   // 当在相同路由中跳转，只是参数不同可以定义这个方法以重新执行读取数据
@@ -30,7 +41,7 @@ export default {
     // 对路由变化做出响应...
     // console.log("切换了路由参数");
     let id = to.params.id;
-    this.data.id = id;
+    this.id = id;
     this.getDatas( this.data.id );
   },
 
@@ -38,6 +49,8 @@ export default {
     return {
       id: 0,
       datas: [],
+      onOff_messagePop: !0,
+      inputImages: []
 
 
     }
@@ -72,9 +85,59 @@ export default {
         var res = datas.data
         self.datas = res.map( this.formatData );
       })
-    }
+    },
+    /**
+     * [deleteImage 删除图片]
+     * @param  {[type]} file [description]
+     * @return {[type]}      [description]
+     */
+    deleteImage ( file ) {
+      const id = file.id;
+      /*this.post(URL.api_imageDelete + id).then( res => {
+        console.log(res)
+      })*/
+    },
+    /**
+     * [uploadImage 上传图片]
+     * @param  {[type]} images [description]
+     * @return {[type]}        [description]
+     */
+    uploadImage ( images ) {
+      var self = this;
+      for (let i=0; i < images.length; i++) {
+        let image = images[i].image;
+        let target = NaN
+        for (let s=0; s<this.data.images.length; s++ ){
+          target = this.data.images[s].name == image.name?s :NaN;
+          if (target!==NaN && this.data.images[target]) {
+            this.data.images[target].status="uploading";
+            self.data.images[target].message = '上传中...';
+            break;
+          };
+        }
+        const param = new FormData();
+        param.append("image", image);
+        param.append("id", this.data.id);// 多态的imagesablie_id
+        param.append("model", 'construction');// 多态模型imagesable_type
+        axios.post(URL.api_imageUpload, param, {
+            headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
+            console.log(res);
+            if(res.data.success === true){
+              self.data.images[target].status = "";
+              self.data.images[target].url = res.data.url;
+              self.data.images[target].id = res.data.id;
+              self.$toast('上传成功');
+              console.log(self.data.images);
+            } else {
+              self.data.images[target].status = "failed";
+              self.$toast('上传失败');
+            }
+         });
 
-  },
+      }
+
+    }
+  }
 }
 </script>
 <style scoped>
