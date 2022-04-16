@@ -46,7 +46,7 @@
                 </van-uploader>
                 <div class="button-wrapper">
                     <div class="button-con">
-                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交{{form.images.length}}张图片</van-button>
+                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交</van-button>
                     </div>
                 </div>
             </div>
@@ -103,6 +103,10 @@
                 type: Number,
                 default: 2,
             },
+            mustReply: {
+                type: String,
+                default: '1',
+            },
             explain: {
                 type: String,
                 default: '',
@@ -137,14 +141,14 @@
         },
         data() {
             return {
-                // 所有显示中的图片
+                // 所有显示中的图片路径,不包括上传的图片
                 fileList: this.files,
                 popShow: this.show,
                 form: {
                     images: [],
                     receiver: this.receiver,
                     message: this.message,
-                    mustReply: '1',
+                    mustReply: this.mustReply,
                 },
 
             }
@@ -168,6 +172,10 @@
             },
             fileList ( nval ) {
                 this.$emit('update:files', nval);
+            },
+            receiver ( nval )
+            {
+                this.form.receiver = nval;
             }
 
 

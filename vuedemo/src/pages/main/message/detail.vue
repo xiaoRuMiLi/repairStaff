@@ -2,6 +2,7 @@
   <div>
     <jin-chat-panel
     :datas="datas"
+    @tapReply = "tapReply"
     >
 
     </jin-chat-panel>
@@ -9,8 +10,9 @@
     <jin-message-creat-pop
     :show.sync="onOff_messagePop"
     :files.sync="inputImages"
+    :receiver = "params.receiver"
     explain = "上传图片时请保持横向"
-    @submit="uploadImage"
+    @submit="creatMessage"
     @delete = "deleteImage"
     >
     </jin-message-creat-pop>
@@ -49,8 +51,9 @@ export default {
     return {
       id: 0,
       datas: [],
-      onOff_messagePop: !0,
-      inputImages: []
+      onOff_messagePop: !1,
+      inputImages: [],
+      params: {},
 
 
     }
@@ -71,6 +74,7 @@ export default {
     formatData: function (item) {
       let createrName = 'creater' in item? (typeof item.creater == 'object' && item.creater!=null)? item.creater.name: null: null;
       return {
+        id: item.id,
         name: createrName,
         onLeft: createrName == this.userInfo.userName? !1: !0,
         content: item.content,
@@ -97,39 +101,58 @@ export default {
         console.log(res)
       })*/
     },
+    /* 点击某一条消息的回复 */
+    tapReply ( id, key )
+    {
+      this.onOff_messagePop = !0;
+      this.params.id = id;
+      this.params.receiver = this.datas[key].name;
+    },
+    creatMessage ( form ) {
+      let images = form.images || [];
+      let params = {content: form.message, must_reply: form.mustReply, parent_id: this.params.id}
+      this.get(URL.api_messageReply,params).then( data=> {
+        let dat = typeof data == 'string'? JSON.parse( data ): data;
+        if( dat.data.hasOwnProperty('id')) {
+          this.uploadImage(images,'message',dat.data.id);
+        }
+      })
+    },
     /**
      * [uploadImage 上传图片]
      * @param  {[type]} images [description]
      * @return {[type]}        [description]
      */
-    uploadImage ( images ) {
+    uploadImage ( images, model, model_id ) {
+
       var self = this;
       for (let i=0; i < images.length; i++) {
         let image = images[i].image;
         let target = NaN
-        for (let s=0; s<this.data.images.length; s++ ){
-          target = this.data.images[s].name == image.name?s :NaN;
-          if (target!==NaN && this.data.images[target]) {
-            this.data.images[target].status="uploading";
-            self.data.images[target].message = '上传中...';
+        // 对应的图片显示上传提示
+        for (let s=0; s<this.inputImages.length; s++ ){
+          target = this.inputImages[s].name == image.name?s :NaN;
+          if (target!==NaN && this.inputImages[target]) {
+            this.inputImages[target].status="uploading";
+            self.inputImages[target].message = '上传中...';
             break;
           };
         }
         const param = new FormData();
         param.append("image", image);
-        param.append("id", this.data.id);// 多态的imagesablie_id
-        param.append("model", 'construction');// 多态模型imagesable_type
+        param.append("id", model_id);// 多态的imagesablie_id
+        param.append("model", model);// 多态模型imagesable_type
         axios.post(URL.api_imageUpload, param, {
             headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
             console.log(res);
             if(res.data.success === true){
-              self.data.images[target].status = "";
-              self.data.images[target].url = res.data.url;
-              self.data.images[target].id = res.data.id;
+              self.inputImages[target].status = "";
+              self.inputImages[target].url = res.data.url;
+              self.inputImages[target].id = res.data.id;
               self.$toast('上传成功');
-              console.log(self.data.images);
+              console.log(self.inputImages);
             } else {
-              self.data.images[target].status = "failed";
+              self.inputImages[target].status = "failed";
               self.$toast('上传失败');
             }
          });

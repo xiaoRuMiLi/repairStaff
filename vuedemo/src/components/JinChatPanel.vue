@@ -2,12 +2,13 @@
     <div class="jin-chat-pannel-wrapper">
         <div class="content">
 
-            <div v-for="(item, key) in datas" class="item">
+            <div v-for="(item, key) in datas" class="item" @click="tapItem(item, key)">
                 <div v-if="item.onLeft" class="left-item">
                     <div class='user'>
                         <span v-text="item.name"></span>
                     </div>
                     <div class="text">
+
                     {{item.content}}
 
                     </div>
@@ -26,10 +27,8 @@
                     </div>
                     <div class="date-container">
                         <div class="button">
-                            <van-button type="primary" size="mini">回复</van-button>
+                            <van-button type="primary" size="mini" @click="reply(item.id,key)">回复</van-button>
                         </div>
-
-
                     </div>
 
                 </div>
@@ -162,6 +161,15 @@
                 });
 
             },
+            /* 点击某一条 */
+            tapItem ( item, key ) {
+                this.$emit('tapItem',item,key);
+            },
+            /* 点击回复 */
+            reply (id, key)
+            {
+                this.$emit('tapReply', id, key );
+            }
 
 
         },
