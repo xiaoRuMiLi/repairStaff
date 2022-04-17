@@ -2,6 +2,7 @@
   <div>
     <jin-chat-panel
     :datas="datas"
+    ref = "panel"
     @tapReply = "tapReply"
     >
 
@@ -88,6 +89,7 @@ export default {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
         self.datas = res.map( this.formatData );
+        this.$refs.panel.toTop();
       })
     },
     /**
@@ -114,17 +116,21 @@ export default {
       this.get(URL.api_messageReply,params).then( data=> {
         let dat = typeof data == 'string'? JSON.parse( data ): data;
         if( dat.data.hasOwnProperty('id')) {
-          this.uploadImage(images,'message',dat.data.id);
+          // 添加到显示
+          dat.data.images = [];
+          this.datas.push(dat.data);
+          if (images.length > 0) {
+            this.uploadImage(images,'message',dat.data.id);
+          }
+          this.$refs.panel.toTop();
         }
       })
     },
     /**
      * [uploadImage 上传图片]
-     * @param  {[type]} images [description]
-     * @return {[type]}        [description]
+     *
      */
     uploadImage ( images, model, model_id ) {
-
       var self = this;
       for (let i=0; i < images.length; i++) {
         let image = images[i].image;
@@ -144,13 +150,15 @@ export default {
         param.append("model", model);// 多态模型imagesable_type
         axios.post(URL.api_imageUpload, param, {
             headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
-            console.log(res);
             if(res.data.success === true){
               self.inputImages[target].status = "";
               self.inputImages[target].url = res.data.url;
               self.inputImages[target].id = res.data.id;
+              let lastMessage = self.datas[self.datas.length - 1];
+              if(lastMessage.hasOwnProperty('images') && Array.isArray(lastMessage.images)){
+                lastMessage.images.push(res.data.url);
+              } 
               self.$toast('上传成功');
-              console.log(self.inputImages);
             } else {
               self.inputImages[target].status = "failed";
               self.$toast('上传失败');

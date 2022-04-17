@@ -96,14 +96,15 @@ export default {
   },
   /* 判断是否是从详情页过来的，如果是那么不刷新页面 */
   beforeRouteEnter(to, from, next) {
-      if(from.name === 'construction') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
-          to.meta.isBack = true;
-      }
-      next();
+    if(from.name === 'messageDetail') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
+      to.meta.isBack = true;
+    }
+    next();
   },
-  // activated 是本页面切换为当前页面事件
+  // activated 一进入当前页面页面事件，就会触发事件
   // 如果是从详情页过来的，不用刷新页面
   activated() {
+    console.log('this.$route',this.$route);
     if(!this.$route.meta.isBack) {
       // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
       this.getDatas(); // ajax获取数据方法

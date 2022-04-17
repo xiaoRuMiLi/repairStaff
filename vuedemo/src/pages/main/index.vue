@@ -10,7 +10,7 @@
     />
 
     <!-- 二级路由插槽 -->
-    <router-view></router-view>
+    <router-view ></router-view>
     <!-- 标签栏支持路由模式，用于搭配vue-router使用。路由模式下会匹配页面路径和标签的to属性，并自动选中对应的标签 -->
     <van-tabbar route v-model="active" :active-color="otherInfo.iconActiveColor" :color="otherInfo.iconUnifiedStyleColor" >
       <van-tabbar-item icon="home-o" name="home" to="/home">首页</van-tabbar-item>

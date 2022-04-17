@@ -1,6 +1,6 @@
 <template>
     <div class="jin-chat-pannel-wrapper">
-        <div class="content">
+        <div class="content" ref="content" style="overflow:scroll;height:100%;">
 
             <div v-for="(item, key) in datas" class="item" @click="tapItem(item, key)">
                 <div v-if="item.onLeft" class="left-item">
@@ -159,7 +159,6 @@
                   closeable: true,
                   startPosition: index,
                 });
-
             },
             /* 点击某一条 */
             tapItem ( item, key ) {
@@ -169,7 +168,20 @@
             reply (id, key)
             {
                 this.$emit('tapReply', id, key );
+            },
+            toTop () {
+                
+                // this.$refs.content.scrollTop = this.$refs.content.scrollHeight;
+                let timer = setInterval(() => {               
+                    let ispeed = Math.floor(this.$refs.content.scrollHeight / 20);    
+                    this.$refs.content.scrollTop = this.$refs.content.scrollTop + ispeed
+                    // console.log(this.$refs.content.clientHeight,this.$refs.content.scrollTop,this.$refs.content.scrollHeight);
+                    if (this.$refs.content.scrollTop >= (this.$refs.content.scrollHeight - this.$refs.content.clientHeight)) {
+                      clearInterval(timer)
+                    }
+                }, 16)
             }
+
 
 
         },
@@ -179,6 +191,11 @@
 <style scoped>
 .jin-chat-pannel-wrapper {
     padding: var(--com-padding-md);
+    height: 100%;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+
 }
 .item {
     position: relative;
@@ -216,8 +233,6 @@
 }
 .content {
     background-color: var(--com-background-color);
-
-
 }
 .image {
     padding-bottom: var(--com-padding-sm);
@@ -261,6 +276,9 @@
     display: flex;
     justify-content: flex-start;
     text-align: right;
+}
+.space-white {
+    height: 100px;
 }
 
 </style>
