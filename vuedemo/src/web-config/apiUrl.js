@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-04-16 21:25:42
+* @Last Modified time: 2022-04-17 20:33:38
 */
 
 'use strict';
@@ -50,8 +50,10 @@ const URL = {
     api_messageShow: API_BASE_URL + '/api/v1/message/show/',
     /*----------------------------------- 同一主题的而消息 -----------------------------------*/
     api_getMessagesByMorph: API_BASE_URL + '/api/v1/message/get_messages_by_morph/',
-     /*----------------------------------- 回复一条消息 -----------------------------------*/
+    /*----------------------------------- 回复一条消息 -----------------------------------*/
     api_messageReply: API_BASE_URL + '/api/v1/message/reply',
+    /*----------------------------------- 一条消息标记已读 -----------------------------------*/
+    api_messageRead: API_BASE_URL + '/api/v1/message/read/',
 }
 // export default 在其他文件引入时语法是 import 别名 from @/web-config/apiUrl 不能使用 import  { Url } from @/web-config/apiUrl. 要这样引用不能加default关键字
 export {

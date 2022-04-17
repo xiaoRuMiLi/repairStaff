@@ -194,7 +194,7 @@ export default {
         name: item.creater && item.creater.name,
         avatar: item.creater && item.creater.avatarUrl,
         message: item.content,
-        count: Array('无需回复','需要回复')[item.must_reply],
+        count: item.must_reply?Array('无需回复','需要回复')[item.must_reply]:0,
         dateTime: item.created_at,
       };
     },

@@ -4,6 +4,7 @@
     :datas="datas"
     ref = "panel"
     @tapReply = "tapReply"
+    @tapRead = "tapRead"
     >
 
     </jin-chat-panel>
@@ -21,7 +22,8 @@
 </template>
 <script>
 import axios from 'axios'
-import { Popup, Image as VanImage } from 'vant';
+import { Popup, Image as VanImage, Toast } from 'vant';
+import Vue from 'vue';
 import { URL } from '@/web-config/apiUrl'
 // import { isUrl } from '@/utils/CheckUtils';
 import conf from '@/web-config/index';
@@ -80,6 +82,8 @@ export default {
         onLeft: createrName == this.userInfo.userName? !1: !0,
         content: item.content,
         images: item.images.map((i)=>i.url),
+        read_at: item.read_at,
+        reply_at: item.reply_at,
         date: item.created_at,
       }
     },
@@ -109,6 +113,19 @@ export default {
       this.onOff_messagePop = !0;
       this.params.id = id;
       this.params.receiver = this.datas[key].name;
+    },
+    tapRead ( id, key )
+    {
+      var self = this;
+      this.get(URL.api_messageRead + id).then( res=> {
+        if( res.status == 'success' ) {
+          Toast(this.language.success);
+          console.log(res.data);
+          console.log(self.datas[key],res.data);
+          Vue.set(self.datas[key],'read_at',res.data.read_at)
+          self.datas[key].read_at = res.data.read_at;
+        }
+      })
     },
     creatMessage ( form ) {
       let images = form.images || [];
@@ -157,7 +174,7 @@ export default {
               let lastMessage = self.datas[self.datas.length - 1];
               if(lastMessage.hasOwnProperty('images') && Array.isArray(lastMessage.images)){
                 lastMessage.images.push(res.data.url);
-              } 
+              }
               self.$toast('上传成功');
             } else {
               self.inputImages[target].status = "failed";

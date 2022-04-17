@@ -25,9 +25,12 @@
                     </div>
 
                     </div>
-                    <div class="date-container">
+                    <div class="button-container">
                         <div class="button">
-                            <van-button type="primary" size="mini" @click="reply(item.id,key)">回复</van-button>
+                            <van-button :type="item.reply_at && item.must_reply?'primary':'danger'" size="mini" @click="reply(item.id,key)">回复</van-button>
+                        </div>
+                        <div v-if="!item.read_at" class="button">
+                            <van-button type="primary" size="mini" @click="read(item.id,key)">已读</van-button>
                         </div>
                     </div>
 
@@ -54,7 +57,7 @@
                         </div>
 
                         </div>
-                        <div class="date-container">
+                        <div class="button-container">
                             <div class="button">
 
                             </div>
@@ -169,11 +172,15 @@
             {
                 this.$emit('tapReply', id, key );
             },
+            read (id, key )
+            {
+                this.$emit('tapRead', id, key );
+            },
             toTop () {
-                
+
                 // this.$refs.content.scrollTop = this.$refs.content.scrollHeight;
-                let timer = setInterval(() => {               
-                    let ispeed = Math.floor(this.$refs.content.scrollHeight / 20);    
+                let timer = setInterval(() => {
+                    let ispeed = Math.floor(this.$refs.content.scrollHeight / 20);
                     this.$refs.content.scrollTop = this.$refs.content.scrollTop + ispeed
                     // console.log(this.$refs.content.clientHeight,this.$refs.content.scrollTop,this.$refs.content.scrollHeight);
                     if (this.$refs.content.scrollTop >= (this.$refs.content.scrollHeight - this.$refs.content.clientHeight)) {
@@ -181,8 +188,6 @@
                     }
                 }, 16)
             }
-
-
 
         },
     }
@@ -272,10 +277,14 @@
 .right-item .user {
     text-align: right;
 }
+.button-container {
+    display: flex;
+}
 .button {
     display: flex;
     justify-content: flex-start;
     text-align: right;
+    padding: var(--com-padding-base);
 }
 .space-white {
     height: 100px;

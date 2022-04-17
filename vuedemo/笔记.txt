@@ -98,7 +98,35 @@ npm使用
 	npm install -save moduleName # -save 的意思是将模块安装到项目目录下，并在package文件的dependencies节点写入依赖。这个是上线必须要使用的包使用该命令
 	npm install -save-dev moduleName # -save-dev 的意思是将模块安装到项目目录下，并在package文件的devDependencies节点写入依赖。开发中使用的包上线不需要使用的就用这个命令
 	传送门 https://www.cnblogs.com/limitcode/p/7906447.html
+git
 
+   报错  cannot lock ref 'refs/remotes/origin/master': unable to resolve reference 'refs/remotes/origin/master': reference broken
+       解决方法
+            **第一步：**删除到.git目录下的master文件
+            rm ./.git/refs/remotes/origin/master
+
+            **第二步：**抓取远程仓库最新代码
+            git fetch
+
+            **第三步：**远程分支内容合并到本地master分支下
+            git merge origin/master
+            至此，成功将远程的最新代码，pull到本地
+
+        传送门 https://blog.csdn.net/weixin_42168046/article/details/103649904
+js
+    判断为假
+        typeof(undefined) == 'undefined'
+        typeof(null) == 'object'
+        typeof("") == 'string'
+        typeof(0) == 'number'
+        typeof(false) == 'boolean'
+        这五个值的共同点是，在if语句中做判断，都会执行false分支。当然从广义上来看，是说明这些数值都是其对应数据类型上的无效值或空值。还有这五个值作!运算，结果全为：true。
+
+        这几个值中也有不同，其中undefined和null比较特殊，虽然null的类型是object，但是null不具有任何对象的特性，就是说我们并不能执行null.toString()、null.constructor等对象实例的默认调用。所以从这个意义上来说，null和undefined有最大的相似性。看看null == undefined的结果(true)也就更加能说明这点。不过相似归相似，还是有区别的，就是和数字运算时，10 + null结果为：10；10 + undefined结果为：NaN。
+
+        另外""、0和false虽然在if语句表现为"假值"，可它们都是有意义数据，只是被作为了"空值"或"假值"，因为："".toString()，(0).toString()和false.toString()都是合法的可执行表达式。
+
+        其实这5个值在上面所说的这些差异里，并不太会给程流程控制带来太大的问题，那么要区分它们什么呢？需要注意区分的是这些值在转换为String时的差异是比较大的，它们到String的转换关系是：
 报错
     npm run dev 报错
         错误码
