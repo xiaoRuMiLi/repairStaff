@@ -194,7 +194,7 @@ export default {
         name: item.creater && item.creater.name,
         avatar: item.creater && item.creater.avatarUrl,
         message: item.content,
-        count: item.must_reply?Array('无需回复','需要回复')[item.must_reply]:0,
+        count: item.must_reply && !item.reply_at? Array(this.language.notNeedReply,this.language.needReply)[item.must_reply]:0,
         dateTime: item.created_at,
       };
     },
@@ -206,7 +206,7 @@ export default {
       params.page = pageNumber;
       params.message_type = self.inputs.active;
       self.onOff.loading = !0;
-      console.log('params:', this.params );
+      // console.log('params:', this.params );
       this.get ( URL.api_messageSearch, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data

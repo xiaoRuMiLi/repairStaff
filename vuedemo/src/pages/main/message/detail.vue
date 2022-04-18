@@ -84,6 +84,7 @@ export default {
         images: item.images.map((i)=>i.url),
         read_at: item.read_at,
         reply_at: item.reply_at,
+        must_reply: item.must_reply,
         date: item.created_at,
       }
     },

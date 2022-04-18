@@ -127,13 +127,18 @@
 
     }
     .content-container .message {
+        /*设置文本两行后多余的用省略号*/
         font-size: var(--com-font-size-sm);
         color: var(--com-text-color-2);
-        text-overflow: ellipsis;
         overflow: hidden;
-        padding: 5px;
-        white-space: nowrap;
-
+        padding: 0px 5px;
+        text-overflow: -o-ellipsis-lastline;
+        display: -webkit-box;
+        display: box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        box-sizing: border-box;
     }
     .message-number {
        padding: 5px 0;
