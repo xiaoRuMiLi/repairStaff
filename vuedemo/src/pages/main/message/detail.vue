@@ -1,12 +1,16 @@
 <template>
   <div>
+    <div class="main-info">
+      <div v-for="(val,key) in messageable">
+         {{key}}: {{val}}
+      </div>
+    </div>
     <jin-chat-panel
     :datas="datas"
     ref = "panel"
     @tapReply = "tapReply"
     @tapRead = "tapRead"
     >
-
     </jin-chat-panel>
     <!-- 上传弹窗组 -->
     <jin-message-creat-pop
@@ -22,13 +26,14 @@
 </template>
 <script>
 import axios from 'axios'
-import { Popup, Image as VanImage, Toast } from 'vant';
+import { Popup, Image as VanImage, Skeleton, Toast } from 'vant';
 import Vue from 'vue';
 import { URL } from '@/web-config/apiUrl'
 // import { isUrl } from '@/utils/CheckUtils';
 import conf from '@/web-config/index';
 import JinChatPanel from '@/components/JinChatPanel.vue';
 import JinMessageCreatPop from '@/components/JinMessageCreatPop';
+import JinBasicInfo from '@/components/JinBasicInfo';
 
 // moudle 对象传送门https://www.cnblogs.com/tian-xie/p/7754186.html
 export default {
@@ -38,7 +43,9 @@ export default {
     Popup,
     'van-image': VanImage,
     'jin-chat-panel': JinChatPanel,
-    'jin-message-creat-pop': JinMessageCreatPop
+    'jin-message-creat-pop': JinMessageCreatPop,
+    'van-skeleton': Skeleton,
+    'jin-basic-info': JinBasicInfo,
 
   },
   // 当在相同路由中跳转，只是参数不同可以定义这个方法以重新执行读取数据
@@ -54,6 +61,7 @@ export default {
     return {
       id: 0,
       datas: [],
+      messageable: {},
       onOff_messagePop: !1,
       inputImages: [],
       params: {},
@@ -86,7 +94,28 @@ export default {
         reply_at: item.reply_at,
         must_reply: item.must_reply,
         date: item.created_at,
+        messageable: item.messageable,
+        messageable_type: item.messageable_type
       }
+    },
+    formatMessageable: function (messageable,model) {
+      let result = {};
+      console.log(model);
+      switch ( model ) {
+        case 'App\\Models\\Construction':
+          result = {
+            id: messageable.id,
+            name: '施工单',
+            type: 'construction',
+            car_number: messageable.car_number,
+            car_mode: messageable.car_mode,
+          }
+          console.log(result)
+          break;
+        default:
+          break;
+      }
+      return result;
     },
     getDatas: function ( id ) {
       let self = this;
@@ -94,6 +123,12 @@ export default {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
         self.datas = res.map( this.formatData );
+        if ( self.datas.length > 0 && 'messageable' in self.datas[0]) {
+          let messageable = self.datas[0].messageable;
+          let model = self.datas[0].messageable_type;
+          self.messageable = self.formatMessageable(messageable,model)
+          console.log(self.messageable);
+        }
         this.$refs.panel.toTop();
       })
     },
@@ -265,6 +300,13 @@ export default {
 }
 .button-wrapper .button-con {
   width: 100%;
+}
+.main-info {
+  padding: var(--van-padding-md);
+}
+.main-info div {
+  padding: 0 var(--van-padding-sm);
+  font-size: var(--van-font-size-md);
 }
 
 
