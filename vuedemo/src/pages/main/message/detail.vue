@@ -1,8 +1,14 @@
 <template>
   <div>
     <div class="main-info">
-      <div v-for="(val,key) in messageable">
-         {{key}}: {{val}}
+      <div v-for="(val,key) in messageable" class="content">
+        <div class="title">
+          {{key}}
+        </div>
+        <div class="val">
+          {{val}}
+        </div>
+         
       </div>
     </div>
     <jin-chat-panel
@@ -303,12 +309,32 @@ export default {
 }
 .main-info {
   padding: var(--van-padding-md);
+
 }
-.main-info div {
+.main-info .content {
   padding: 0 var(--van-padding-sm);
   font-size: var(--van-font-size-md);
-}
+  position: relative;
 
+}
+.main-info .content {
+  display: flex;
+}
+.main-info .title {
+  width: 30%;
+  /* text-align justify 被设置元素必须有一个元素兄弟元素, 貌似只对中文有效 */
+  text-align-last: justify;
+  text-align: justify;
+  padding: 0 var(--van-padding-sm);
+  color: var(--van-text-color);
+  font-size: var(--van-font-size-md);
+}
+.main-info .val {
+  width: 70%;
+  padding: 0 var(--van-padding-sm);
+  color: var(--van-text-color-2);
+  font-size: var(--van-font-size-sm);
+}
 
 
 </style>

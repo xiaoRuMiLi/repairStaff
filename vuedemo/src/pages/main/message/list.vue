@@ -102,7 +102,7 @@ export default {
     next();
   },
   // activated 一进入当前页面页面事件，就会触发事件
-  // 如果是从详情页过来的，不用刷新页面
+  // 如果是从详情页过来的，不用刷新页面,如果本路由没有设置keep-alive 为true，则该生命周期函数不会被调用，如果上一个路由，也就是from Keep-alive属性为true，该函数也不会被调用
   activated() {
     console.log('this.$route',this.$route);
     if(!this.$route.meta.isBack) {
