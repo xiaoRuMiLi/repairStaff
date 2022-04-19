@@ -10,6 +10,7 @@
         @textTap = "toMsg"
         :numbers = "nums"
         hideBack
+        @avatarSet = "avatarSet"
         />
         <div class="content-father">
             <div class="content">
@@ -17,6 +18,13 @@
                     <div class="title" >{{language.setUp}}</div>
                     <van-cell title-class="cell-title" is-link title="账户信息" value="" />
                     <van-cell title-class="cell-title" is-link title="退出登录" value="" @click="loginOut"/>
+                </van-cell-group>
+
+            </div>
+            <div class="content">
+                <van-cell-group>
+                    <div class="title" >{{language.chart}}</div>
+                    <van-cell title-class="cell-title" is-link :title="language.constructionChart" value="" @click="toChart"/>
                 </van-cell-group>
 
             </div>
@@ -33,7 +41,7 @@
     import JinRemberMe from '@/components/JinRemberMe';
     import { URL } from '@/web-config/apiUrl'
     export default {
-        name: 'login',
+        name: 'mine',
         mixins: [require( '@/mixins').default],
         components: {
             Icon,
@@ -102,6 +110,12 @@
                     // on cancel
                 });
 
+            },
+            toChart () {
+                this.$router.push({path: "chart"});
+            },
+            avatarSet () {
+                this.$router.push( {path: "mine/avatarset"});
             }
 
 

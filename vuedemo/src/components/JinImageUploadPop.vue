@@ -18,6 +18,7 @@
                 :max-size="maxSize"
                 :before-read="beforeUpload"
                 :after-read="afterRead"
+                :max-count="maxCount"
                 v-model="fileList"
                 @delete="del"
                 >
@@ -61,6 +62,11 @@
             maxSize: {
                 type: Number,
                 default: 60000000000,
+            },
+            maxCount: {
+                type: Number,
+                default: 16,
+
             },
             explain: {
                 type: String,

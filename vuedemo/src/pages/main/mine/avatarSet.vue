@@ -1,33 +1,64 @@
 <template>
-  <div>
+  <div class="wrapper">
+    <div class="image-container">
+    <van-image
+      round
+      width="200"
+      height="200"
+      :src="images[0].url"
+      @click="popUp"
+    />
+    </div>
+    <jin-upload-pop
+    :show.sync="onOff_imagePop"
+    :files.sync="images"
+    explain = "上传图片时请保持横向"
+    :maxCount = "1"
+    @upload="uploadImage"
+    @delete = "deleteImage"
+    />
 
+    <div class="button-container">
+      <van-button type="primary" size="large" @click="submit">提交</van-button>
+    </div>
   </div>
 </template>
+<style scoped>
+  .wrapper {
+    padding: var(--van-padding-lg);
+  }
+  .image-container {
+    text-align: center;
+    padding: 50px 50px 150px 50px;
+
+  }
+
+</style>
 <script>
 import axios from 'axios'
-import { Popup } from 'vant';
+import { Popup, Image as VanImage, Button } from 'vant';
 import { URL } from '@/web-config/apiUrl';
 import conf from '@/web-config/index';
+import JinImageUploadPop from '@/components/JinImageUploadPop';
 export default {
-  name: 'construction',
+  name: 'avatarSet',
   mixins : [ require ( "@/mixins" ).default],
   components: {
+     VanImage,
+     Button,
+     'jin-upload-pop': JinImageUploadPop,
+     'van-button': Button,
 
   },
   data () {
     return {
       // 提交到后端的参数
       params: {},
-      onOff:{
-        // 弹出右侧弹层
-        showPop: !1,
-        // 列表下方读取中动画
-        loading: true,
-        finished: false,
-      },
+      onOff_imagePop: !1,
       inputs: {
 
       },
+      images: [{url: "https://cdn.jsdelivr.net/npm/@vant/assets/cat.jpeg" }],
       datas: [
 
       ]
@@ -62,11 +93,30 @@ export default {
 
   created() {},
 
-  mounted() {},
+  mounted() {
+    this.getData();
+  },
 
   unmounted() {},
 
   methods: {
+    getData () {
+      console.log(this.userInfo);
+      const url = this.userInfo.avatarUrl;
+      this.images = [{url}];
+
+    },
+    uploadImage () {
+
+    },
+    deleteImage (){
+    },
+    submit () {
+
+    },
+    popUp (){
+      this.onOff_imagePop = !0;
+    }
 
 
   },

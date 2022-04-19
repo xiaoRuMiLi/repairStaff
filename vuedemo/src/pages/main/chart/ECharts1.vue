@@ -79,8 +79,8 @@ export default {
     //初始化图表
     init_echarts1() {
       var chartData = {
-        title: "某地区蒸发量和降水量",
-        legendData: ["蒸发量", "降水量"],
+        title: "",
+        legendData: ["", ""],
         xData: [
           "1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月",],
         seriesData: [],

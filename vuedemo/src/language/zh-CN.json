@@ -1,5 +1,7 @@
 {
   "" : "" ,
+  "chart" : "报表",
+  "constructionChart": "施工报表",
   "requestResult" : "请求结果" ,
   "unifiedStyle" : "统一风格" ,
   "excelExport" : "excel导出" ,

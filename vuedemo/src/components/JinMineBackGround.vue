@@ -25,7 +25,7 @@
                   height="60px"
                   :src="avatar"
                 />
-                <i class="van-icon van-icon-edit"></i>
+                <i class="van-icon van-icon-edit" @click="avatarSet"></i>
             </div>
         </div>
         <div class="bottom-content">
@@ -222,6 +222,9 @@
             },
             avatarTap () {
                 this.$emit('avatarTap');
+            },
+            avatarSet () {
+                this.$emit('avatarSet')
             }
         },
     }

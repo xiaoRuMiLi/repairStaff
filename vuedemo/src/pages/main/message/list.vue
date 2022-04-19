@@ -58,7 +58,7 @@ import JinChatListItem from '@/components/JinChatListItem.vue'
 import conf from '@/web-config/index';
 
 export default {
-  name: 'orderPage',
+  name: 'messageList',
   mixins : [ require ( "@/mixins" ).default],
   components: {
     List,
