@@ -116,8 +116,35 @@ export function fetchGet ( url , param , form ) {
             } )
     } )
 }
+////返回一个Promise 上传资料
+export function fetchUpload ( url , param  ) {
+    let reqTime = new Date ().getTime ();
+    if ( param ) {
+        param.reqTime = reqTime;
+    } else {
+        param = { reqTime }
+    }
+
+    param = formData ( param );
+
+    return new Promise ( ( resolve , reject ) => {
+        const headers = { "Content-Type": "multipart/form-data"};
+        axios.post ( url , param ,{headers: headers} )
+            .then ( response => {
+                resolve ( response )
+            } , err => {
+                reject ( err )
+                mes ();
+            } )
+            .catch ( ( error ) => {
+                reject ( error )
+                mes ();
+            } )
+    } )
+}
 
 export default {
     fetchPost ,
     fetchGet ,
+    fetchUpload ,
 }

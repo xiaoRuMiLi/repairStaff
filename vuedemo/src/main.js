@@ -9,7 +9,7 @@ import './VuePrototype';
 import './VueFilters';
 /* 使用vue的时候，后台可能不能及时作出接口，那么就需要我们前端自己模拟数据，使用mockjs可以进行模拟数据。 */
 // import './mock';
-import { fetchPost, fetchGet } from './http';
+import { fetchPost, fetchGet, fetchUpload } from './http';
 import { setLocal , getLocal , clearLocal } from "@/function";
 import './routeguard';
 // import "./allcss.css"; // 饿了吗的样式库
@@ -27,6 +27,7 @@ import vuescroll from 'vuescroll';
 //console.log("当前环境变量："+process.env.NODE_ENV) 和   console.log("当前环境路径："+process.env.VUE_APP_URL);
 Vue.prototype.$Post = fetchPost
 Vue.prototype.$Get = fetchGet
+Vue.prototype.$Upload = fetchUpload
 Vue.component('BaseNavBar', BaseNavBar)
 Vue.component('BaseTopTabs', BaseTopTabs)
 Vue.component('JhRefreshView', JhRefreshView)
@@ -41,7 +42,7 @@ Vue.config.productionTip = false
 /* 读取localstage 数据到store */
 let userMemory = getLocal("userMemory");
 //console.log('userMemory is true: ', Vue.$isTrue(userMemory));
-if (userMemory) {  
+if (userMemory) {
     store.dispatch ( "upVuex" , {
         mutations : "setOtherInfo" ,
         value : userMemory.otherInfo
@@ -58,8 +59,8 @@ if (userMemory) {
         mutations : "setLanguage" ,
         value : userMemory.language // 简要信息
     } );
-} 
-     
+}
+
 new Vue({
   el: '#app',
   router,

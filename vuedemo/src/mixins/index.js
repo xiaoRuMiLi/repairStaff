@@ -116,6 +116,28 @@ let m = {
                 } );
             } );
         } ,
+        // 第二个参数会被转换成formdata
+        upload ( u, p, ts ) {
+            let that = this;
+            return new Promise( ( resolve, reject ) => {
+                this.$Upload ( this.h + u , p ).then ( res => {
+                    // 对返回数据进行预处理
+                    that.backRequest ( u , res , ts );
+                    resolve ( res )
+                } ).catch ( ( e ) => {
+                    reject ( e )
+                } );
+
+            })
+
+        },
+        /**
+         * [backRequest 返回数据预处理,调用this.$log函数打印服务器返回的值，根据返回码，弹出服务器返回的消息]
+         * @param  {[type]} u   [访问服务器接口，也就是post方法的url]
+         * @param  {[type]} res [服务返回数据]
+         * @param  {[type]} ts  [是否页面上方弹出notify弹窗，true 弹出，false 不弹出]
+         * @return {[type]}     [description]
+         */
         backRequest ( u , res , ts ) {
             this.$log ( {
                 u ,

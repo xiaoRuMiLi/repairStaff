@@ -5,7 +5,7 @@
       round
       width="200"
       height="200"
-      :src="images[0].url"
+      :src="images.length > 0? 'url' in images[0]? images[0].url: '': ''"
       @click="popUp"
     />
     </div>
@@ -40,6 +40,8 @@ import { Popup, Image as VanImage, Button } from 'vant';
 import { URL } from '@/web-config/apiUrl';
 import conf from '@/web-config/index';
 import JinImageUploadPop from '@/components/JinImageUploadPop';
+/* setLocal 保存数据到本地 getLocal 获取数据 clearLocal 清除数据*/
+import { setLocal , getLocal , clearLocal, validator } from "@/function";
 export default {
   name: 'avatarSet',
   mixins : [ require ( "@/mixins" ).default],
@@ -106,7 +108,48 @@ export default {
       this.images = [{url}];
 
     },
-    uploadImage () {
+    uploadImage (images) {
+      let self = this;
+      console.log('this.images',this.images);
+      console.log('images',images)
+      let image = images[0].image;
+
+      self.images[0].status="uploading";
+      self.images[0].message = '上传中...';
+      let form = {"image": image};
+      // p params 和 f form 共同组成 axios的 params 参数， ts 为true 弹出上方提示框
+      self.upload( URL.api_userSetAvatar, form ).then( res => {
+        console.log(res);
+        if(typeof res.data === 'object'){
+          const data  = res.data;
+          /* 页面刷新后 修改的user_info就不会被存在
+           刷新页面时,vue实例重新加载,从而,store也被重置了。store是用来存储组件状态的,而不是用来做本地数据存储的。所以,对于不希望页面刷新之后被重置的数据,使用本地存储来进行存储。*/
+          let userInfo = {avatarUrl: data.avatarUrl}
+          self.setUserInfo ( userInfo );
+
+          /* setLocal 保存数据到本地,永久存储
+               使用的window.localStorage,
+               params 1 为保存的键名
+               param 2 为保存的值,
+          */
+          setLocal ( "userMemory" , {
+              userInfo : self.userInfo ,
+              otherInfo : self.otherInfo ,
+              language : self.languageSet
+          } );
+
+
+          self.images[0].status = "";
+          self.images[0].url = res.data.avatarUrl;
+          self.$toast('上传成功');
+          console.log(self.images);
+        } else {
+          self.images[0].status = "failed";
+          self.$toast('上传失败');
+        }
+
+      })
+      console.log(this.images);
 
     },
     deleteImage (){
