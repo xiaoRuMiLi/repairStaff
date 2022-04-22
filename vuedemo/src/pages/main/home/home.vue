@@ -6,23 +6,25 @@
       <van-swipe-item>3</van-swipe-item>
       <van-swipe-item>4</van-swipe-item>
     </van-swipe>
-    <van-notice-bar scrollable text="技术是开发它的人的共同灵魂。" />
-    <jin-remind :remind-title = "task.title">
-      <template slot="item">
-        <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
-        <jin-remind-item v-for="( item , key ) in task.datas" :num = "item.num" :msg="item.msg" :ind="key" :key="key" @click-item="clickItem">
-  
-        </jin-remind-item>
-      </template>
-    </jin-remind>
-    <jin-remind :remind-title = "repair.title">
-      <template slot="item">
-        <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
-        <jin-remind-item v-for="( item , key ) in repair.datas" :num = "item.num" :msg="item.msg" :ind="key" :key="key" @click-item="clickItem">
-  
-        </jin-remind-item>
-      </template>
-    </jin-remind>
+    <div class="content">
+      <van-notice-bar scrollable text="技术是开发它的人的共同灵魂。" />
+      <jin-remind :remind-title = "task.title">
+        <template slot="item">
+          <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
+          <jin-remind-item v-for="( item , key ) in task.datas" :num = "item.num" :msg="item.msg" :ind="key" :key="key" @click-item="clickItem">
+    
+          </jin-remind-item>
+        </template>
+      </jin-remind>
+      <jin-remind :remind-title = "repair.title">
+        <template slot="item">
+          <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
+          <jin-remind-item v-for="( item , key ) in repair.datas" :num = "item.num" :msg="item.msg" :ind="key" :key="key" @click-item="clickItem">
+    
+          </jin-remind-item>
+        </template>
+      </jin-remind>
+  </div>
   </div>
 </template>
 
@@ -101,6 +103,9 @@ export default {
     line-height: 150px;
     text-align: center;
     background-color: #39a9ed;
+  }
+  .content {
+    padding: var(--van-padding-sm);
   }
 </style>
 

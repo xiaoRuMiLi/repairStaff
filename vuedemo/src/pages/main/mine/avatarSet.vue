@@ -19,7 +19,7 @@
     />
 
     <div class="button-container">
-      <van-button type="primary" size="large" @click="submit">提交</van-button>
+      <van-button type="primary" size="large" @click="popUp">{{language.changeAvatar}}</van-button>
     </div>
   </div>
 </template>

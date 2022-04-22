@@ -32,7 +32,9 @@ const URL = {
     /*----------------------------------- 施工单修改备注 -----------------------------------*/
     api_constructionSetRemarks: API_BASE_URL + '/api/v1/construction_set_remarks/',/*{id}, //  - post
     /*----------------------------------- 按月获取近两年施工单金额合计 -----------------------------------*/
-    api_constructionGetTotalGroupByMoon: API_BASE_URL + '/api/v1/get_total_group_by_moon',
+    api_constructionGetTotalGroupByMoon: API_BASE_URL + '/api/v1/get_total_group_by_moon', 
+    /*----------------------------------- 分享接口调用 -----------------------------------*/
+    api_getWxShareTicket: '/url/weChat/index.php', // 临时接口上线时需要修改
 
     /*----------------------------------- 登陆 -----------------------------------*/
     api_login: API_BASE_URL + '/api/v1/loginApi2',/*{id}, //  - post
