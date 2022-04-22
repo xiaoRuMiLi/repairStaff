@@ -11,8 +11,8 @@
       <jin-remind :remind-title = "task.title">
         <template slot="item">
           <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
-          <jin-remind-item v-for="( item , key ) in task.datas" :num = "item.num" :msg="item.msg" :ind="key" :key="key" @click-item="clickItem">
-    
+          <jin-remind-item v-for="( item , key ) in task.datas" :num = "item.num" :msg="item.msg" :ind="key" :key="key" @click-item="clickEvent">
+
           </jin-remind-item>
         </template>
       </jin-remind>
@@ -20,7 +20,7 @@
         <template slot="item">
           <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
           <jin-remind-item v-for="( item , key ) in repair.datas" :num = "item.num" :msg="item.msg" :ind="key" :key="key" @click-item="clickItem">
-    
+
           </jin-remind-item>
         </template>
       </jin-remind>
@@ -41,12 +41,12 @@ export default {
     'jin-remind': jinRemind,
     "van-notice-bar": NoticeBar,
     'jin-remind-item': jinRemindItem,
-    'van-swipe': Swipe, 
+    'van-swipe': Swipe,
     'van-swipe-item': SwipeItem
   },
   data () {
     return {
-      task:{ 
+      task:{
         title: '代办事项',
         datas: [
           { num: 10,
@@ -55,7 +55,7 @@ export default {
           { num: 20,
             msg:"等待接单"
           },
-          
+
         ],
         active: 0,
       },
@@ -74,7 +74,7 @@ export default {
 
         ]
       }
-      
+
     }
   },
   methods: {
@@ -84,16 +84,29 @@ export default {
     onClickRight() {
       Toast('按钮');
     },
-    clickItem( key ) { 
+    clickItem( key ) {
       console.log( key );
     },
-    
-    
+    clickEvent( key ) {
+      switch ( key )
+      {
+        case 0:
+            this.$router.push( { path: `message/list`, query: { message_type: 2 } } );
+            break;
+        case 1:
+            this.$router.push( { path: `order`, query: { construction_type: 1 } } );
+            break;
+        default:
+            break;
+      }
+    }
+
+
 
   },
   mounted () {
-     
-  } 
+
+  }
 }
 </script>
 <style scoped>

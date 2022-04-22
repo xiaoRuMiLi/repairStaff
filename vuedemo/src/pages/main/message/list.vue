@@ -72,6 +72,7 @@ export default {
   },
   data () {
     return {
+      fromKeepAlive: !0,
       chooseVal: '',
       // 提交到后端的参数
       params: {},
@@ -86,7 +87,7 @@ export default {
 
       ],
       inputs: {
-        active: 1,
+        active: 0,
         searchVal: '',
       }
 
@@ -97,34 +98,62 @@ export default {
   /* 判断是否是从详情页过来的，如果是那么不刷新页面 */
   beforeRouteEnter(to, from, next) {
     if(from.name === 'messageDetail') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
-      to.meta.isBack = true;
+        to.meta.isBack = true;
+    }
+    /* 如果是从主页过来的，进入后就执行搜索  */
+    if( from.name === 'home' ) {
+        to.meta.onSearch = true;
     }
     next();
   },
   // activated 一进入当前页面页面事件，就会触发事件
   // 如果是从详情页过来的，不用刷新页面,如果本路由没有设置keep-alive 为true，则该生命周期函数不会被调用，如果上一个路由，也就是from Keep-alive属性为true，该函数也不会被调用
   activated() {
-    console.log('this.$route',this.$route);
-    if(!this.$route.meta.isBack) {
+    // console.log('this.$route',this.$route);
+    if(this.$route.meta.isBack) {
       // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
-      this.getDatas(); // ajax获取数据方法
+       // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+      this.$route.meta.isBack = false
+      let wrapperScrollTop = this.$refs.wrapper.scrollTop;
+      return;
     }
-    // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
-    this.$route.meta.isBack = false
-    let wrapperScrollTop = this.$refs.wrapper.scrollTop;
 
+    if ( this.$route.meta.onSearch )
+    {
+      let params = self.$route.query;
+      this.params = params;
+      this.datas = [];
+      this.onOff.finished = !1;
+      this.onOff.showPop = !1;
+      this.getDatas();
+      this.$route.meta.onSearch = false
+      return ;
+    }
+    this.datas = []
+    this.getDatas();
+    this.fromKeepAlive = !1; // ajax获取数据方法
 
-    console.log('wrapperScrollTop', wrapperScrollTop);
-
-    console.log(this.$refs.wrapper)
   },
 
   watch: {
+    params ( nval ) {
+      const self = this;
+      self.inputs.active = 'message_type' in nval && Number(nval.message_type)
+    }
 
   },
   mounted () {
     // mouted中的方法代表dom已经加载完毕
-    this.getDatas ();
+    //console.log( 'mounted' );
+    /*if( this.fromKeepAlive ) {
+      this.datas = []
+      this.getDatas ();
+    }*/
+  },
+  beforeDestroy () {
+    console.log('beforeDestroy');
+    this.fromKeepAlive = !0;
+
   },
   created () {
 
@@ -132,7 +161,9 @@ export default {
   methods: {
       /* 上滑执行的事件 */
     onLoad() {
+
       this.getDatas ();
+
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
     },
@@ -179,6 +210,7 @@ export default {
       self.datas = [];
       self.searchEmpty();
       self.onOff.finished = !1;
+      self.params.message_type = self.inputs.active;
       this.getDatas()
 
     },
@@ -204,7 +236,6 @@ export default {
       self = this
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
       params.page = pageNumber;
-      params.message_type = self.inputs.active;
       self.onOff.loading = !0;
       // console.log('params:', this.params );
       this.get ( URL.api_messageSearch, params ).then( (data) => {

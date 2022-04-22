@@ -62,13 +62,13 @@ router.beforeEach ( ( to , from , next ) => {
 
     let meta = to.meta;
     /* 对应路由的meta对象*/
-    console.log( 'meta', meta )
+    /*console.log( 'meta', meta )
     console.log( 'to', to )
     console.log( 'from', from )
     console.log( 'next', next )
-    console.log( 'store', store )
+    console.log( 'store', store )*/
 
-    if ( meta.intercept == false ) { 
+    if ( meta.intercept == false ) {
         //是否需要拦截 = 否 执行逻辑
         setRouterHistory ( toHandler , to );
         next ();

@@ -90,6 +90,7 @@ export default {
   },
   data () {
     return {
+      fromKeepAlive: !0,
       list: [],
       choose_datas: ['0-100','100-500','500-1000','1000-2000','2000-5000'],
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
@@ -177,22 +178,48 @@ export default {
       if(from.name === 'construction') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
           to.meta.isBack = true;
       }
+      /* 如果是从主页过来的，进入后就执行搜索  */
+      if( from.name === 'home' ) {
+          to.meta.onSearch = true;
+      }
       next();
   },
-  // 如果是从详情页过来的，不用刷新页面
+  // 如果是从详情页过来的，不用刷新页面, 如果上一个路由，也就是from Keep-alive属性为true，该函数也不会被调用
+  // activated 生命周期在keep-alive 组件激活时调用
   activated() {
-    if(!this.$route.meta.isBack) {
+    // console.log(this.$router); 表示router模块
+    // console.log('this.$route____________',this.$route);  // 表示当前路由
+    if(this.$route.meta.isBack) {
       // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
-      this.getDatas(); // ajax获取数据方法
+      // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+      this.$route.meta.isBack = false
+      let wrapperScrollTop = this.$refs.wrapper.scrollTop;
+      console.log('wrapperScrollTop', wrapperScrollTop);
+      console.log(this.$refs.wrapper)
+      return ;
     }
-    // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
-    this.$route.meta.isBack = false
-    let wrapperScrollTop = this.$refs.wrapper.scrollTop;
 
-
-    console.log('wrapperScrollTop', wrapperScrollTop);
-
-    console.log(this.$refs.wrapper)
+    if ( this.$route.meta.onSearch )
+    {
+      let params = self.$route.query;
+      this.params = params;
+      /*{
+        construction_type: this.inputs.active,
+        // 传入实际完成时间的时间区间数组
+        real_complete_at: this.inputs.betweenRealComplete,
+        amount: this.inputs.betweenAmount
+      }*/
+      // console.log('提交的params is',this.params);
+      self.onOff.finished = !1;
+      self.onOff.showPop = !1;
+      this.$route.meta.onSearch = false
+      this.datas = [];
+      this.getDatas ();
+      return ;
+    }
+    this.datas = [];
+    this.getDatas ();
+    this.fromKeepAlive = !1;
   },
   methods: {
     /**
@@ -265,7 +292,7 @@ export default {
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
       params.page = pageNumber;
       self.onOff.loading = !0;
-      // console.log('params:', this.params );
+      console.log('params:', this.params );
       this.get ( URL.api_constructionSearch, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
@@ -273,6 +300,7 @@ export default {
         self.datas = self.datas.concat( res.map( this.formatData ) );
         this.onOff.loading = false;
         //self.onOff.finished = true;
+        self.fromKeepAlive = !1;
       })
     },
     /* 取消筛选 */
@@ -365,15 +393,26 @@ export default {
         Number(amounts[1])
         ]
       }
+    },
+    params ( nval ) {
+      const self = this;
+      console.log('trigger__________',nval);
+      self.inputs.active = 'construction_type' in nval && Number(nval.construction_type)
     }
 
   },
   mounted () {
     // mouted中的方法代表dom已经加载完毕
-    this.getDatas ();
+    // this.fromKeepAlive 记录的是是否从keepalive为真的路由过来的，如果是则不会执行actived生命周期函数，也就是说不会读取数据
+    /*if(this.fromKeepAlive) {
+      this.datas = []
+      this.getDatas();
+      this.fromKeepAlive = !0;
+    }*/
+
   },
   created () {
-
+    console.log('created');
   }
 }
 </script>
