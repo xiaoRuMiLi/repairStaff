@@ -134,6 +134,10 @@ export default {
     this.fromKeepAlive = !1; // ajax获取数据方法
 
   },
+  deactivated () {
+    console.log(' deactivated ');
+
+  },
 
   watch: {
     params ( nval ) {
