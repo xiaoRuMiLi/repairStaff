@@ -57,7 +57,7 @@ if (userMemory) {
     } );
     store.dispatch ( "upVuex" , {
         mutations : "setLanguage" ,
-        value : userMemory.language // 简要信息
+        value : userMemory.language // 语言信息
     } );
 }
 

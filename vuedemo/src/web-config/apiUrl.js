@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-04-20 19:23:10
+* @Last Modified time: 2022-04-23 21:48:05
 */
 
 'use strict';
@@ -32,7 +32,7 @@ const URL = {
     /*----------------------------------- 施工单修改备注 -----------------------------------*/
     api_constructionSetRemarks: API_BASE_URL + '/api/v1/construction_set_remarks/',/*{id}, //  - post
     /*----------------------------------- 按月获取近两年施工单金额合计 -----------------------------------*/
-    api_constructionGetTotalGroupByMoon: API_BASE_URL + '/api/v1/get_total_group_by_moon', 
+    api_constructionGetTotalGroupByMoon: API_BASE_URL + '/api/v1/get_total_group_by_moon',
     /*----------------------------------- 分享接口调用 -----------------------------------*/
     api_getWxShareTicket: '/url/weChat/index.php', // 临时接口上线时需要修改
 
@@ -58,6 +58,11 @@ const URL = {
     api_messageReply: API_BASE_URL + '/api/v1/message/reply',
     /*----------------------------------- 一条消息标记已读 -----------------------------------*/
     api_messageRead: API_BASE_URL + '/api/v1/message/read/',
+
+
+    /*----------------------------------- 员工版主页统计 -----------------------------------*/
+    api_statistics: API_BASE_URL + '/api/v1/statistics/staff/index',
+
 }
 // export default 在其他文件引入时语法是 import 别名 from @/web-config/apiUrl 不能使用 import  { Url } from @/web-config/apiUrl. 要这样引用不能加default关键字
 export {

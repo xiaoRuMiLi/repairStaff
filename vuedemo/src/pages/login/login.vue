@@ -187,7 +187,7 @@
             },
             async setWebConfig () {
                 // let config = await this.$Get(`/web-config/config-admin.json`);
-                let config = require ( "@/web-config/config-admin.json" );
+                let config = require ( "@/web-config/admin.json" );
                 this.setOtherInfo ( config );
                 this.$setIco ( this.otherInfo.webIco );
 
