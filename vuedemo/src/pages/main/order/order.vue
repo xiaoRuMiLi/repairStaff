@@ -194,8 +194,6 @@ export default {
       // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
       this.$route.meta.isBack = false
       let wrapperScrollTop = this.$refs.wrapper.scrollTop;
-      console.log('wrapperScrollTop', wrapperScrollTop);
-      console.log(this.$refs.wrapper)
       return ;
     }
 
@@ -292,7 +290,7 @@ export default {
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
       params.page = pageNumber;
       self.onOff.loading = !0;
-      console.log('params:', this.params );
+      // console.log('params:', this.params );
       this.get ( URL.api_constructionSearch, params ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
@@ -300,7 +298,6 @@ export default {
         self.datas = self.datas.concat( res.map( this.formatData ) );
         this.onOff.loading = false;
         //self.onOff.finished = true;
-        self.fromKeepAlive = !1;
       })
     },
     /* 取消筛选 */
@@ -396,7 +393,6 @@ export default {
     },
     params ( nval ) {
       const self = this;
-      console.log('trigger__________',nval);
       self.inputs.active = 'construction_type' in nval && Number(nval.construction_type)
     }
 
@@ -412,7 +408,7 @@ export default {
 
   },
   created () {
-    console.log('created');
+    // console.log('created');
   }
 }
 </script>
