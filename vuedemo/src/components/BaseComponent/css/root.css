@@ -1,0 +1,81 @@
+/* 添加这段样式后，Primary Button 会变成红色, 定义全局样式，所有的组件都遵循 */
+:root {
+  --com-black: #000;
+  --com-white: #ffffff;
+  --com-gray-1: #f7f8fa;
+  --com-gray-2: #f2f3f5;
+  --com-gray-3: #ebedf0;
+  --com-gray-4: #dcdee0;
+  --com-gray-5: #c8c9cc;
+  --com-gray-6: #969799;
+  --com-gray-7: #646566;
+  --com-gray-8: #323233;
+  --com-red: #ee0a24;
+  --com-blue: #1989fa;
+  --com-orange: #ff976a;
+  --com-orange-dark: #ed6a0c;
+  --com-orange-light: #fffbe8;
+  --com-green: #07c160;
+  --com-yellow: #ffcd34;
+  --com-blue-grey: #576B95;
+
+  /** Gradient Colors*/
+  --com-gradient-red: linear-gradient(to right, #ff6034, #ee0a24);
+  --com-gradient-orange: linear-gradient(to right, #ffd01e, #ff8917);
+
+  /* Component Colors*/
+  --com-primary-color: var(--com-blue);
+  --com-success-color: var(--com-green);
+  --com-danger-color: var(--com-red);
+  --com-warning-color: var(--com-orange);
+  --com-text-color: var(--com-gray-8);
+  --com-text-color-2: var(--com-gray-6);
+  --com-text-color-3: var(--com-gray-5);
+  --com-text-link-color: #576b95;
+  --com-active-color: var(--com-gray-2);
+  --com-active-opacity: 0.6;
+  --com-disabled-opacity: 0.5;
+  --com-background-color: var(--com-gray-1);
+  --com-background-color-light: var(--com-white);
+
+  /* Padding*/
+  --com-padding-base: 4px;
+  --com-padding-xs: 8px;
+  --com-padding-sm: 12px;
+  --com-padding-md: 16px;
+  --com-padding-lg: 24px;
+  --com-padding-xl: 32px;
+
+  /* Font*/
+  --com-font-size-xs: 10px;
+  --com-font-size-sm: 12px;
+  --com-font-size-md: 14px;
+  --com-font-size-lg: 16px;
+  --com-font-size-xl: 22px;
+  --com-font-weight-bold: 500;
+  --com-font-weight-bold-2: 550;
+  --com-line-height-xs: 14px;
+  --com-line-height-sm: 18px;
+  --com-line-height-md: 20px;
+  --com-line-height-lg: 22px;
+  --com-base-font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+    Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB',
+    'Microsoft Yahei', sans-serif;
+  --com-price-integer-font-family: Avenir-Heavy, PingFang SC, Helvetica Neue,
+    Arial, sans-serif;
+
+  /* Animation*/
+  --com-animation-duration-base: 0.3s;
+  --com-animation-duration-fast: 0.2s;
+  --com-animation-timing-function-enter: ease-out;
+  --com-animation-timing-function-leave: ease-in;
+
+  /* Border*/
+  --com-border-color: var(--com-gray-3);
+  --com-border-width-base: 1px;
+  --com-border-radius-sm: 2px;
+  --com-border-radius-md: 4px;
+  --com-border-radius-lg: 8px;
+  --com-border-radius-xl: 30px;
+  --com-border-radius-max: 999px;
+}

@@ -1,0 +1,476 @@
+[
+  {
+    "path" : "/home" ,
+    "name" : "home" ,
+    "component" : "welcome/Home" ,
+    "meta" : {
+      "intercept" : true ,
+      "role" : [ 5233 , 5232 , 5231 , 5230 ]
+    }
+  } , {
+  "path" : "/logo" ,
+  "name" : "logo" ,
+  "redirect" : {
+    "name" : "home"
+  } ,
+  "meta" : {
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  }
+} , {
+  "path" : "/cooplogo" ,
+  "name" : "cooplogo" ,
+  "redirect" : {
+    "name" : "home"
+  } ,
+  "meta" : {
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  }
+} , {
+  "path" : "/hide" ,
+  "name" : "hide" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "intercept" : false ,
+    "noQuickTabs" : true ,
+    "noKeepAlive" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/systemLog" ,
+      "name" : "systemLog" ,
+      "component" : "welcome/SystemLog" ,
+      "meta" : {
+        "icon" : "el-icon-house" ,
+        "intercept" : false ,
+        "noQuickTabs" : false ,
+        "noKeepAlive" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/quickFeedback" ,
+      "name" : "quickFeedback" ,
+      "component" : "welcome/QuickFeedback" ,
+      "meta" : {
+        "icon" : "el-icon-house" ,
+        "intercept" : false ,
+        "noQuickTabs" : false ,
+        "noKeepAlive" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/embHome" ,
+      "name" : "embHome" ,
+      "component" : "welcome/Home" ,
+      "meta" : {
+        "icon" : "el-icon-house" ,
+        "intercept" : true ,
+        "noQuickTabs" : false ,
+        "noKeepAlive" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/recursiveMenu" ,
+  "name" : "recursiveMenu" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-house" ,
+    "intercept" : true ,
+    "noKeepAlive" : true ,
+    "noQuickTabs" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/bigHome" ,
+      "name" : "bigHome" ,
+      "redirect" : {
+        "name" : "home"
+      } ,
+      "meta" : {
+        "icon" : "el-icon-house" ,
+        "intercept" : true ,
+        "noKeepAlive" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/twoLevMenu" ,
+      "name" : "twoLevMenu" ,
+      "component" : "test/Test" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "noKeepAlive" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      } ,
+      "children" : [
+        {
+          "path" : "/test" ,
+          "name" : "test" ,
+          "component" : "test/Test" ,
+          "meta" : {
+            "icon" : "el-icon-sugar" ,
+            "intercept" : true ,
+            "noKeepAlive" : true ,
+            "role" : [ 5233 , 5232 , 5231 , 5230 ]
+          }
+        } , {
+          "path" : "/embHome" ,
+          "name" : "embHome" ,
+          "redirect" : {
+            "name" : "embHome"
+          } ,
+          "meta" : {
+            "icon" : "el-icon-house" ,
+            "intercept" : true ,
+            "noKeepAlive" : true ,
+            "role" : [ 5233 , 5232 , 5231 , 5230 ]
+          }
+        }
+      ]
+    }
+  ]
+} , {
+  "path" : "/aboutIcon" ,
+  "name" : "aboutIcon" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/iconBasicUsage" ,
+      "name" : "iconBasicUsage" ,
+      "component" : "abouticon/iconbasicusage/IconBasicUsage" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutButton" ,
+  "name" : "aboutButton" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/buttonBasicUsage" ,
+      "name" : "buttonBasicUsage" ,
+      "component" : "aboutbutton/buttonbasicusage/ButtonBasicUsage" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutDatePicker" ,
+  "name" : "aboutDatePicker" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/datePickerBasicUsage" ,
+      "name" : "datePickerBasicUsage" ,
+      "component" : "aboutdatepicker/datepickerbasicusage/DatePickerBasicUsage" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutTable" ,
+  "name" : "aboutTable" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/tableBasicUsage" ,
+      "name" : "tableBasicUsage" ,
+      "component" : "abouttable/tablebasicusage/TableBasicUsage" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "menu" : "/tableExpandUsage" ,
+        "menu" : "" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/tableExpandUsage" ,
+      "name" : "tableExpandUsage" ,
+      "component" : "abouttable/tableexpandusage/TableExpandUsage" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/tableSingMultUsage" ,
+      "name" : "tableSingMultUsage" ,
+      "component" : "abouttable/tablesingmultusage/TableSingMultUsage" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutStyle" ,
+  "name" : "aboutStyle" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/icoAndTitle" ,
+      "name" : "icoAndTitle" ,
+      "component" : "aboutstyle/icoandtitle/IcoAndTitle" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/dynamicCss" ,
+      "name" : "dynamicCss" ,
+      "component" : "aboutstyle/dynamiccss/DynamicCss" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/uploadTools" ,
+  "name" : "uploadTools" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/uploadImg" ,
+      "name" : "uploadImg" ,
+      "component" : "uploadtools/uploadimg/UploadImg" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/uploadFile" ,
+      "name" : "uploadFile" ,
+      "component" : "uploadtools/uploadfile/UploadFile" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/selfAdaption" ,
+  "name" : "selfAdaption" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/selfAdaptionEcherts" ,
+      "name" : "selfAdaptionEcherts" ,
+      "component" : "selfadaption/selfadaptionecherts/SelfAdaptionEcherts" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutmap" ,
+  "name" : "aboutmap" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/aMap" ,
+      "name" : "aMap" ,
+      "component" : "aboutmap/amap/AMap" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/baiDuMap" ,
+      "name" : "baiDuMap" ,
+      "component" : "aboutmap/baidumap/BaiDuMap" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutAudioFrequency" ,
+  "name" : "aboutAudioFrequency" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/musicPlayer" ,
+      "name" : "musicPlayer" ,
+      "component" : "aboutaudiofrequency/musicplayer/MusicPlayer" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutVideo" ,
+  "name" : "aboutVideo" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/videoFrequency" ,
+      "name" : "videoFrequency" ,
+      "component" : "aboutvideo/videofrequency/VideoFrequency" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/aboutRichText" ,
+  "name" : "aboutRichText" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/tinymce" ,
+      "name" : "tinymce" ,
+      "component" : "richtext/tinymce/Tinymce" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    } , {
+      "path" : "/tiptap" ,
+      "name" : "tiptap" ,
+      "component" : "richtext/elementtiptap/ElementTiptap" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/element" ,
+  "name" : "element" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/eleDialog" ,
+      "name" : "eleDialog" ,
+      "component" : "element/eledialog/EleDialog" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+} , {
+  "path" : "/systemPermissions" ,
+  "name" : "systemPermissions" ,
+  "component" : "welcome/Main" ,
+  "meta" : {
+    "icon" : "el-icon-sugar" ,
+    "intercept" : true ,
+    "role" : [ 5233 , 5232 , 5231 , 5230 ]
+  } ,
+  "children" : [
+    {
+      "path" : "/menuManagement" ,
+      "name" : "menuManagement" ,
+      "component" : "admin/routemanagement/RouteManagement" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 ]
+      }
+    } , {
+      "path" : "/permissionsDemo" ,
+      "name" : "permissionsDemo" ,
+      "component" : "admin/permissionsdemo/PermissionsDemo" ,
+      "meta" : {
+        "icon" : "el-icon-sugar" ,
+        "intercept" : true ,
+        "role" : [ 5233 , 5232 , 5231 , 5230 ]
+      }
+    }
+  ]
+}
+]

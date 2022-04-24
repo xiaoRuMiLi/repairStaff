@@ -1,0 +1,32 @@
+常用命令
+    倒退到上一次提交的状态，  git reset --hard
+Es6
+    箭头函数和普通函数
+        “区别:箭头函数是“=>”,普通函数是“function”。箭头函数不能作为构造函数,不能使用new。箭头函数不绑定arguments,但普通函数可以。箭头函数中的this代表上层对象,普通函数中的this代表当前对象。”
+报错
+    pull时报错
+        error:
+            Your local changes to the following files would be overwritten by merge:
+                    laravel/weixiubang/app/Http/Controllers/Api/TokenLoginController.php
+            Please commit your changes or stash them before you merge.
+        原因
+            pull 的时候本地曾经编辑过，发生了冲突
+        处理方法
+            这种情况下，如何保留本地的修改同时又把远程的合并过来呢？
+            首先取决于你是否想要保存本地修改。（是 /否）
+            需要保留本地修改的操作
+            是
+                别急我们有如下三部曲
+                    git stash
+                    git pull origin master
+                    git stash pop
+                git stash的时候会把你本地快照，然后git pull 就不会阻止你了，pull完之后这时你的代码并没有保留你的修改。惊了！ 别急，我们之前好像做了什么？
+                STASH
+                这时候执行git stash pop你去本地看会发现发生冲突的本地修改还在，这时候你该commit push啥的就悉听尊便了。
+
+
+            否
+                既然不想保留本地的修改，那好办。直接将本地的状态恢复到上一个commit id 。然后用远程的代码直接覆盖本地就好了。
+                git reset --hard
+                git pull origin master
+

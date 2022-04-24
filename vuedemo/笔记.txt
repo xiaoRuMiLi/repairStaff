@@ -1,0 +1,157 @@
+版本：
+
+	找到package.json文件夹 找"dependencies"然后就可以看到你装的vue的版本了
+	或者 npm list vue , vue -V
+	查看Vue/cli版本：
+
+	vue -V 或者 vue --version
+
+	问题：查看npm有哪些版本
+
+	解决办法：npm view indicative versios
+
+	安装固定版本：npm -g install npm@3.0.0
+
+	Vue 升级版本参考 https://www.cnblogs.com/thinkingthigh/p/15529082.html
+
+配置 vue.config.js
+
+	vue-cli3 脚手架搭建完成后，项目目录中没有 vue.config.js 文件，需要手动创建
+	创建vue.config.js
+	vue.config.js 是一个可选的配置文件，如果项目的 (和 package.json 同级的) 根目录中存在这个文件，那么它会被 @vue/cli-service 自动加载。你也可以使用 package.json 中的 vue 字段，但是注意这种写法需要你严格遵照 JSON 的格式来写。
+
+	作者：Rising_life
+	链接：https://www.jianshu.com/p/b358a91bdf2d
+	来源：简书
+	著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+填坑
+   调试Vue项目的时候有时候出差错了，编辑后不断刷新感觉修改的没有反映到页面中，比如删除一个变量后，本来程序应该出错但是项目会记住你出错前的内容，致使被删除的变量在项目中任然会生效。
+
+import
+    引用获取一个json 对象
+         json = require ( "./web-config/config-admin.json" )
+Vue
+    $set 方法
+        在开发过程中，我们时常会遇到这样一种情况：当vue的data里边声明或者已经赋值过的对象或者数组（数组里边的值是对象）时，向对象中添加新的属性，如果更新此属性的值，是不会更新视图的。
+		根据官方文档定义：如果在实例创建之后添加新的属性到实例上，它不会触发视图更新。
+		当你把一个普通的 JavaScript 对象传入 Vue 实例作为 data 选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty 把这些属性全部转为 getter/setter。
+		受现代 JavaScript 的限制 (以及废弃 Object.observe)，Vue 不能检测到对象属性的添加或删除。由于 Vue 会在初始化实例时对属性执行 getter/setter 转化过程，所以属性必须在 data 对象上存在才能让 Vue 转换它，这样才能让它是响应的。
+
+        解决方案
+			官方定义：
+			Vue 不允许在已经创建的实例上动态添加新的根级响应式属性 (root-level reactive property)。然而它可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上：
+
+			Vue.set(vm.obj, 'e', 0)
+			您还可以使用 vm.$set 实例方法，这也是全局 Vue.set 方法的别名：
+
+			this.$set(this.obj,'e',02)
+
+			有时你想向已有对象上添加一些属性，例如使用 Object.assign() 或 _.extend() 方法来添加属性。但是，添加到对象上的新属性不会触发更新。在这种情况下可以创建一个新的对象，让它包含原对象的属性和新的属性：
+
+			// 代替 Object.assign(this.obj, { a: 1, e: 2 })
+			this.obj= Object.assign({}, this.obj, { a: 1, e: 2 })
+
+        链接：https://www.jianshu.com/p/71b1807b1815
+
+
+store
+    store好处
+        比如我要把用户的登陆信息放到状态管理里面去，因为在应用的其他页面可能要获取用户信息。如果用户修改了登陆信息也可以随时获取到
+        在page a 中调用了this.$store.commit("setLanguage",language)给language赋值
+        在page b 中执行以下语句
+        import store from '@/store';
+        const language = store.getters.getLanguage;
+        language 任然是有值的，也就是说不同页面获取到的是同一个对象内容
+    基本使用方法
+        getters方法
+            就是供外部可以获取，this.$store.getters.getMessage  这样的方式使状态不会暴露在外面
+		actions方法
+		    就是提交mutations触发的状态改变，唯一不同的是actions方法里可以做异步的处理而mutations只能做同步的状态改变。
+            this.$store.dispatch 是触发action中的方法，
+		    this.$store.dispatch('setMessage',data)
+        mutations 方法
+            这个是触发mutations中的方法，其中data为payload
+		    this.$store.commit('setMessage',data)
+    加入到文档中
+	    需要使用store 需要在这里加入到配置中，要不然this.$store 提示为undefined
+		new Vue({
+		  el: '#app',
+		  router,
+		  store, // 加入到这里
+		  components: { App },
+		  template: '<App/>'
+		})
+	严格模式
+		开启严格模式，仅需在创建 store 的时候传入 strict: true；
+		const store = new Vuex.Store({
+		  // ...
+		  strict: true
+		})
+		在严格模式下，无论何时发生了状态变更且不是由 mutation 函数引起的，将会抛出错误。这能保证所有的状态变更都能被调试工具跟踪到。
+        非严格模式可以这样改变state的状态 this.$store.state.language = language
+        严格模式下只能这样 this.$store.commit("setLanguage",language) 要不就会报错，do not mutate vuex store state outside mutation handlers
+
+    https://blog.csdn.net/maidu_xbd/article/details/89140696
+npm使用
+    npm install moduleName # 安装模块到项目目录下只安装包到node_modules 不会写入dependencies节点devDependencies节点
+	npm install -g moduleName # -g 的意思是将模块安装到全局，具体安装到磁盘哪个位置，要看 npm config prefix 的位置。不会写入dependencies节点devDependencies节点
+	npm install -save moduleName # -save 的意思是将模块安装到项目目录下，并在package文件的dependencies节点写入依赖。这个是上线必须要使用的包使用该命令
+	npm install -save-dev moduleName # -save-dev 的意思是将模块安装到项目目录下，并在package文件的devDependencies节点写入依赖。开发中使用的包上线不需要使用的就用这个命令
+	传送门 https://www.cnblogs.com/limitcode/p/7906447.html
+git
+
+   报错  cannot lock ref 'refs/remotes/origin/master': unable to resolve reference 'refs/remotes/origin/master': reference broken
+       解决方法
+            **第一步：**删除到.git目录下的master文件
+            rm ./.git/refs/remotes/origin/master
+
+            **第二步：**抓取远程仓库最新代码
+            git fetch
+
+            **第三步：**远程分支内容合并到本地master分支下
+            git merge origin/master
+            至此，成功将远程的最新代码，pull到本地
+
+        传送门 https://blog.csdn.net/weixin_42168046/article/details/103649904
+js
+    判断为假
+        typeof(undefined) == 'undefined'
+        typeof(null) == 'object'
+        typeof("") == 'string'
+        typeof(0) == 'number'
+        typeof(false) == 'boolean'
+        这五个值的共同点是，在if语句中做判断，都会执行false分支。当然从广义上来看，是说明这些数值都是其对应数据类型上的无效值或空值。还有这五个值作!运算，结果全为：true。
+
+        这几个值中也有不同，其中undefined和null比较特殊，虽然null的类型是object，但是null不具有任何对象的特性，就是说我们并不能执行null.toString()、null.constructor等对象实例的默认调用。所以从这个意义上来说，null和undefined有最大的相似性。看看null == undefined的结果(true)也就更加能说明这点。不过相似归相似，还是有区别的，就是和数字运算时，10 + null结果为：10；10 + undefined结果为：NaN。
+
+        另外""、0和false虽然在if语句表现为"假值"，可它们都是有意义数据，只是被作为了"空值"或"假值"，因为："".toString()，(0).toString()和false.toString()都是合法的可执行表达式。
+
+        其实这5个值在上面所说的这些差异里，并不太会给程流程控制带来太大的问题，那么要区分它们什么呢？需要注意区分的是这些值在转换为String时的差异是比较大的，它们到String的转换关系是：
+报错
+    npm run dev 报错
+        错误码
+	        webpack-dev-server --inline --progress --config build/webpack.dev.conf.js
+	        webpack-dev-server --inline --progress --config build/webpack.dev.conf.js  webpack-dev-server' 不是内部或外部命
+        原因：
+            新版的webpack-dev-server 3.1.14 存在问题。
+
+		解决方法：
+		    package.json 中指定 webpack-dev-server 低版本号
+
+			方法1：
+
+			"webpack-dev-server": "^2.9.1"
+
+			删除 node_modules 目录，再重新安装依赖包
+
+			npm install -S      // 这种方式安装的时间会长些，也可以只重装 webpack-dev-server模块
+			方法2：单独重装 webpack-dev-server模块
+
+			（1）、npm uninstall webpack-dev-server
+
+			（2）、npm install webpack-dev-server@2.9.1
+
+			（3）、npm run dev
+
+
+
