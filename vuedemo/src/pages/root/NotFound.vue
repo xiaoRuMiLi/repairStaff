@@ -10,11 +10,11 @@
         mixins: [require( '@/mixins').default],
         components: {
         },
-        
+
         data() {
             return {
                 email: null
-                
+
             }
         },
 
@@ -27,18 +27,18 @@
         },
         created() {},
 
-        mounted() {      
+        mounted() {
 
         },
 
         unmounted() {},
 
         beforeDestroy () {
-    
+
         },
 
         methods: {
-           
+
         },
     }
 </script>

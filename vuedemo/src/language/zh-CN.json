@@ -136,10 +136,7 @@
   "foreverNotShow" : "永远不再显示" ,
   "tableNotShow" : "相同表格不再显示" ,
   "tableSwitch" : "表格使用提示" ,
-<<<<<<< HEAD
-=======
   "email" : "邮箱" ,
->>>>>>> 2f81c3f71231e4d2a7a0d1468eca4260c4014225
   "tel" : "电话" ,
   "monthAccountDate" : "每月出账日期" ,
   "postPay" : "后付费" ,
@@ -204,17 +201,14 @@
   "monthlyTotalOfConstructionOrdersInThePastTwoYears": "近两年的施工单金额按月合计",
   "thanksForUsing": "谢谢你的使用",
   "questionsWelcome": "欢迎提出使用中发现的问题",
-<<<<<<< HEAD
   "dear": "亲爱的",
   "resetPassWord": "重新设置密码",
   "enterEmailRemind": "输入你的注册时使用的邮箱地址，我们会发送一个验证码到该邮箱，在下一个页面输入你收到的验证码！",
   "toPhoneVerify": "切换到手机号验证",
   "next": "下一步",
   "email" : "邮箱",
-  "pleaseEnterEmail": "请输入邮箱地址"
-=======
+  "pleaseEnterEmail": "请输入邮箱地址",
   "dear": "亲爱的"
->>>>>>> 2f81c3f71231e4d2a7a0d1468eca4260c4014225
 
 
 }

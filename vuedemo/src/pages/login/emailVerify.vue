@@ -1,7 +1,7 @@
 <template>
-	<div class="wrapper">
-		<!-- 背景图区域 -->
-		<jin-background
+    <div class="wrapper">
+        <!-- 背景图区域 -->
+        <jin-background
         title="验证邮箱地址"
         content= '输入你注册时使用的邮箱地址，我们会发送一个验证码到该邮箱，在下一个页面输入你收到的验证码！'
         remindText= ''
@@ -9,15 +9,15 @@
         />
         <div class="content-father">
             <div class="content">
-        		<!-- 输入框容器 -->
-        		<div class="input-container">
-        			<jin-input-style1
-        			title="邮箱地址"
-        			:value.sync="email"
-        			placeholder="输入邮箱地址"
-        			/>
+                <!-- 输入框容器 -->
+                <div class="input-container">
+                    <jin-input-style1
+                    title="邮箱地址"
+                    :value.sync="email"
+                    placeholder="输入邮箱地址"
+                    />
 
-        		</div>
+                </div>
                 <!-- 按钮 -->
                 <div class="button-container">
                      <van-button type="primary" size="large" text="下一步" @click="submit"></van-button>
@@ -25,10 +25,10 @@
                 </div>
             </div>
         </div>
-	</div>
+    </div>
 </template>
 <script >
-	import { Icon, Button, Popup, Toast } from 'vant';
+    import { Icon, Button, Popup, Toast } from 'vant';
     /* setLocal 保存数据到本地 getLocal 获取数据 clearLocal 清除数据*/
     import { validator } from "@/function";
 
@@ -51,7 +51,7 @@
         data() {
             return {
                 email: null
-                
+
             }
         },
 
@@ -67,7 +67,7 @@
         created() {},
 
         mounted() {
-            
+
 
         },
 
@@ -75,7 +75,7 @@
 
         beforeDestroy () {
 
-    
+
         },
 
         methods: {
@@ -86,7 +86,7 @@
                         function(item){
                             if (item instanceof Error) throw item;
                     },)
-                      
+
                 }catch(err){
                     this.$notify(err.message)
                     return ;
@@ -104,7 +104,7 @@
             toRegiste () {
                 console.log('to registe');
             },
-           
+
 
 
 
@@ -115,7 +115,7 @@
 
 <style scoped>
 .wrapper {
-	background-color: var(--van-white);
+    background-color: var(--van-white);
 }
 .content-father {
     background-color: var(--van-white);

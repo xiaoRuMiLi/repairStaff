@@ -21,9 +21,8 @@ export default new Router({
 		    }
 	    },
 	    {
-<<<<<<< HEAD
-		    path: '/emailVerify',
-		    name: 'emailVerify',
+		    path: '/login/email-verify',
+		    name: 'email-verify',
 		    component: () => import('@/pages/login/emailVerify'),
 		    replace: true,
 		    meta : {
@@ -35,9 +34,23 @@ export default new Router({
                 role : [ 5233 , 5232 , 5231 , 5230 ]
 		    }
 	    },
+        {
+		    path: '/login/enter-newpw',
+		    name: 'email-verify',
+		    component: () => import('@/pages/login/enterNewPw'),
+		    replace: true,
+		    meta : {
+		        intercept : false ,
+		        // 有无快速跳转标签
+		        noQuickTabs : true ,
+		        title: '主页',
+                keepAlive: false, // 需要被缓存
+                role : [ 5233 , 5232 , 5231 , 5230 ]
+		    }
+	    },
+
+
 	    {
-=======
->>>>>>> 2f81c3f71231e4d2a7a0d1468eca4260c4014225
 		    path: '/',
 		    name: 'main',
 		    component: () => import('@/pages/main/index'),
@@ -163,7 +176,7 @@ export default new Router({
 				},
 				{
 				    path: 'mine/avatarset',
-				    name: 'avatarSet',
+				    name: 'avatar-set',
 				    component: () => import('@/pages/main/mine/avatarSet'),
 				    replace: false,
 				    /** @type {Object} [重定向]
