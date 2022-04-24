@@ -21,6 +21,7 @@ export default new Router({
 		    }
 	    },
 	    {
+<<<<<<< HEAD
 		    path: '/emailVerify',
 		    name: 'emailVerify',
 		    component: () => import('@/pages/login/emailVerify'),
@@ -35,6 +36,8 @@ export default new Router({
 		    }
 	    },
 	    {
+=======
+>>>>>>> 2f81c3f71231e4d2a7a0d1468eca4260c4014225
 		    path: '/',
 		    name: 'main',
 		    component: () => import('@/pages/main/index'),
