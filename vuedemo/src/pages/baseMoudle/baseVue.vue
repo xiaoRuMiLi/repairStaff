@@ -65,6 +65,7 @@ export default {
   mounted() {},
 
   unmounted() {},
+  destroyed() {},
 
   methods: {
 

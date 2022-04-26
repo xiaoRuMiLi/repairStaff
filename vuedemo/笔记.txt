@@ -27,6 +27,8 @@
 填坑
    调试Vue项目的时候有时候出差错了，编辑后不断刷新感觉修改的没有反映到页面中，比如删除一个变量后，本来程序应该出错但是项目会记住你出错前的内容，致使被删除的变量在项目中任然会生效。
 
+变量规范
+    传送门https://www.kancloud.cn/star409964/iview-admin/1742773
 import
     引用获取一个json 对象
          json = require ( "./web-config/config-admin.json" )

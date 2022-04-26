@@ -12,6 +12,7 @@
 
         },
         props: {
+            // 在声明 prop 的时候，其命名应该始终使用  propA，而在模板中应该始终使用prop-a. example： <base :prop-a="val">
             // 基础类型检测 (`null` 指允许任何类型)
             propA: Number,
             // 可能是多种类型
@@ -65,6 +66,8 @@
         mounted() {},
 
         unmounted() {},
+
+        destroyed() {},
 
         methods: {
 
