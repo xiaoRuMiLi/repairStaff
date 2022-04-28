@@ -37,7 +37,7 @@ export default new Router({
 	    {
 		    path: '/login/phone-verify',
 		    name: 'phone-verify',
-		    component: () => import('@/pages/login/email-verify'),
+		    component: () => import('@/pages/login/phone-verify'),
 		    replace: true,
 		    meta : {
 		        intercept : false ,

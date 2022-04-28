@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-04-23 21:48:05
+* @Last Modified time: 2022-04-28 22:16:00
 */
 
 'use strict';
@@ -35,7 +35,7 @@ const URL = {
     api_constructionGetTotalGroupByMoon: API_BASE_URL + '/api/v1/get_total_group_by_moon',
     /*----------------------------------- 分享接口调用 -----------------------------------*/
     api_getWxShareTicket: '/url/weChat/index.php', // 临时接口上线时需要修改
-     
+
     /*-登录操作------------------------------------------------------------------------*/
     /*----------------------------------- 登陆 -----------------------------------*/
     api_login: API_BASE_URL + '/api/v1/loginApi2',/*{id}, //  - post
@@ -44,7 +44,7 @@ const URL = {
     /*----------------------------------- 设置用户头像 -----------------------------------*/
     api_userSetAvatar: API_BASE_URL + '/api/v1/user/set_avatar',
     /*-----------------------------------获取手机验证码 -----------------------------------*/
-    api_userGetPone_verify: API_BASE_URL + '/api/v1/user/verification_codes',
+    api_userGetPhone_verify: API_BASE_URL + '/api/v1/user/verification_codes',
      /*-----------------------------------获取邮箱验证码 -----------------------------------*/
     api_userGetEmail_verify: API_BASE_URL + '/api/v1/user/get_email_code',
      /*-----------------------------------修改密码 -----------------------------------*/

@@ -6,7 +6,7 @@ let regularTel = (rule, value, callback) => {
     // let z = /^1(3|4|5|6|7|8)\d{9}$/;
     if (value === "") {
         callback(new Error(language.pleaseTel));
-    } else if (/^((0\d{2,3}-\d{7,8})|(1[73584]\d{9}))$/.test(value)) {
+    } else if (/^((0\d{2,3}-\d{7,8})|(1[735849]\d{9}))$/.test(value)) {
         callback();
     } else {
         callback(new Error(language.illegalTel));

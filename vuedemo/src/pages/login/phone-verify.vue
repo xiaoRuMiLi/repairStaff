@@ -62,6 +62,7 @@
             return {
                 phone: null,
                 second: 0,
+                vKey: ""
 
             }
         },
@@ -91,19 +92,7 @@
 
         methods: {
             submit () {
-                try
-                {
-                    validator( 'tel', this.email,
-                        function(item){
-                            if (item instanceof Error) throw item;
-                    },)
-
-                }catch(err){
-                    this.$notify(err.message)
-                    return ;
-                }
-                console.log('xiayibu');
-
+                this.$router.push({path: "/login/enter-newpw",query: {verification_key: this.vKey}});
             },
 
             forgetPw () {
@@ -115,23 +104,36 @@
             toRegiste () {
                 console.log('to registe');
             },
-            reSend ()
+            async reSend ()
             {
+                try
+                {
+                    validator( 'tel', this.phone,
+                        function(item)
+                        {
+                            if (item instanceof Error) throw item;
+                        }
+                    )
+                }catch(err){
+                    this.$notify(err.message)
+                    return ;
+                }
+                if(this.second > 0) return;
                 let self = this;
                 self.second = 60;
-                let intval = setInterval(() => {
+                let intval = setInterval(() =>
+                {
                     self.second -= 1;
                     if (self.second == 0)
                     {
                         clearInterval(intval);
                     }
                 }, 1000);
+                const result = await this.post(URL.api_userGetPhone_verify, {phone: this.phone});
+                let data = result.data;
+                console.log(data);
+                this.vKey = data.verification_key;
             }
-
-
-
-
-
         },
     }
 </script>

@@ -103,6 +103,7 @@
 
         methods: {
             async submit () {
+                const self = this;
                 console.log(this);
                 try
                 {
@@ -118,7 +119,7 @@
                     this.$notify(this.language.twoInputNotSame);
                     return ;
                 }
-                if (!this.verification_code) 
+                if (!this.verification_code)
                 {
                     this.$notify(this.language.vCodeEmpty);
                     return ;
@@ -141,6 +142,7 @@
                     Toast({
                         message: "修改成功", duration: 1000
                     });
+                    self.$router.replace({path:"/home"});
                 }
                 console.log(result);
             },
@@ -154,7 +156,7 @@
             toRegiste () {
                 console.log('to registe');
             },
-            
+
 
 
 

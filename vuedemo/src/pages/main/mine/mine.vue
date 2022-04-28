@@ -17,6 +17,7 @@
                 <van-cell-group>
                     <div class="title" >{{language.setUp}}</div>
                     <van-cell title-class="cell-title" is-link title="账户信息" value="" />
+                    <van-cell title-class="cell-title" is-link title="修改密码" value="" @click="setPassWord"/>
                     <van-cell title-class="cell-title" is-link title="退出登录" value="" @click="loginOut"/>
                 </van-cell-group>
 
@@ -116,6 +117,10 @@
             },
             avatarSet () {
                 this.$router.push( {path: "mine/avatarset"});
+            },
+            setPassWord ()
+            {
+                this.$router.push( {path: "/login/email-verify"});
             }
 
 
