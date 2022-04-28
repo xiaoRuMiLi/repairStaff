@@ -44,11 +44,11 @@ const URL = {
     /*----------------------------------- 设置用户头像 -----------------------------------*/
     api_userSetAvatar: API_BASE_URL + '/api/v1/user/set_avatar',
     /*-----------------------------------获取手机验证码 -----------------------------------*/
-    api_userSetAvatar: API_BASE_URL + '/api/v1/user/verification_codes',
+    api_userGetPone_verify: API_BASE_URL + '/api/v1/user/verification_codes',
      /*-----------------------------------获取邮箱验证码 -----------------------------------*/
-    api_userSetAvatar: API_BASE_URL + '/api/v1/user/get_email_code',
+    api_userGetEmail_verify: API_BASE_URL + '/api/v1/user/get_email_code',
      /*-----------------------------------修改密码 -----------------------------------*/
-    api_userSetAvatar: API_BASE_URL + '/api/v1/user/user/set_password',
+    api_userSetPassword: API_BASE_URL + '/api/v1/user/set_password',
 
 
     /*-图片操作------------------------------------------------------------------------*/

@@ -2,8 +2,8 @@
 	<div class="wrapper">
 		<!-- 背景图区域 -->
 		<jin-background
-        title="输入你收到的验证码"
-        content= '请将你刚刚收到的验证码，在下面的输入框逐个输入。'
+        title="输入新的密码"
+        content= '首先输入两次新的密码，然后将刚刚收到的验证码，在下面的输入框逐个输入。'
         remindText= ''
         @textTap = "toRegiste"
         />
@@ -24,29 +24,19 @@
                 <div class="verification-code"> 输入验证码 </div>
         		<!-- 密码输入框 -->
                 <van-password-input
-                  :value="value"
+                  :value="verification_code"
                   :focused="showKeyboard"
                   @focus="showKeyboard = true"
                 />
                 <!-- 数字键盘 -->
                 <van-number-keyboard
-                  v-model="value"
+                  v-model="verification_code"
                   :show="showKeyboard"
                   @blur="showKeyboard = false"
                 />
-                <div class="not-receive-wrapper">
-                   <div class="remind">
-                        没有收到验证码
-                   </div>
-                   <div class="resend">
-                        {{second}}点击重新发送
-
-                   </div>
-
-                </div>
                 <!-- 按钮 -->
                 <div class="button-container">
-                     <van-button type="primary" size="large" text="下一步" @click="submit"></van-button>
+                     <van-button type="primary" size="large" text="提交" @click="submit"></van-button>
 
                 </div>
             </div>
@@ -54,12 +44,13 @@
 	</div>
 </template>
 <script >
-	import { Icon, Button, Popup, Toast, PasswordInput, NumberKeyboard  } from 'vant';
+	import { Icon, Button, Toast, Popup, PasswordInput, NumberKeyboard } from 'vant';
     /* setLocal 保存数据到本地 getLocal 获取数据 clearLocal 清除数据*/
     import { validator } from "@/function";
     import JinBackGround from '@/components/JinBackGround';
     import JinInputStyle1 from '@/components/JinInputStyle1';
     import { URL } from '@/web-config/apiUrl'
+
     export default {
         name: 'login',
         mixins: [require( '@/mixins').default],
@@ -76,12 +67,13 @@
         data() {
             return {
                 email: null,
-                showKeyboard: !0,
+                showKeyboard: !1,
                 value: '',
                 second: '',
                 repeatPassword: '',
                 password: '',
-
+                verification_code: "",
+                verification_key: "",
             }
         },
 
@@ -97,8 +89,9 @@
         created() {},
 
         mounted() {
-
-
+            const vKey = "query" in this.$route && this.$route.query.verification_key;
+            this.verification_key = vKey;
+            console.log(vKey);
         },
 
         unmounted() {},
@@ -109,23 +102,47 @@
         },
 
         methods: {
-            submit () {
+            async submit () {
+                console.log(this);
                 try
                 {
-                    validator( 'password', this.email,
+                    validator( 'password', this.password,
                         function(item){
                             if (item instanceof Error) throw item;
                     },)
-
                 }catch(err){
-                    this.$notify(err.message)
+                    this.$notify(err.message);
                     return ;
                 }
                 if ( this.password != this.repeatPassword ) {
-                    return;
+                    this.$notify(this.language.twoInputNotSame);
+                    return ;
                 }
-                console.log('xiayibu');
-
+                if (!this.verification_code) 
+                {
+                    this.$notify(this.language.vCodeEmpty);
+                    return ;
+                }
+                if (!this.verification_key)
+                {
+                    this.$notify(this.language.vCodeKeyEmpty);
+                    return ;
+                }
+                const params = {
+                    verification_key: this.verification_key,
+                    verification_code: this.verification_code,
+                    password_confirmation: this.repeatPassword,
+                    password: this.password,
+                }
+                console.log(params);
+                let result = await this.post(URL.api_userSetPassword, params);
+                if ("code" in result && result.code == 200)
+                {
+                    Toast({
+                        message: "修改成功", duration: 1000
+                    });
+                }
+                console.log(result);
             },
 
             forgetPw () {
@@ -137,6 +154,7 @@
             toRegiste () {
                 console.log('to registe');
             },
+            
 
 
 
@@ -164,28 +182,12 @@
 .button-container {
     padding: var(--van-padding-md) 0;
 }
-.notReceive-wrapper {
-    padding: 50px var(--van-padding-md);
-}
-.remind {
-    text-align: center;
-    font-size: var(--van-font-size-md);
-    color: var(--van-text-color-2);
-    padding: var(--van-padding-sm) 0;
-}
-.resend {
-    text-align: center;
-    font-size: var(--van-font-size-lg);
-    color: var(--van-yellow);
-    padding: var(--van-padding-sm) 0;
-}
 .verification-code {
     color: var(--com-gray-7);
     font-size: var(--com-font-size-md);
     width: 100%;
     padding-bottom: var(--com-padding-md);
     font-weight: var(--com-font-weight-bold-2);
-
 }
 
 

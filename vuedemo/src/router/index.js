@@ -36,7 +36,7 @@ export default new Router({
 	    },
 	    {
 		    path: '/login/phone-verify',
-		    name: 'email-verify',
+		    name: 'phone-verify',
 		    component: () => import('@/pages/login/email-verify'),
 		    replace: true,
 		    meta : {
@@ -50,7 +50,7 @@ export default new Router({
 	    },
         {
 		    path: '/login/enter-newpw',
-		    name: 'email-verify',
+		    name: 'enter-newpw',
 		    component: () => import('@/pages/login/enter-newpw'),
 		    replace: true,
 		    meta : {

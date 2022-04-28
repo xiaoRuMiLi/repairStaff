@@ -18,6 +18,16 @@
                     />
 
                 </div>
+                <div class="not-receive-wrapper">
+                   <div class="remind">
+                        没有收到验证码
+                   </div>
+                   <div class="resend" @click="reSend">
+                        {{second != 0? second + "秒后": ""}}点击重新发送
+
+                   </div>
+
+                </div>
                 <!-- 按钮 -->
                 <div class="button-container">
                      <van-button type="primary" size="large" text="下一步" @click="submit"></van-button>
@@ -50,7 +60,8 @@
         },
         data() {
             return {
-                phone: null
+                phone: null,
+                second: 0,
 
             }
         },
@@ -104,6 +115,18 @@
             toRegiste () {
                 console.log('to registe');
             },
+            reSend ()
+            {
+                let self = this;
+                self.second = 60;
+                let intval = setInterval(() => {
+                    self.second -= 1;
+                    if (self.second == 0)
+                    {
+                        clearInterval(intval);
+                    }
+                }, 1000);
+            }
 
 
 
@@ -131,6 +154,30 @@
 .button-container {
     padding: var(--van-padding-md) 0;
 }
+.resend {
+    text-align: center;
+    font-size: var(--van-font-size-lg);
+    color: var(--van-yellow);
+    padding: var(--van-padding-sm) 0;
+}
+.verification-code {
+    color: var(--com-gray-7);
+    font-size: var(--com-font-size-md);
+    width: 100%;
+    padding-bottom: var(--com-padding-md);
+    font-weight: var(--com-font-weight-bold-2);
+
+}
+.notReceive-wrapper {
+    padding: 50px var(--van-padding-md);
+}
+.remind {
+    text-align: center;
+    font-size: var(--van-font-size-md);
+    color: var(--van-text-color-2);
+    padding: var(--van-padding-sm) 0;
+}
+
 
 
 </style>
