@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-04-28 22:16:00
+* @Last Modified time: 2022-04-29 20:39:02
 */
 
 'use strict';
@@ -47,8 +47,10 @@ const URL = {
     api_userGetPhone_verify: API_BASE_URL + '/api/v1/user/verification_codes',
      /*-----------------------------------获取邮箱验证码 -----------------------------------*/
     api_userGetEmail_verify: API_BASE_URL + '/api/v1/user/get_email_code',
-     /*-----------------------------------修改密码 -----------------------------------*/
+    /*-----------------------------------修改密码 -----------------------------------*/
     api_userSetPassword: API_BASE_URL + '/api/v1/user/set_password',
+    /*-----------------------------------获取用户信息 -----------------------------------*/
+    api_userGetUserInfo: API_BASE_URL + '/api/v1/user',
 
 
     /*-图片操作------------------------------------------------------------------------*/

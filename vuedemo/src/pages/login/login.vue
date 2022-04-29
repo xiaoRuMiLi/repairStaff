@@ -95,15 +95,15 @@
                 value : this.languageSet
             } );*/
             let userMemory = getLocal("userMemory");
-            // this.ruleForm = getLocal ( "loginForm" );
+            this.ruleForm = getLocal ( "loginForm" );
             let { remberPassWord } = getLocal("setting");
-            this.isChecked = remberPassWord; 
+            this.isChecked = remberPassWord;
+
             if (this.$isTrue(userMemory)) {
                 this.setOtherInfo ( userMemory.otherInfo );
             } else {
                 this.setWebConfig ();
             }
-            console.log( this.ruleForm );
         },
 
         unmounted() {},
@@ -121,8 +121,7 @@
                 otherInfo : that.otherInfo ,
                 language : that.languageSet
             } );
-            // 相当于记录上次登录信息作用
-            setLocal ( "loginForm" , that.ruleForm );
+
         },
         methods: {
             saveInfo () {

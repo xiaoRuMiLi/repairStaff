@@ -189,6 +189,25 @@ export default new Router({
 				    },
 				},
 				{
+				    path: 'user-info',
+				    name: 'user-info',
+				    component: () => import('@/pages/main/mine/user-info'),
+				    replace: false,
+				    /** @type {Object} [重定向]
+				    redirect : {
+					    "name" : "home"
+					} ,*/
+				    meta : {
+				      	// 是否需要拦截 如果为真跳转到该路由需要守卫拦截,可能会出现无法正常跳转的现象
+				        intercept : false ,
+				        // 有无快速跳转标签
+				        noQuickTabs : true ,
+				        title: '账户信息',
+		                keepAlive: false, // 不需要被缓存
+		                role : [ 5233 , 5232 , 5231 , 5230 ]
+				    },
+				},
+				{
 				    path: 'mine/avatarset',
 				    name: 'avatar-set',
 				    component: () => import('@/pages/main/mine/avatar-set'),

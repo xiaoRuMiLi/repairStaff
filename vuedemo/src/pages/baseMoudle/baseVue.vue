@@ -44,7 +44,7 @@
         watch: {
             // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
         },
-  
+
         created() {},
 
         mounted() {
@@ -52,15 +52,21 @@
              * this.$router 是Router 的实例，this.$route 是当前路由属性，
              * this.$router.currentRoute 属性就时 this.$route
              */
-            //console.log(this.$router, this.$route); 
+            //console.log(this.$router, this.$route);
         },
 
         unmounted() {},
-        destroyed() {},
+        beforeDestroy ()
+        {
+            // 开发状态的切换页面都是把页面缓存下来的，不会销毁已经打开的页面。不会执行beforedestroy
+        }
+        destroyed() {
+            // 我们从destroyed的字面意思可知，中文意为是“销毁”的意思，当我们离开这个页面的时候，便会调用这个函数(具体可以看看vue的的生命周期)，我们常用来销毁一些监听事件及定时函数，
+        },
 
         methods: {
 
 
-      },
+        },
     }
 </script>

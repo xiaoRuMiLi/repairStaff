@@ -16,7 +16,7 @@
             <div class="content">
                 <van-cell-group>
                     <div class="title" >{{language.setUp}}</div>
-                    <van-cell title-class="cell-title" is-link title="账户信息" value="" />
+                    <van-cell title-class="cell-title" is-link title="账户信息" value="" @click="toUserInfo" />
                     <van-cell title-class="cell-title" is-link title="修改密码" value="" @click="setPassWord"/>
                     <van-cell title-class="cell-title" is-link title="退出登录" value="" @click="loginOut"/>
                 </van-cell-group>
@@ -121,6 +121,11 @@
             setPassWord ()
             {
                 this.$router.push( {path: "/login/email-verify"});
+            },
+            toUserInfo ()
+            {
+                const id = this.userInfo.id;
+                this.$router.push({path: `/user-info`})
             }
 
 
@@ -151,7 +156,7 @@
     position: relative;
 }
 .content {
-    padding: var( --van-padding-lg);
+    padding: var( --van-padding-md);
 
 
 }
