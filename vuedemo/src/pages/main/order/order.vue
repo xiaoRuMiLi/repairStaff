@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="fixed">
-      <van-tabs v-model="inputs.active" @click="tapConstructionType">
+      <van-tabs v-model="inputs.active || 0" @click="tapConstructionType">
         <van-tab title="全部"></van-tab>
         <van-tab title="待接单"></van-tab>
         <van-tab title="施工中"></van-tab>
@@ -90,7 +90,6 @@ export default {
   },
   data () {
     return {
-      fromKeepAlive: !0,
       list: [],
       choose_datas: ['0-100','100-500','500-1000','1000-2000','2000-5000'],
       choose_dates: ['近两个月','近一个月','近二十天','近十天'],
@@ -123,52 +122,6 @@ export default {
         ],
       },
       datas: [
-        /*{
-          title: '喷漆施工单',
-          amount: 1000,
-          con: [
-            {
-              title: '车牌照号：',
-              content: '川F-PK685',
-            },
-            {
-              title: '车型：',
-              content: '一汽大众 速腾 2012 手动',
-            },
-            {
-              title: '接单时间：',
-              content: '2018-12-01 10：00：00',
-            }
-          ],
-          buttons: [
-            'no1',
-            'no2',
-          ],
-          rightTitle: '未完成'
-        },
-        {
-          title: '喷漆施工单',
-          amount: 1000,
-          con: [
-            {
-              title: '车牌照号：',
-              content: '川F-PK685',
-            },
-            {
-              title: '车型：',
-              content: '一汽大众 速腾 2012 手动',
-            },
-            {
-              title: '接单时间：',
-              content: '2018-12-01 10：00：00',
-            }
-          ],
-          buttons: [
-            '备注',
-            '留言',
-          ],
-          rightTitle: '已完成'
-        }*/
       ]
     }
 
@@ -178,15 +131,12 @@ export default {
       if(from.name === 'construction') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
           to.meta.isBack = true;
       }
-      /* 如果是从主页过来的，进入后就执行搜索  */
-      if( from.name === 'home' ) {
-          to.meta.onSearch = true;
-      }
       next();
   },
   // 如果是从详情页过来的，不用刷新页面, 如果上一个路由，也就是from Keep-alive属性为true，该函数也不会被调用
   // activated 生命周期在keep-alive 组件激活时调用
   activated() {
+    const self = this;
     // console.log(this.$router); 表示router模块
     // console.log('this.$route____________',this.$route);  // 表示当前路由
     if(this.$route.meta.isBack) {
@@ -196,28 +146,20 @@ export default {
       let wrapperScrollTop = this.$refs.wrapper.scrollTop;
       return ;
     }
-
-    if ( this.$route.meta.onSearch )
-    {
-      let params = self.$route.query;
-      this.params = params;
-      /*{
-        construction_type: this.inputs.active,
-        // 传入实际完成时间的时间区间数组
-        real_complete_at: this.inputs.betweenRealComplete,
-        amount: this.inputs.betweenAmount
-      }*/
-      // console.log('提交的params is',this.params);
-      self.onOff.finished = !1;
-      self.onOff.showPop = !1;
-      this.$route.meta.onSearch = false
-      this.datas = [];
-      this.getDatas ();
-      return ;
-    }
+    let params = "query" in self.$route? self.$route.query: {};
+    this.params = params;
+    /*{
+      construction_type: this.inputs.active,
+      // 传入实际完成时间的时间区间数组
+      real_complete_at: this.inputs.betweenRealComplete,
+      amount: this.inputs.betweenAmount
+    }*/
+    // console.log('提交的params is',this.params);
+    self.onOff.finished = !1;
+    self.onOff.showPop = !1;
     this.datas = [];
     this.getDatas ();
-    this.fromKeepAlive = !1;
+
   },
   methods: {
     /**
@@ -286,12 +228,12 @@ export default {
       return data;
     },
     getDatas ( params = this.params ) {
-      self = this
+      const self = this
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
-      params.page = pageNumber;
+      let nparams = params;
+      nparams.page = pageNumber;
       self.onOff.loading = !0;
-      // console.log('params:', this.params );
-      this.get ( URL.api_constructionSearch, params ).then( (data) => {
+      this.get ( URL.api_constructionSearch, nparams ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
         if ( res.length < conf.numberPerPage ) self.onOff.finished = true;
@@ -346,7 +288,6 @@ export default {
     },
     onFilter () {
       this.onOff.showPop = true
-      console.log("filter")
     },
     /**
      * [tapSubmit 提交筛选信息]
@@ -393,19 +334,16 @@ export default {
     },
     params ( nval ) {
       const self = this;
-      self.inputs.active = 'construction_type' in nval && Number(nval.construction_type)
+      self.inputs.active = 'construction_type' in nval? Number(nval.construction_type): 0
     }
 
   },
   mounted () {
-    // mouted中的方法代表dom已经加载完毕
-    // this.fromKeepAlive 记录的是是否从keepalive为真的路由过来的，如果是则不会执行actived生命周期函数，也就是说不会读取数据
-    /*if(this.fromKeepAlive) {
-      this.datas = []
-      this.getDatas();
-      this.fromKeepAlive = !0;
-    }*/
-
+    let params = "query" in this.$route? this.$route.query: {};
+    this.params = params;
+    this.datas = []
+    this.getDatas();
+   
   },
   created () {
     // console.log('created');

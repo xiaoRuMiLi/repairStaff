@@ -19,13 +19,13 @@
 
                 </div>
                 <div class="not-receive-wrapper">
-                   <div class="remind">
-                        没有收到验证码
-                   </div>
-                   <div class="resend" @click="reSend">
+                    <div class="remind" @click="$router.push({path:'/login/phone-verify'})">
+                        用手机号码验证
+                    </div>
+                    <div class="resend" @click="reSend">
                         {{second != 0? second + "秒后点击重新发送": "发送验证码"}}
 
-                   </div>
+                    </div>
 
                 </div>
                 <!-- 按钮 -->

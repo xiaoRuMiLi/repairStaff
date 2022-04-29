@@ -72,7 +72,6 @@ export default {
   },
   data () {
     return {
-      fromKeepAlive: !0,
       chooseVal: '',
       // 提交到后端的参数
       params: {},
@@ -100,10 +99,6 @@ export default {
     if(from.name === 'messageDetail') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
         to.meta.isBack = true;
     }
-    /* 如果是从主页过来的，进入后就执行搜索  */
-    if( from.name === 'home' ) {
-        to.meta.onSearch = true;
-    }
     next();
   },
   // activated 一进入当前页面页面事件，就会触发事件
@@ -117,46 +112,34 @@ export default {
       let wrapperScrollTop = this.$refs.wrapper.scrollTop;
       return;
     }
-
-    if ( this.$route.meta.onSearch )
-    {
-      let params = self.$route.query;
-      this.params = params;
-      this.datas = [];
-      this.onOff.finished = !1;
-      this.onOff.showPop = !1;
-      this.getDatas();
-      this.$route.meta.onSearch = false
-      return ;
-    }
-    this.datas = []
+    let params = "query" in this.$route? this.$route.query: {};
+    this.params = params;
+    this.datas = [];
+    this.onOff.finished = !1;
+    this.onOff.showPop = !1;
     this.getDatas();
-    this.fromKeepAlive = !1; // ajax获取数据方法
-
   },
   deactivated () {
-    console.log(' deactivated ');
+    // 从缓存页面切换到非缓存页面触发
 
   },
 
   watch: {
     params ( nval ) {
       const self = this;
-      self.inputs.active = 'message_type' in nval && Number(nval.message_type)
+      self.inputs.active = ('message_type' in nval)? parseInt(nval.message_type): 0
     }
 
   },
   mounted () {
-    // mouted中的方法代表dom已经加载完毕
-    //console.log( 'mounted' );
-    /*if( this.fromKeepAlive ) {
-      this.datas = []
-      this.getDatas ();
-    }*/
+    let params = "query" in this.$route? this.$route.query: {};
+    this.params = params;
+    this.datas = []
+    this.getDatas ();
+    
   },
   beforeDestroy () {
-    console.log('beforeDestroy');
-    this.fromKeepAlive = !0;
+    // 页面销毁前触发
 
   },
   created () {
@@ -237,12 +220,12 @@ export default {
 
 
     getDatas ( params = this.params ) {
-      self = this
+      let self = this
       let pageNumber = self.datas.length / conf.numberPerPage + 1;
-      params.page = pageNumber;
+      let nparams = params
+      nparams.page = pageNumber;
       self.onOff.loading = !0;
-      // console.log('params:', this.params );
-      this.get ( URL.api_messageSearch, params ).then( (data) => {
+      this.get ( URL.api_messageSearch, nparams ).then( (data) => {
         var datas = typeof data == 'string'? JSON.parse( data ): data;
         var res = datas.data
         if ( res.length < conf.numberPerPage ) self.onOff.finished = true;

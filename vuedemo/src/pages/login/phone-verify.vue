@@ -19,17 +19,17 @@
 
                 </div>
                 <div class="not-receive-wrapper">
-                   <div class="remind">
-                        没有收到验证码
-                   </div>
-                   <div class="resend" @click="reSend">
+                    <div class="remind" @click="$router.push({path:'/login/email-verify'})">
+                        切换到邮箱验证
+                    </div>
+                    <div class="resend" @click="reSend">
                         {{second != 0? second + "秒后": ""}}点击重新发送
 
-                   </div>
+                    </div>
 
                 </div>
                 <!-- 按钮 -->
-                <div class="button-container">
+                <div class="button-container" v-show="vKey">
                      <van-button type="primary" size="large" text="下一步" @click="submit"></van-button>
 
                 </div>

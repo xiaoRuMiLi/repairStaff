@@ -66,12 +66,6 @@
             return {
                 ruleForm: {email: null,password: null},
                 isChecked: true,
-                historicalAccount : {
-                    admin : "admin" ,
-                    tourist : "tourist" ,
-                    users : "users" ,
-                    other : "other"
-                }
             }
         },
 
@@ -87,39 +81,35 @@
         created() {},
 
         mounted() {
+            this.console()
             // 挂载语言到store
             this.languageSet = require ( "@/language/zh-CN.json" );
             /**
              * 三种改变store 状态方法
              * this.$store.state.language = language
              * */
-            this.$store.commit("setLanguage",this.languageSet);
+            this.$store.commit("setLanguage", this.languageSet);
             // 设置用户的信息
             /*this.$store.dispatch ( "upVuex" , {
                 mutations : "setLanguage" ,
                 value : this.languageSet
             } );*/
             let userMemory = getLocal("userMemory");
-            this.ruleForm = getLocal ( "loginForm" );
-            this.historicalAccount = getLocal ( "historicalAccount" );
-            console.log('userMemory is true: ', this.$isTrue(userMemory));
-
+            // this.ruleForm = getLocal ( "loginForm" );
+            let { remberPassWord } = getLocal("setting");
+            this.isChecked = remberPassWord; 
             if (this.$isTrue(userMemory)) {
                 this.setOtherInfo ( userMemory.otherInfo );
             } else {
                 this.setWebConfig ();
             }
-
-
-
+            console.log( this.ruleForm );
         },
 
         unmounted() {},
 
         beforeDestroy () {
-
-            // 开发状态态的切换页面都是把页面缓存下来的，不会销毁已经打开的页面。不会执行beforedestroy
-            console.log('执行了beforeDestroy')
+            // 开发状态的切换页面都是把页面缓存下来的，不会销毁已经打开的页面。不会执行beforedestroy
             let that = this;
             /* setLocal 保存数据到本地
                使用的window.localStorage,
@@ -134,7 +124,6 @@
             // 相当于记录上次登录信息作用
             setLocal ( "loginForm" , that.ruleForm );
         },
-
         methods: {
             saveInfo () {
                 let that = this;
@@ -149,22 +138,25 @@
                     language : that.languageSet
                 } );
                 // 相当于记录上次登录信息作用
-                setLocal ( "loginForm" , that.ruleForm );
-                // 登录用户名或者email作为键名，密码作为键值
-                setLocal ( 'historicalAccount', that.historicalAccount );
+                if (this.isChecked)
+                {
+                    setLocal ("loginForm" , that.ruleForm);
+                } else {
+                    setLocal ("loginForm" , {email: "",password: ""});
+                }
 
+                // 登录用户名或者email作为键名，密码作为键值
+                //setLocal ( 'historicalAccount', that.historicalAccount );
             },
             console () {
-                console.log('配置信息')
-                console.log(getLocal("userMemory"))
-                console.log(getLocal("loginForm"))
-                console.log(getLocal("historicalAccount"))
+                console.log('Local保存信息')
+                console.log("userMemory",getLocal("userMemory"))
+                console.log("loginForm",getLocal("loginForm"))
                 console.log('store保存信息')
                 console.log(this.userInfo)
                 console.log(this.otherInfo)
                 console.log(this.language)
                 console.log(this.briefInfo)
-
             },
             submit () {
                 try
@@ -182,22 +174,21 @@
                 }catch(err){
                     this.$notify(err.message)
                 }
-
-
             },
             async setWebConfig () {
                 // let config = await this.$Get(`/web-config/config-admin.json`);
                 let config = require ( "@/web-config/admin.json" );
                 this.setOtherInfo ( config );
                 this.$setIco ( this.otherInfo.webIco );
-
             } ,
 
             forgetPw () {
                 console.log('forget password');
             },
             remberChange ( val ) {
-                console.log('remberChange is', val);
+                this.isChecked = val;
+                let remberPassWord = val;
+                setLocal("setting" , { remberPassWord });
             },
             toRegiste () {
                 console.log('to registe');
@@ -205,16 +196,16 @@
             /* 登陆 */
             login () {
                 let that = this;
+                console.log("that.ruleForm", that.ruleForm);
                 this.post ( URL.api_login , {
                     email : that.ruleForm.email ,
                     password : that.ruleForm.password
                 } ).then ( res => {
-                    console.log(res);
                     if ( res.code == 200 ) {
                         let data = res.data;
                         /*增加修改this.data中的响应数据对象或者数组，因为普通增加属性方式并不会改变数组或者对象的内存地址。
                         增加的属性一样能够成为响应数据。使用that.$set（被修改的对象，增加的属性，增加的值）*/
-                        that.$set ( that.historicalAccount , that.ruleForm.email , that.ruleForm.password );
+                        // that.$set ( that.historicalAccount , that.ruleForm.email , that.ruleForm.password );
                         // console.log('that.historicalAccount is ',that.historicalAccount);
                         that.setUserInfo ( {
                             userName : data.user_info.name ,
@@ -228,7 +219,7 @@
                             // projectId: that.$isTrue(res.Expand) ? res.Expand.Id : null,
                             // cooperativePartner: that.language.ABC
                         } );
-                        that.lastUserInfo ();//保存userInfo的最后一次登录时间 保存键名为"lastTime" , 值为包含时间戳的对象{ date: "2022/3/10 16:15:21"second: 1646900121011 }
+                        //
 
                         /*1.this.$router.push()描述：跳转到不同的url，但这个方法会向history栈添加一个记录，点击后退会返回到上一个页面。
                         2.this.$router.replace()描述：同样是跳转到指定的url，但是这个方法不会向history里面添加新的记录，点击返回，会跳转到上上一个页面。上一个记录是不存在的。

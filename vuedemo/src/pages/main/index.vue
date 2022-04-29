@@ -36,7 +36,6 @@ export default {
   name: 'index',
   data () {
     return {
-      active: "home",
       isFixed: true,
       active: 0,
     }
