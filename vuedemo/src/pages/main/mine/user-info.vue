@@ -1,6 +1,7 @@
 <template>
     <div class="user-info">
     <van-cell-group title="基本信息">
+        <van-cell title="ID" :value="data.id" />
         <van-cell title="姓名" :value="data.name" />
         <van-cell title="邮箱地址" :value="data.email" />
         <van-cell title="电话" :value="data.phone" />

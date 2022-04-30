@@ -76,10 +76,19 @@
       </jin-repair-list>
       <!-- 图片展示组 -->
       <div class="img-title">
-        图片展示
+      登记图片
       </div>
       <jin-images-board
       :images = "data.loginImages"
+      :arrowDirection = "false"
+      >
+      </jin-images-board>
+      <!--自传送图片展示组 -->
+      <div class="img-title">
+       施工图片
+      </div>
+      <jin-images-board
+      :images = "constructionImages"
       :arrowDirection = "false"
       >
       </jin-images-board>
@@ -247,6 +256,10 @@ export default {
         return '完成';
       }
       return '已完成'
+    },
+    constructionImages () 
+    {
+      return this.data.images.map( item => item.url );
     }
 
   },

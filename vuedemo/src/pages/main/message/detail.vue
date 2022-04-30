@@ -110,11 +110,11 @@ export default {
       switch ( model ) {
         case 'App\\Models\\Construction':
           result = {
-            id: messageable.id,
-            name: '施工单',
-            type: 'construction',
-            car_number: messageable.car_number,
-            car_mode: messageable.car_mode,
+            ID: messageable.id,
+            名称: '施工单',
+            类型: 'construction',
+            车牌照号: messageable.car_number,
+            车型: messageable.car_mode,
           }
           console.log(result)
           break;
@@ -328,12 +328,14 @@ export default {
   padding: 0 var(--van-padding-sm);
   color: var(--van-text-color);
   font-size: var(--van-font-size-md);
+  box-sizing:border-box;
 }
 .main-info .val {
-  width: 70%;
+  width:70%;
   padding: 0 var(--van-padding-sm);
   color: var(--van-text-color-2);
   font-size: var(--van-font-size-sm);
+  box-sizing:border-box;
 }
 
 
