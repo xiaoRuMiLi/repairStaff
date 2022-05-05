@@ -200,6 +200,7 @@
     position: absolute;
     box-sizing: border-box;
     width: 100%;
+    background-color: var(--com-background-color);
 
 }
 .item {

@@ -24,8 +24,8 @@
 				{{evaluate}}
 		    </div>
 		</div>
-		<div class="right">
-			<i class="van-icon van-icon-arrow"></i>
+		<div class="right" v-if="arrow">
+			<i class="van-icon van-icon-arrow" @click="click"></i>
 		</div>
 
 	</div>
@@ -45,8 +45,9 @@
 			customerName: { type: String, default: '未知客户'},
 			customerType: {type: String, default: '未知客户类型'},
 			scoreTime: {type: String, default: '****-**-**'},
-			scoreValue: { type: Number, default: 2},
-			evaluate: { type: String, default: '该客户很忙，没有留下任何话！'}
+			scoreValue: {type: Number, default: 2},
+			evaluate: {type: String, default: '该客户很忙，没有留下任何话！'},
+      arrow: {type: Boolean, default: false}
 		},
 		data () {
 			return {
@@ -62,6 +63,12 @@
         } else {
           return this.imgSrc;
         }
+      }
+    },
+    methods: {
+      click ()
+      {
+        this.$emit("click-right");
       }
     }
 	}

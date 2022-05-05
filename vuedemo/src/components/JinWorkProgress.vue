@@ -25,7 +25,7 @@
                 </div>
 
             </div>
-            <div class="right">
+            <div v-if="arrow" class="right" @click="click">
                 <i class="van-icon van-icon-arrow"></i>
             </div>
         </div>
@@ -72,6 +72,10 @@
                 }
 
 
+            },
+            arrow: {
+              type: Boolean,
+              default: false,
             }
 
         },
@@ -168,6 +172,12 @@
                 }
 
             }
+        },
+        methods: {
+          click ()
+          {
+            this.$emit("click-right");
+          }
         }
 
     }

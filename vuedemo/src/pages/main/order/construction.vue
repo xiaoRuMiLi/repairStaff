@@ -9,7 +9,7 @@
         <i class = "van-icon-share-o van-icon"></i>
       </div>
       <div class="rectangle image-title">
-        <span>{{data.id}}</span>
+        <span>ID: {{data.id}}</span>
       </div>
     </div>
     <div id = "content">
@@ -84,14 +84,16 @@
       >
       </jin-images-board>
       <!--自传送图片展示组 -->
-      <div class="img-title">
-       施工图片
+      <div v-show="constructionImages.length">
+        <div class="img-title">
+         施工图片
+        </div>
+        <jin-images-board
+        :images = "constructionImages"
+        :arrowDirection = "false"
+        >
+        </jin-images-board>
       </div>
-      <jin-images-board
-      :images = "constructionImages"
-      :arrowDirection = "false"
-      >
-      </jin-images-board>
       <!-- 备注组 -->
       <div class="img-title">
         备注
@@ -660,6 +662,7 @@ export default {
   right: 20px;
   font-size: 20px;
   border-radius: 50%;
+  text-align: center;
 }
 .rectangle {
   bottom: 50px;
@@ -670,6 +673,7 @@ export default {
   margin: 10px;
   height: 30px;
   line-height: 30px;
+  text-align: center;
 }
 /* 故障描述 */
 .fault-description {

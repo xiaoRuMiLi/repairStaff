@@ -12,8 +12,8 @@
     </div>
 
   </div>
-  <div class="right">
-    <i class="van-icon van-icon-arrow"></i>
+  <div class="right" v-if="arrow">
+    <i class="van-icon van-icon-arrow" @click="click"></i>
   </div>
 </div>
 </template>
@@ -32,11 +32,21 @@ export default {
     amount: {
       type: Number,
       default: 'amount',
+    },
+    arrow: {
+      type: Boolean,
+      default: false,
     }
   },
   data () {
     return {
 
+    }
+  },
+  methods: {
+    click ()
+    {
+      this.$emit('click-right');
     }
   }
 

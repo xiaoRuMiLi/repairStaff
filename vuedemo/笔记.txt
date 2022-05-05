@@ -19,7 +19,7 @@
 	vue-cli3 脚手架搭建完成后，项目目录中没有 vue.config.js 文件，需要手动创建
 	创建vue.config.js
 	vue.config.js 是一个可选的配置文件，如果项目的 (和 package.json 同级的) 根目录中存在这个文件，那么它会被 @vue/cli-service 自动加载。你也可以使用 package.json 中的 vue 字段，但是注意这种写法需要你严格遵照 JSON 的格式来写。
-
+   
 	作者：Rising_life
 	链接：https://www.jianshu.com/p/b358a91bdf2d
 	来源：简书

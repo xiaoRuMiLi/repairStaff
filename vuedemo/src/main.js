@@ -12,17 +12,13 @@ import './VueFilters';
 import { fetchPost, fetchGet, fetchUpload } from './http';
 import { setLocal , getLocal , clearLocal } from "@/function";
 import './routeguard';
-// import "./allcss.css"; // 饿了吗的样式库
-// import "./font.css";
 import BaseNavBar from "./components/BaseNavBar.vue";
 import BaseTopTabs from "./components/BaseTopTabs.vue";
 import './config/vant/vant.js'; // 全局调用的组件定义
 import './config/css/global.css';
 import JhRefreshView from "./components/JhRefreshView/index.vue";// 下拉刷新控制
-// import BaseRefreshView from "./components/BaseRefreshView.vue";
 import BaiduMap from 'vue-baidu-map';
 import vuescroll from 'vuescroll';
-//import { ConfigProvider } from 'vant';
 
 //console.log("当前环境变量："+process.env.NODE_ENV) 和   console.log("当前环境路径："+process.env.VUE_APP_URL);
 Vue.prototype.$Post = fetchPost
