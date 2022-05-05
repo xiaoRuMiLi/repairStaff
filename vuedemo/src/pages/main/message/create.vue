@@ -1,11 +1,27 @@
 <template>
     <div>
-
+        <van-checkbox-group v-model="checked">
+            <van-cell-group inset>
+                <van-cell
+                v-for="(item, index) in list"
+                clickable
+                :key="item"
+                :title="`复选框 ${item}`"
+                @click="toggle(index)"
+                >
+                    <template #right-icon>
+                        <van-checkbox
+                        :name="item"
+                        :ref="el => checkboxRefs[index] = el"
+                        @click.stop
+                        />
+                    </template>
+                </van-cell>
+            </van-cell-group>
+        </van-checkbox-group>
     </div>
 </template>
 <script>
-    import axios from 'axios'
-    import { Popup } from 'vant';
     import { URL } from '@/web-config/apiUrl';
     import conf from '@/web-config/index';
     export default {
@@ -17,11 +33,11 @@
         data () {
            return {
            }
+
         },
         /* 判断是否是从详情页过来的，如果是那么不刷新页面 */
         beforeRouteEnter(to, from, next) {
-            if(from.name === '路由name属性')
-            { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
+            if(from.name === '路由name属性') { //判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
                 to.meta.isBack = true;
             }
             next();
