@@ -1,7 +1,7 @@
 <template>
     <div>
         <van-checkbox-group v-model="checked">
-            <van-cell-group inset>
+            <van-cell-group title="接收者" inset>
                 <van-cell
                 v-for="(item, index) in list"
                 clickable
@@ -9,6 +9,7 @@
                 :title="`复选框 ${item}`"
                 @click="toggle(index)"
                 >
+                    <!-- click.stop 阻止点击事件继续传播, #right-icon slot="right-icon"简写 slot-scope="obj" 组件中传值 -->
                     <template #right-icon>
                         <van-checkbox
                         :name="item"
@@ -18,20 +19,81 @@
                     </template>
                 </van-cell>
             </van-cell-group>
-        </van-checkbox-group>
+            <van-cell-group title="回复类型" inset>
+                <van-cell center title="是否必回">
+                    <template #right-icon>
+                        <van-switch v-model="mustReply" size="24" />
+                    </template>
+                </van-cell>
+            </van-cell-group>
+            <van-cell-group title="信息内容" inset>
+                <van-field
+                    v-model="message"
+                    rows="3"
+                    autosize
+                    label="留言"
+                    type="textarea"
+                    maxlength="125"
+                    placeholder="请输入留言"
+                    show-word-limit
+                />
+                </van-cell-group>
+            </van-checkbox-group>
+            <van-cell-group title="图片附件" inset>
+                <div style="padding: var(--van-padding-md);">
+                    <van-uploader
+                    ref="uploader"
+                    name="file"
+                    :accept="acceptType"
+                    :max-size="maxSize"
+                    :before-read="beforeUpload"
+                    :after-read="afterRead"
+                    :max-count="maxCount"
+                    v-model="fileList"
+                    @delete="del"
+                    >
+                    </van-uploader>
+                </div>
+            </van-cell-group>
+        <div class="button-wrapper" style="padding: 50px var(--van-padding-md);">
+            <div class="button-con" style="text-align: center; width: 100%;">
+              <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交</van-button>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+    import { CheckboxGroup, Checkbox, Cell, CellGroup, Field, Switch, Uploader   } from "vant";
     import { URL } from '@/web-config/apiUrl';
     import conf from '@/web-config/index';
+    import { compressConversion } from '@/utils/imgUtils.js';
     export default {
         name: 'construction',
         mixins : [ require ( "@/mixins" ).default],
         components: {
+            'van-checkbox-group': CheckboxGroup, 
+            "van-checkbox": Checkbox, 
+            Cell, 
+            CellGroup,
+            Field,
+            "van-switch": Switch,
+            "van-uploader": Uploader
 
         },
         data () {
            return {
+                checked: [],
+                checkboxRefs: [],
+                list: ['a','b'],
+                message: '',
+                mustReply: "",
+                fileList: [],// 提交的文件数据
+                acceptType:  'image/*',
+                maxSize: 60000000000,
+                maxCount: 16,
+                explain: "",
+                compressionRate: {width:270,height:230,size:80},
+                imageAccept: ['image/jpg','image/png','image/JPEG','image/jpeg'],
            }
 
         },
@@ -70,18 +132,47 @@
              */
             //console.log(this.$router, this.$route);
         },
-
-        unmounted() {},
-        beforeDestroy ()
-        {
-            // 开发状态的切换页面都是把页面缓存下来的，不会销毁已经打开的页面。不会执行beforedestroy
-        }
-        destroyed() {
-            // 我们从destroyed的字面意思可知，中文意为是“销毁”的意思，当我们离开这个页面的时候，便会调用这个函数(具体可以看看vue的的生命周期)，我们常用来销毁一些监听事件及定时函数，
-        },
-
         methods: {
-
+            toggle (index) {
+                console.log(this)
+            },
+            //  async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数,
+            async uploadFiles(fileObject){
+                // 压缩
+                //  //  await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值
+               // 如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理,为undefined
+                let file = await compressConversion(fileObject,this.compressionRate);
+                return file;
+            },
+            beforeUpload(file) {
+                return new Promise((resolve, reject) => {
+                    if (!this.imageAccept.includes(file.type)) {
+                        return this.$notify('请上传 jpg/png 格式图片');
+                        reject();
+                    } else {
+                        const img = this.uploadFiles(file)
+                        console.log(img);
+                        resolve(img);
+                    }
+                })
+            },
+            afterRead (file) {
+                var self = this;
+                self.fileList[self.fileList.length-1].status = '';
+                self.fileList[self.fileList.length-1].name = file.file.name;
+                self.fileList[self.fileList.length-1].message='待上传';
+                console.log(self.fileList)
+            },
+            submit () {
+                var self = this;
+                const datas = self.fileList.map( (i) => i.file)
+                console.log(datas)
+                this.$emit( 'upload', datas );
+                self.fileList = [];
+            },
+            del (file) {
+                this.$emit( 'delete', file );
+            }
 
         },
     }

@@ -266,6 +266,26 @@ export default new Router({
 		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
 		                role : [ 5233 , 5232 , 5231 , 5230 ]
 				    },
+				},
+				{
+				    path: 'message/create',
+				    name: 'messageCreate',
+				    component: () => import('@/pages/main/message/create'),
+				    replace: false,
+				    /** @type {Object} [重定向]
+				    redirect : {
+					    "name" : "home"
+					} ,*/
+				    meta : {
+				      	// 是否需要拦截 如果为真跳转到该路由需要守卫拦截,可能会出现无法正常跳转的现象
+				        intercept : false ,
+				        // 有无快速跳转标签
+				        noQuickTabs : true ,
+				        title: '消息详情',
+		                keepAlive: false, // 不需要被缓存
+		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
+		                role : [ 5233 , 5232 , 5231 , 5230 ]
+				    },
 				}
 		    ]
 	    },
