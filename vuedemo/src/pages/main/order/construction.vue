@@ -112,6 +112,9 @@
         <div class="button-con">
           <van-button type="primary" icon="photo-o" style="background-color: #1989fa; color: white; width: 80%;" @click="onOff_imagePop=!onOff_imagePop" >添加图片</van-button>
         </div>
+        <div class="button-con">
+          <van-button type="primary" icon="chat-o" style="background-color: #1989fa; color: white; width: 80%;" @click="toMessage" >发送信息</van-button>
+        </div>
       </div>
     </div>
     <div class="white-space"> </div>
@@ -259,7 +262,7 @@ export default {
       }
       return '已完成'
     },
-    constructionImages () 
+    constructionImages ()
     {
       return this.data.images.map( item => item.url );
     }
@@ -545,7 +548,7 @@ export default {
       }
       return result;
     },
- 
+
     // 分享页面的逻辑
     shareFriend(){//当点击分享好友按钮时
       //怎么取图片的地址取决于你放图片的路径，你也可以用线上图片，也可以放在你们的服务器上。
@@ -573,9 +576,9 @@ export default {
             showAlert:true,
             errTitle:"错误提示",
             errMsg:JSON.stringify(res[msg]),
-            errCode:""  
+            errCode:""
           }
-        } 
+        }
       })
       //以上是配置项注入成功
       wx.ready(()=>{//点击要去分享
@@ -583,7 +586,7 @@ export default {
           title :this.share.title,//分享标题
           link : this.share.url, //分享链接
           imgUrl : this.share.imgurl, //分享图标
-          success : function(res){//分享成功 
+          success : function(res){//分享成功
             console.log("已分享朋友圈成功")
             //如分享成功后想做一些其他的业务处理，可以在这里做
           },
@@ -593,19 +596,23 @@ export default {
           }
         })
         wx.onMenuShareAppMessage({//配置去分享好友的选项
-          title :  this.share.title,  
-          link :  this.share.url,       
-          desc : this.share.desc,             
-          imgUrl : this.share.imgurl ,                            
+          title :  this.share.title,
+          link :  this.share.url,
+          desc : this.share.desc,
+          imgUrl : this.share.imgurl ,
           success : function(res){
             console.log("分享好友成功")
           },
           cancel:function(res){
-            console.log("分享失败") 
+            console.log("分享失败")
           }
         });
       })
     },
+    toMessage () {
+      this.$router.push({path: "/message/create", query: { id: this.data.id}})
+
+    }
 
 
 

@@ -1,60 +1,54 @@
 <template>
     <div>
-        <van-checkbox-group v-model="checked">
+        <van-radio-group v-model="checked">
             <van-cell-group title="接收者" inset>
-                <van-cell
-                v-for="(item, index) in list"
-                clickable
-                :key="item"
-                :title="`复选框 ${item}`"
-                @click="toggle(index)"
+                <van-cell v-for="(item, index) in list" title="单选框 1" clickable @click="toggle(index)">
+                    <template #right-icon>
+                        <van-radio :name="item" />
+                    </template>
+                </van-cell>
+
+            </van-cell-group>
+        </van-radio-group>
+
+        <van-cell-group title="回复类型" inset>
+            <van-cell center title="是否必回">
+                <template #right-icon>
+                    <van-switch v-model="mustReply" size="24" />
+                </template>
+            </van-cell>
+        </van-cell-group>
+
+        <van-cell-group title="信息内容" inset>
+            <van-field
+                v-model="message"
+                rows="3"
+                autosize
+                label="留言"
+                type="textarea"
+                maxlength="125"
+                placeholder="请输入留言"
+                show-word-limit
+            />
+        </van-cell-group>
+
+        <van-cell-group title="图片附件" inset>
+            <div style="padding: var(--van-padding-md);">
+                <van-uploader
+                ref="uploader"
+                name="file"
+                :accept="acceptType"
+                :max-size="maxSize"
+                :before-read="beforeUpload"
+                :after-read="afterRead"
+                :max-count="maxCount"
+                v-model="fileList"
+                @delete="del"
                 >
-                    <!-- click.stop 阻止点击事件继续传播, #right-icon slot="right-icon"简写 slot-scope="obj" 组件中传值 -->
-                    <template #right-icon>
-                        <van-checkbox
-                        :name="item"
-                        :ref="el => checkboxRefs[index] = el"
-                        @click.stop
-                        />
-                    </template>
-                </van-cell>
-            </van-cell-group>
-            <van-cell-group title="回复类型" inset>
-                <van-cell center title="是否必回">
-                    <template #right-icon>
-                        <van-switch v-model="mustReply" size="24" />
-                    </template>
-                </van-cell>
-            </van-cell-group>
-            <van-cell-group title="信息内容" inset>
-                <van-field
-                    v-model="message"
-                    rows="3"
-                    autosize
-                    label="留言"
-                    type="textarea"
-                    maxlength="125"
-                    placeholder="请输入留言"
-                    show-word-limit
-                />
-                </van-cell-group>
-            </van-checkbox-group>
-            <van-cell-group title="图片附件" inset>
-                <div style="padding: var(--van-padding-md);">
-                    <van-uploader
-                    ref="uploader"
-                    name="file"
-                    :accept="acceptType"
-                    :max-size="maxSize"
-                    :before-read="beforeUpload"
-                    :after-read="afterRead"
-                    :max-count="maxCount"
-                    v-model="fileList"
-                    @delete="del"
-                    >
-                    </van-uploader>
-                </div>
-            </van-cell-group>
+                </van-uploader>
+            </div>
+        </van-cell-group>
+
         <div class="button-wrapper" style="padding: 50px var(--van-padding-md);">
             <div class="button-con" style="text-align: center; width: 100%;">
               <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交</van-button>
@@ -63,7 +57,7 @@
     </div>
 </template>
 <script>
-    import { CheckboxGroup, Checkbox, Cell, CellGroup, Field, Switch, Uploader   } from "vant";
+    import { RadioGroup, Radio, Cell, CellGroup, Field, Switch, Uploader   } from "vant";
     import { URL } from '@/web-config/apiUrl';
     import conf from '@/web-config/index';
     import { compressConversion } from '@/utils/imgUtils.js';
@@ -71,9 +65,9 @@
         name: 'construction',
         mixins : [ require ( "@/mixins" ).default],
         components: {
-            'van-checkbox-group': CheckboxGroup, 
-            "van-checkbox": Checkbox, 
-            Cell, 
+            "van-radio-group": RadioGroup,
+            "van-radio": Radio,
+            Cell,
             CellGroup,
             Field,
             "van-switch": Switch,
