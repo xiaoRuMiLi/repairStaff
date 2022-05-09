@@ -610,7 +610,7 @@ export default {
       })
     },
     toMessage () {
-      this.$router.push({path: "/message/create", query: { id: this.data.id}})
+      this.$router.push({path: "/message/create/" + this.data.id})
 
     }
 
@@ -635,7 +635,6 @@ export default {
         this.timestamp = res.data.timestamp;
         this.noncstr = res.data.nonceStr;
         this.signatureInfo = res.data.signature;
-
         console.log( this.appId, this.timestamp, this.noncstr, this.signatureInfo );
       }
     }).catch(err=>{console.log(err)})

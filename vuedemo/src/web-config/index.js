@@ -11,5 +11,11 @@ export default {
     numberPerPage: 20,
     // 默认图片文件前缀，如果缺失自动补全
     remoteImageFolder: 'http://weixiubang.club/img/',
+    // 模型Str
+    models: {
+    	message: "message",
+    	construction: "construction",
+    }
+    
 
 }

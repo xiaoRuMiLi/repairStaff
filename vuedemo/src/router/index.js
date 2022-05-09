@@ -268,7 +268,7 @@ export default new Router({
 				    },
 				},
 				{
-				    path: 'message/create',
+				    path: 'message/create/:id',
 				    name: 'messageCreate',
 				    component: () => import('@/pages/main/message/create'),
 				    replace: false,
