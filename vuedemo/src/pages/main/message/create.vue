@@ -1,65 +1,81 @@
 <template>
     <div>
-        <van-radio-group v-model="checked">
-            <van-cell-group title="接收者" inset>
-                <van-cell v-for="(item, index) in list" :title="item.name" clickable @click="toggle(index)">
+        <!-- 要表单验证必须要把input放在van-form中 -->
+        <van-form validate-first @failed="onFailed">
+            <van-radio-group v-model="checked">
+                <van-cell-group title="接收者" inset>
+                    <van-cell v-for="(item, index) in list" :title="item.name" clickable @click="toggle(index)">
+                        <template #right-icon>
+                            <van-radio :name="item.id" />
+                        </template>
+                    </van-cell>
+                </van-cell-group>
+            </van-radio-group>
+
+            <van-cell-group title="回复类型" inset>
+                <van-cell center title="是否必回">
                     <template #right-icon>
-                        <van-radio :name="item.id" />
+                        <van-switch v-model="mustReply" size="24" />
                     </template>
                 </van-cell>
-
             </van-cell-group>
-        </van-radio-group>
 
-        <van-cell-group title="回复类型" inset>
-            <van-cell center title="是否必回">
-                <template #right-icon>
-                    <van-switch v-model="mustReply" size="24" />
-                </template>
-            </van-cell>
-        </van-cell-group>
+            <van-cell-group title="信息内容" inset>
+                <van-field
+                    v-model="message"
+                    rows="3"
+                    autosize
+                    label="留言"
+                    type="textarea"
+                    maxlength="125"
+                    placeholder="请输入留言"
+                    show-word-limit
+                    :rules="[
+                        {
+                            required: true,
+                            trigger:'onBlur',
+                            message: language.inputNotNull
+                        },
+                        {
+                            pattern: /\S+/,
+                            message: language.pleaseInputAny,
+                            trigger: 'onBlur'
+                        }
+                    ]"
+                />
+                <!--正则验证 必须先给name赋值 :rules="[{正则变量 , message: '错误提示内容' }]" -->
+            </van-cell-group>
 
-        <van-cell-group title="信息内容" inset>
-            <van-field
-                v-model="message"
-                rows="3"
-                autosize
-                label="留言"
-                type="textarea"
-                maxlength="125"
-                placeholder="请输入留言"
-                show-word-limit
-            />
-        </van-cell-group>
+            <van-cell-group title="图片附件" inset>
+                <div style="padding: var(--van-padding-md);">
+                    <van-uploader
+                    ref="uploader"
+                    name="file"
+                    :accept="acceptType"
+                    :max-size="maxSize"
+                    :before-read="beforeUpload"
+                    :after-read="afterRead"
+                    :max-count="maxCount"
+                    v-model="fileList"
+                    @delete="del"
+                    >
+                    </van-uploader>
+                </div>
+            </van-cell-group>
 
-        <van-cell-group title="图片附件" inset>
-            <div style="padding: var(--van-padding-md);">
-                <van-uploader
-                ref="uploader"
-                name="file"
-                :accept="acceptType"
-                :max-size="maxSize"
-                :before-read="beforeUpload"
-                :after-read="afterRead"
-                :max-count="maxCount"
-                v-model="fileList"
-                @delete="del"
-                >
-                </van-uploader>
+            <div class="button-wrapper" style="padding: 50px var(--van-padding-md);">
+                <div class="button-con" style="text-align: center; width: 100%;">
+                  <van-button type="primary"  size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交</van-button>
+                </div>
             </div>
-        </van-cell-group>
-
-        <div class="button-wrapper" style="padding: 50px var(--van-padding-md);">
-            <div class="button-con" style="text-align: center; width: 100%;">
-              <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交</van-button>
-            </div>
-        </div>
+        </van-form>
     </div>
 </template>
 <script>
     import { RadioGroup, Radio, Cell, CellGroup, Field, Switch, Uploader   } from "vant";
     import { URL } from '@/web-config/apiUrl';
     import conf from '@/web-config/index';
+    import { validator } from "@/function";
     import { compressConversion } from '@/utils/imgUtils.js';
     export default {
         name: 'construction',
@@ -76,9 +92,10 @@
         },
         data () {
             return {
+                pattern:  /\d{6}/,
                 // 施工单ID
                 id: 0,
-                checked: 0,
+                checked: null,
                 checkboxRefs: [],
                 list: [],
                 message: '',
@@ -98,7 +115,7 @@
         /* 判断是否是从详情页过来的，如果是那么不刷新页面 */
         beforeRouteEnter(to, from, next) {
             // 判断是从哪个路由过来的，若是detail页面不需要刷新获取新数据，直接用之前缓存的数据即可
-            if(from.name === '路由name属性') { 
+            if(from.name === '路由name属性') {
                 to.meta.isBack = true;
             }
             next();
@@ -134,9 +151,12 @@
             this.getReceivers(this.id);
         },
         methods: {
+            onFailed(errorInfo) {
+                // 表单验证错误，会执行这里
+                console.log('failed', errorInfo);
+            },
             toggle (index) {
-                console.log(index)
-                console.log(this.checked);
+                // console.log(index)
             },
             //  async 是一个修饰符，async 定义的函数会默认的返回一个Promise对象resolve的值，因此对async函数可以直接进行then操作,返回的值即为then方法的传入函数,
             async uploadFiles(fileObject){
@@ -167,18 +187,27 @@
             },
             submit () {
                 var self = this;
+                console.log(self.language)
+                validator( 'numType', self.checked, function(item){
+                    if (item instanceof Error) {
+                        self.$notify(item.message);
+                        throw item; // 抛出错误程序中断执行; 不抛出则程序继续执行
+                    };
+                });
+
                 const images = self.fileList;
-                self.params = { 
-                    user_id: self.checked, 
-                    content: self.message, 
-                    must_reply: self.mustReply? 1: 0, 
+                self.params = {
+                    user_id: self.checked,
+                    content: self.message,
+                    must_reply: self.mustReply? 1: 0,
                     model: conf.models.construction,
                     model_id: self.id,
                     images: images,
                 };
                 self.creatMessage(self.params);
-                console.log(self.params);
                 self.fileList = [];
+                self.checked = null;
+                self.message = "";
             },
             del (file) {
                 this.$emit( 'delete', file );
@@ -186,7 +215,7 @@
             async getReceivers (id) {
                 const self = this;
                 const data = await self.get(URL.api_getMessageReceiversByConstructionId + id);
-                self.list = "data" in data? data.data: [];    
+                self.list = "data" in data? data.data: [];
             },
 
             async uploadImages (images, model, model_id) {
@@ -208,14 +237,14 @@
                     }
 
                 }
-                
+
             },
             creatMessage ( form ) {
                 let images = form.images || [];
-                let params = { 
-                    user_id: form.user_id, 
-                    content: form.content, 
-                    must_reply: form.must_reply, 
+                let params = {
+                    user_id: form.user_id,
+                    content: form.content,
+                    must_reply: form.must_reply,
                     model: form.model,
                     model_id: form.model_id
                 };
@@ -226,7 +255,7 @@
                             console.log(data);
                             this.uploadImages(images, 'message', dat.data.id);
                         }
-                        
+
                     }
                 })
             },

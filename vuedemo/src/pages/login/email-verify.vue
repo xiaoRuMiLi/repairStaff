@@ -63,7 +63,6 @@
                 email: null,
                 second: 0,
                 vKey: "",
-
             }
         },
 
@@ -121,7 +120,7 @@
                 if(this.second > 0) return;
                 let self = this;
                 self.second = 60;
-                let intval = setInterval(() => 
+                let intval = setInterval(() =>
                 {
                     self.second -= 1;
                     if (self.second == 0)

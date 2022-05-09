@@ -98,7 +98,6 @@
             this.ruleForm = getLocal ( "loginForm" );
             let { remberPassWord } = getLocal("setting");
             this.isChecked = remberPassWord;
-
             if (this.$isTrue(userMemory)) {
                 this.setOtherInfo ( userMemory.otherInfo );
             } else {

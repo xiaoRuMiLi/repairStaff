@@ -361,6 +361,7 @@ export  function validator ( rule, value, callback=null, dom = null ) {
         }
         if( typeof(validator) == 'function' ){
             doEvent(dom,trigger);
+            // 调用函数检查
             validator('rule',value,callback);
         }
     }
