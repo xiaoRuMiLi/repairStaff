@@ -29,7 +29,7 @@
         // activated 一进入当前页面页面事件，就会触发事件
         // 如果是从详情页过来的，不用刷新页面,如果本路由没有设置keep-alive 为true，则该生命周期函数不会被调用，如果上一个路由，也就是from Keep-alive属性为true，该函数也不会被调用
         activated() {
-            console.log('this.$route',this.$route);
+            //  console.log('this.$route',this.$route);
             if(!this.$route.meta.isBack) {
                 // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
                 //this.getDatas(); // ajax获取数据方法
@@ -42,7 +42,12 @@
 
         },
         watch: {
-            // 在watch中使用this要注意，不能用箭头函数，否则会出错，例如：
+            /**
+            |  在watch中使用this要注意，不能用箭头函数,箭头函数中this：
+            |   1.普通函数this指向它的调用者,obj.func1()就是this指向obj自己,或者这么理解obj.func1.call(obj)。
+            |   2.箭头函数this和其最外层this保持一致,obj.func2(),既调用箭头函数时,最外层是obj,obj当前挂在window下,那么箭头函数的t|his同obj一样,指向window。
+            |   3.obj.func3.fn(),存在多层嵌套后调用箭头函数,此时箭头函数的this依旧是与最外层(obj)保持一致,指向window
+            */
         },
 
         created() {},

@@ -294,10 +294,11 @@ export default {
      * @return {[type]} [description]
      */
     tapSubmit () {
-      // 与标签栏的选择项同步
+      const self = this;
+      // 与标签栏的选择项同步,设置筛选待接单和施工中无效,因为筛选会强制选择一个实际完成时间，施工中和未接单实际完成时间是空，所以筛选不出来
       if( this.filterConstructionType == '待接单' || this.filterConstructionType == '施工中')
       {
-        this.filterConstructionType = '全部'
+        this.filterConstructionType = '全部';
       }
       this.inputs.active = this.filterConstructionTypes.indexOf( this.filterConstructionType );
       this.params = {
@@ -316,10 +317,6 @@ export default {
 
   },
   watch: {
-    filterConstructionType ( newVal ) {
-      // 与标签栏的选择项同步
-      // this.inputs.active = this.filterConstructionTypes.indexOf( newVal );
-    },
     chooseVal ( newVal )
     {
       let amounts = newVal.split('-');
@@ -343,7 +340,6 @@ export default {
     this.params = params;
     this.datas = []
     this.getDatas();
-   
   },
   created () {
     // console.log('created');

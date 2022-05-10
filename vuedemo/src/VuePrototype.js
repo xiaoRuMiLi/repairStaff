@@ -74,6 +74,11 @@ Vue.prototype.$isFalse = function ( o ) {
     if ( !o || o === 'null' || o === 'undefined' || o === 'false' || o === 'NaN' || Object.keys ( o ).length < 1 || o.length < 1 ) return true
     return false
 }
+/**
+ * [$isTrue ]
+ * @param  {[type]}  d [被检测的值]
+ * @return {Boolean}   [description]
+ */
 Vue.prototype.$isTrue = function ( d ) {
     //检验值有但是为空
     switch ( Vue.prototype.$type ( d ) ) {

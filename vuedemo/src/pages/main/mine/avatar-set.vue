@@ -77,7 +77,6 @@ export default {
   // activated 一进入当前页面页面事件，就会触发事件
   // 如果是从详情页过来的，不用刷新页面,如果本路由没有设置keep-alive 为true，则该生命周期函数不会被调用，如果上一个路由，也就是from Keep-alive属性为true，该函数也不会被调用
   activated() {
-    console.log('this.$route',this.$route);
     if(!this.$route.meta.isBack) {
       // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
       //this.getDatas(); // ajax获取数据方法
@@ -120,7 +119,7 @@ export default {
           const data  = res.data;
           /* 页面刷新后 修改的user_info就不会被存在
            刷新页面时,vue实例重新加载,从而,store也被重置了。store是用来存储组件状态的,而不是用来做本地数据存储的。所以,对于不希望页面刷新之后被重置的数据,使用本地存储来进行存储。*/
-          let userInfo = {avatarUrl: data.avatarUrl}
+          let userInfo = { avatarUrl: data.avatarUrl }
           self.setUserInfo ( userInfo );
 
           /* setLocal 保存数据到本地,永久存储

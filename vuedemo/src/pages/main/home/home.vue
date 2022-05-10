@@ -1,10 +1,8 @@
 <template>
   <div>
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item>1</van-swipe-item>
-      <van-swipe-item>2</van-swipe-item>
-      <van-swipe-item>3</van-swipe-item>
-      <van-swipe-item>4</van-swipe-item>
+    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" lazy-render>
+      <van-swipe-item v-for="img in swipeImgs"><img :src="img"/></van-swipe-item>
+
     </van-swipe>
     <div class="content">
       <van-notice-bar scrollable :text="notices" />
@@ -35,6 +33,7 @@ import { NoticeBar, Swipe, SwipeItem } from 'vant';
 import jinRemind from "@/components/jin-remind/index.vue";  //引用组件的地址
 import jinRemindItem from "@/components/jin-remind-item/index.vue";  //引用组件的地址
 import { URL } from '@/web-config/apiUrl';
+import { setLocal } from "@/function";
 export default {
   name: 'homePage',
   mixins : [ require ( "@/mixins" ).default],
@@ -47,6 +46,7 @@ export default {
   },
   data () {
     return {
+      swipeImgs: [],
       noticeArr: [],
       task:{
         title: '代办事项',
@@ -83,9 +83,22 @@ export default {
   computed: {
     notices () {
       return this.noticeArr.map(i => i.content).join("!!!!!!。");
-    }
+    },
+  },
+  beforeDestroy () {
+
+    // 对数据进行保存。比如系统的一些挂载的设置，在退出后就自动进行保存，下次就可以直接从localstorage 读取
+    setLocal ( "userMemory" , {
+      userInfo : this.userInfo ,
+      otherInfo : this.otherInfo ,
+      language : this.languageSet
+    });
   },
   methods: {
+    getSwipeImgs () {
+      console.log(this.otherInfo);
+      this.swipeImgs = this.otherInfo.swipeImgs;
+    },
     onClickLeft() {
       Toast('返回');
     },
@@ -158,17 +171,16 @@ export default {
       }
     },
     async getNotices() {
-      const datas = await this.get(URL.api_getLastNotice); 
-      this.noticeArr =  "data" in datas && datas.data ;   
-    }
-
-
+      const datas = await this.get(URL.api_getLastNotice);
+      this.noticeArr =  "data" in datas && datas.data ;
+    },
 
   },
   mounted () {
     let self = this;
     self.getData();
     self.getNotices();
+    self.getSwipeImgs();
 
   },
 

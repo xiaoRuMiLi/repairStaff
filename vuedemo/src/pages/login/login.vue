@@ -78,12 +78,25 @@
 
         },
 
-        created() {},
+        created() {
+            // 先读取配置信息
+            let userMemory = getLocal("userMemory");
+            this.ruleForm = getLocal ( "loginForm" );
+            // 如果localstage 里面保存有数据就从里面读取到store 否则从配置文件读取
+            if (this.$isTrue(userMemory) && userMemory.otherInfo && Object.keys(userMemory.otherInfo).length > 0) {
+                this.setOtherInfo ( userMemory.otherInfo );
+            } else {
+                this.setWebConfig ();
+            }
+            this.setWebConfig ();
+        },
 
         mounted() {
             this.console()
+            // 配置文件中获取默认语言
+            const defaultLanguageOption = this.otherInfo.languageOpt;
             // 挂载语言到store
-            this.languageSet = require ( "@/language/zh-CN.json" );
+            this.languageSet = require ( `@/language/${defaultLanguageOption}.json`);
             /**
              * 三种改变store 状态方法
              * this.$store.state.language = language
@@ -94,15 +107,9 @@
                 mutations : "setLanguage" ,
                 value : this.languageSet
             } );*/
-            let userMemory = getLocal("userMemory");
-            this.ruleForm = getLocal ( "loginForm" );
-            let { remberPassWord } = getLocal("setting");
+            let { remberPassWord } = this.otherInfo;
             this.isChecked = remberPassWord;
-            if (this.$isTrue(userMemory)) {
-                this.setOtherInfo ( userMemory.otherInfo );
-            } else {
-                this.setWebConfig ();
-            }
+
         },
 
         unmounted() {},
@@ -115,11 +122,7 @@
                params 1 为保存的键名
                param 2 为保存的值
             */
-            setLocal ( "userMemory" , {
-                userInfo : that.userInfo ,
-                otherInfo : that.otherInfo ,
-                language : that.languageSet
-            } );
+            that.saveInfo();
 
         },
         methods: {
@@ -174,6 +177,7 @@
                 }
             },
             async setWebConfig () {
+                // 设置配置文件
                 // let config = await this.$Get(`/web-config/config-admin.json`);
                 let config = require ( "@/web-config/admin.json" );
                 this.setOtherInfo ( config );
@@ -186,7 +190,7 @@
             remberChange ( val ) {
                 this.isChecked = val;
                 let remberPassWord = val;
-                setLocal("setting" , { remberPassWord });
+                this.setOtherInfo ( {remberPassWord} );
             },
             toRegiste () {
                 console.log('to registe');
@@ -194,7 +198,6 @@
             /* 登陆 */
             login () {
                 let that = this;
-                console.log("that.ruleForm", that.ruleForm);
                 this.post ( URL.api_login , {
                     email : that.ruleForm.email ,
                     password : that.ruleForm.password
@@ -205,19 +208,13 @@
                         增加的属性一样能够成为响应数据。使用that.$set（被修改的对象，增加的属性，增加的值）*/
                         // that.$set ( that.historicalAccount , that.ruleForm.email , that.ruleForm.password );
                         // console.log('that.historicalAccount is ',that.historicalAccount);
+
                         that.setUserInfo ( {
                             userName : data.user_info.name ,
                             avatarUrl: data.user_info.avatarUrl,
-                            // headerTitle: data.Nickname,
-                            // headerTitle: that.language.subject,
                             userId : data.user_info.id ,
-                            userToken : data.access_token ,
-                            //userRole : data.userrole ,
-                            // userProject: data.Project,
-                            // projectId: that.$isTrue(res.Expand) ? res.Expand.Id : null,
-                            // cooperativePartner: that.language.ABC
-                        } );
-                        //
+                            userToken : data.access_token
+                        });
 
                         /*1.this.$router.push()描述：跳转到不同的url，但这个方法会向history栈添加一个记录，点击后退会返回到上一个页面。
                         2.this.$router.replace()描述：同样是跳转到指定的url，但是这个方法不会向history里面添加新的记录，点击返回，会跳转到上上一个页面。上一个记录是不存在的。
