@@ -79,6 +79,10 @@ const URL = {
     /*----------------------------------- 员工版主页统计 -----------------------------------*/
     api_statistics: API_BASE_URL + '/api/v1/statistics/staff/index',
 
+    /*-公告操作------------------------------------------------------------------------*/
+    /*----------------------------------- 获取最后三天公告 -----------------------------------*/
+    api_getLastNotice: API_BASE_URL + "api/v1/notice/get_last_three",
+
 }
 // export default 在其他文件引入时语法是 import 别名 from @/web-config/apiUrl 不能使用 import  { Url } from @/web-config/apiUrl. 要这样引用不能加default关键字
 export {

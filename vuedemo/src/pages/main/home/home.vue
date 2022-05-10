@@ -7,7 +7,7 @@
       <van-swipe-item>4</van-swipe-item>
     </van-swipe>
     <div class="content">
-      <van-notice-bar scrollable text="技术是开发它的人的共同灵魂。" />
+      <van-notice-bar scrollable :text="notices" />
       <jin-remind :remind-title = "task.title">
         <template slot="item">
           <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
@@ -47,6 +47,7 @@ export default {
   },
   data () {
     return {
+      noticeArr: [],
       task:{
         title: '代办事项',
         datas: [
@@ -79,7 +80,11 @@ export default {
     }
 
   },
-
+  computed: {
+    notices () {
+      return this.noticeArr.map(i => i.content).join("!!!!!!。");
+    }
+  },
   methods: {
     onClickLeft() {
       Toast('返回');
@@ -151,6 +156,10 @@ export default {
         default:
             break;
       }
+    },
+    async getNotices() {
+      const datas = await this.get(URL.api_getLastNotice); 
+      this.noticeArr =  "data" in datas && datas.data ;   
     }
 
 
@@ -159,6 +168,7 @@ export default {
   mounted () {
     let self = this;
     self.getData();
+    self.getNotices();
 
   },
 
