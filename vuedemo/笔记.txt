@@ -54,6 +54,25 @@ Vue
 			this.obj= Object.assign({}, this.obj, { a: 1, e: 2 })
 
         链接：https://www.jianshu.com/p/71b1807b1815
+静态资源引用
+    vue:src引用assets的图片
+        方式1 
+            引用 import backImg from "../../assets/images/backimg.jpg";
+            使用  <img :src="backImg"  />
+        方式2
+        	<img src="@/assets/img/login/user.png"> // 可以使用@，注意src前面不能有：符号
+        	// 错误范例 不可以使用@，无法解析；也无法找到assets目录
+            <img :src="@/assets/img/login/user.png">
+        方式3
+            引用 img: require('@/assets/img/login/user.png')
+            使用  <img :src="img"  />
+        方式4
+            引用 import img from '@/assets/img/login/user.png'
+            使用  <img :src="img"  />
+    static文件引用
+        // 将图片放到static目录下
+        <img :src="'../../static/img/login/user.png'">
+
 
 
 store

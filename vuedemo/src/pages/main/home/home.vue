@@ -1,7 +1,11 @@
 <template>
   <div>
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" lazy-render>
-      <van-swipe-item v-for="img in swipeImgs"><img :src="img"/></van-swipe-item>
+      <van-swipe-item v-for="img in swipeImgs">
+
+        <!-- <img class="swipe-img" v-lazy="img"/> -->
+        <img class="swipe-img" :src="img"/>
+      </van-swipe-item>
 
     </van-swipe>
     <div class="content">
@@ -29,7 +33,7 @@
 <script>
 
 import axios from 'axios'
-import { NoticeBar, Swipe, SwipeItem } from 'vant';
+import { NoticeBar, Swipe, SwipeItem, Lazyload } from 'vant';
 import jinRemind from "@/components/jin-remind/index.vue";  //引用组件的地址
 import jinRemindItem from "@/components/jin-remind-item/index.vue";  //引用组件的地址
 import { URL } from '@/web-config/apiUrl';
@@ -91,7 +95,7 @@ export default {
     setLocal ( "userMemory" , {
       userInfo : this.userInfo ,
       otherInfo : this.otherInfo ,
-      language : this.languageSet
+      language : this.language,
     });
   },
   methods: {
@@ -187,15 +191,19 @@ export default {
 }
 </script>
 <style scoped>
+  .content {
+    padding: var(--van-padding-sm);
+  }
   .my-swipe .van-swipe-item {
     color: #fff;
     font-size: 20px;
-    line-height: 150px;
+    /* line-height: 150px; */
     text-align: center;
-    background-color: #39a9ed;
+    /* background-color: #39a9ed;*/
   }
-  .content {
-    padding: var(--van-padding-sm);
+  .swipe-img {
+    width: 100%;
+    height: 100%;
   }
 </style>
 

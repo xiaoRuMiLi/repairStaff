@@ -18,6 +18,7 @@
                     <div class="title" >{{language.setUp}}</div>
                     <van-cell title-class="cell-title" is-link title="账户信息" value="" @click="toUserInfo" />
                     <van-cell title-class="cell-title" is-link title="修改密码" value="" @click="setPassWord"/>
+                    <van-cell title-class="cell-title" is-link title="刷新设置" value="" @click="setWebConfig" />
                     <van-cell title-class="cell-title" is-link title="退出登录" value="" @click="loginOut"/>
                 </van-cell-group>
 
@@ -126,7 +127,26 @@
             {
                 const id = this.userInfo.id;
                 this.$router.push({path: `/user-info`})
-            }
+            },
+            async setWebConfig () {
+                // 设置配置文件
+                // let config = await this.$Get(`/web-config/config-admin.json`);
+                let config = require ( "@/web-config/admin.json" );
+
+                Dialog.confirm({
+                  title: '提醒',
+                  message:
+                    '是否刷新设置！',
+                })
+                .then(() => {
+                    this.setOtherInfo ( config );
+                    this.$setIco ( this.otherInfo.webIco );    
+                })
+                .catch(() => {
+                    // on cancel
+                });
+                
+            },
 
 
 

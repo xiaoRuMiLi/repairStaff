@@ -6,7 +6,7 @@ import router from './router'
 import 'vant/lib/index.css'
 import store from './store'
 import './VuePrototype';
-import './VueFilters';
+import "./VueComponent";
 /* 使用vue的时候，后台可能不能及时作出接口，那么就需要我们前端自己模拟数据，使用mockjs可以进行模拟数据。 */
 // import './mock';
 import { fetchPost, fetchGet, fetchUpload } from './http';

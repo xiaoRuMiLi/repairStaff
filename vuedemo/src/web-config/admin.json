@@ -1,6 +1,14 @@
 ﻿{
-  "swipeImgs": "首页轮播图",
-  "swipeImgs": ["@/assets/swipe-img/1.jpg","@/assets/swipe-img/2.jpg","@/assets/swipe-img/3.jpg"],
+  "swipeImgs": "首页轮播图,图片尺寸必须一致，建议1005 * 390",
+  "swipeImgs": [
+    "../../static/swipe-img/1.jpg",
+    "../../static/swipe-img/2.jpg",
+    "../../static/swipe-img/3.jpg",
+    "../../static/swipe-img/4.webp",
+    "../../static/swipe-img/5.webp",
+    "../../static/swipe-img/6.webp",
+    "../../static/swipe-img/7.webp"
+  ],
   "helloTitle" : "登录页标题" ,
   "helloTitle" : "adminTitle" ,
   "webIco" : "网站ico" ,

@@ -8,6 +8,12 @@
     import { Popup } from 'vant';
     import { URL } from '@/web-config/apiUrl';
     import conf from '@/web-config/index';
+    /* const age = 'bar';  定义不需要双向绑定的数据，变量提升 */
+    /*  仅仅是在template中作为渲染数据使用，自定义之后便不会在后续的操作中对其修改，不用做遍历数据劫持。这种数据如果使用Vue对其数据劫持会浪费一些性能
+    const arr = Object.freeze([{
+        name: 'nordon',
+        age: 18
+    }]) */
     export default {
         name: 'construction',
         mixins : [ require ( "@/mixins" ).default],
