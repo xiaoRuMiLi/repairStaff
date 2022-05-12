@@ -88,12 +88,11 @@
             } else {
                 this.setWebConfig ();
             }
-            this.setWebConfig ();
         },
 
         mounted() {
             // 读取语言信息
-            // this.console()
+            this.console()
             // 配置文件中获取默认语言
             const defaultLanguageOption = this.otherInfo.languageOpt;
             // 挂载语言到store
@@ -216,7 +215,7 @@
                             userId : data.user_info.id ,
                             userToken : data.access_token
                         });
-
+                        that.saveInfo();
                         /*1.this.$router.push()描述：跳转到不同的url，但这个方法会向history栈添加一个记录，点击后退会返回到上一个页面。
                         2.this.$router.replace()描述：同样是跳转到指定的url，但是这个方法不会向history里面添加新的记录，点击返回，会跳转到上上一个页面。上一个记录是不存在的。
                         3.this.$router.go(n)相对于当前页面向前或向后跳转多少个页面,类似 window.history.go(n)。n可为正数可为负数。正数返回上一个页面*/

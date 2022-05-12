@@ -132,7 +132,6 @@
                 // 设置配置文件
                 // let config = await this.$Get(`/web-config/config-admin.json`);
                 let config = require ( "@/web-config/admin.json" );
-
                 Dialog.confirm({
                   title: '提醒',
                   message:

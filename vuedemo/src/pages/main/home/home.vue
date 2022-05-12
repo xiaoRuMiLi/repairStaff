@@ -100,7 +100,6 @@ export default {
   },
   methods: {
     getSwipeImgs () {
-      console.log(this.otherInfo);
       this.swipeImgs = this.otherInfo.swipeImgs;
     },
     onClickLeft() {
