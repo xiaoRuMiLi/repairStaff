@@ -27,6 +27,7 @@
                 <van-cell-group>
                     <div class="title" >{{language.chart}}</div>
                     <van-cell title-class="cell-title" is-link :title="language.constructionChart" value="" @click="toChart"/>
+                    <van-cell title-class="cell-title" is-link :title="language.performanceInfo" value="" @click="toPerformance"/>
                 </van-cell-group>
 
             </div>
@@ -116,6 +117,9 @@
             toChart () {
                 this.$router.push({path: "chart"});
             },
+            toPerformance () {
+                this.$router.push({path: "mine/performance"});
+            },
             avatarSet () {
                 this.$router.push( {path: "mine/avatarset"});
             },
@@ -139,12 +143,12 @@
                 })
                 .then(() => {
                     this.setOtherInfo ( config );
-                    this.$setIco ( this.otherInfo.webIco );    
+                    this.$setIco ( this.otherInfo.webIco );
                 })
                 .catch(() => {
                     // on cancel
                 });
-                
+
             },
 
 
