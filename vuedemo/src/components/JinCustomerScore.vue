@@ -22,7 +22,7 @@
 			</div>
 			<div class="evaluate">
 				{{evaluate}}
-		    </div>
+		  </div>
 		</div>
 		<div class="right" v-if="arrow">
 			<i class="van-icon van-icon-arrow" @click="click"></i>

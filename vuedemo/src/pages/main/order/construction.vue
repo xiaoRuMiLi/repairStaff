@@ -74,6 +74,21 @@
       :datas="data.repairDatas"
       >
       </jin-repair-list>
+      <!-- 质检评价组 -->
+      <div v-if="data.inspects && data.inspects.length" class="inspect-wrapper" >
+        <div class="img-title">
+          质检评价
+        </div>
+        <div class="score">
+          <div class="rate">
+            <van-rate v-model="data.inspects.at(-1).score" size="15" readonly />
+          </div>
+          <span>{{ data.inspects.at(-1).score }}</span>
+        </div>
+        <div class="inspect-info">
+          {{ data.inspects.at(-1).info}}
+        </div>
+      </div>
       <!-- 图片展示组 -->
       <div class="img-title">
       登记图片
@@ -133,7 +148,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { Popup, Image as VanImage, Step, Steps, Dialog } from 'vant';
+import { Popup, Image as VanImage, Step, Steps, Dialog, Rate } from 'vant';
 import { URL } from '@/web-config/apiUrl'
 // import { isUrl } from '@/utils/CheckUtils';
 import conf from '@/web-config/index';
@@ -167,6 +182,7 @@ export default {
     'jin-work-progress': JinWorkProgress,
     'jin-remarks': JinRemarksText,
     'jin-upload-pop': JinImageUploadPop,
+    "van-rate": Rate,
   },
   // 当在相同路由中跳转，只是参数不同可以定义这个方法以重新执行读取数据
   async beforeRouteUpdate(to, from) {
@@ -227,6 +243,7 @@ export default {
         images: [],
         rateProgress: { active:1 ,data:[] },
         workProgress: [],
+        inspects: [],
         startDt: '',
         endDt: '',
         remarks: '这是一个备注'
@@ -390,6 +407,7 @@ export default {
       self.get( URL.api_constructionShow + constructionId , params ).then ( ( res ) => {
         // console.log( data );
         self.data = self.formatData(res.data);
+        console.log(self.data);
       } );
 
 
@@ -545,6 +563,7 @@ export default {
         endDt: inp.repair.delivery_at,
         remarks: inp.remarks,
         images: images,
+        inspects: inp.inspects,
       }
       return result;
     },
@@ -720,6 +739,24 @@ export default {
 }
 .button-wrapper .button-con {
   width: 100%;
+}
+.inspect-wrapper {
+  padding: 20px;
+}
+.inspect-wrapper .img-title {
+  padding-left: 0;
+}
+.score {
+  display: flex;
+}
+.score span{
+  color: var(--van-text-color-2);
+  padding-left: var(--van-padding-sm);
+
+}
+.inspect-info {
+  color: var(--van-text-color-2);
+  font-size: var(--van-font-size-md);
 }
 
 

@@ -6,7 +6,8 @@
   "againVCodeError" : "重新发送验证码" ,
   "constructionChart": "施工报表",
   "changeAvatar": "更换头像",
-
+  "setUp": "设置",
+  "chart": "报表",
   "": "表单验证类",
   "inputNotNull": "内容不能为空",
   "mustNumType" : "必须为数字类型" ,
