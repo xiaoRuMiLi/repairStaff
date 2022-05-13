@@ -1,8 +1,8 @@
 <template>
     <div class="performance">
         <van-cell-group title="基本信息">
-            <van-cell title="超时回复" value="2%" label="目标：低于4%" />
-            <van-cell title="超时完成" value="10%" label="目标：低于20%" />
+            <van-cell title="信息超时回复" value="2%" label="目标：低于4%" />
+            <van-cell title="施工超时完成" value="10%" label="目标：低于20%" />
             <van-cell title="客户评分" value="80" label="目标：超过60" />
             <van-cell title="质检评分" value="80" label="目标：超过60" />
 
