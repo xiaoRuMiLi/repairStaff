@@ -213,7 +213,9 @@
                             userName : data.user_info.name ,
                             avatarUrl: data.user_info.avatarUrl,
                             userId : data.user_info.id ,
-                            userToken : data.access_token
+                            unitId: data.user_info.unit_id,
+                            userToken : data.access_token,
+
                         });
                         that.saveInfo();
                         /*1.this.$router.push()描述：跳转到不同的url，但这个方法会向history栈添加一个记录，点击后退会返回到上一个页面。
