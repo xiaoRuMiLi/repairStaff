@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-08 21:33:12
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-02-19 21:49:17
+* @Last Modified time: 2022-05-15 23:12:30
 */
 
 'use strict';
@@ -15,7 +15,14 @@ export default {
     models: {
     	message: "message",
     	construction: "construction",
+    },
+    // 绩效get数据时的params
+    performanceSet: {
+        construction: {days: 30, target: 90},
+        message: {days: 30, hours: 24, target: 80},
+        evaluate: {days: 30, target: 80},
+        inspect: {day: 30, target: 80}
     }
-    
+
 
 }

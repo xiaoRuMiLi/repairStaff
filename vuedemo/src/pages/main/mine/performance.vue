@@ -1,10 +1,21 @@
 <template>
     <div class="performance">
         <van-cell-group title="基本信息">
-            <van-cell title="信息超时回复" value="2%" label="目标：低于4%" />
-            <van-cell title="施工超时完成" value="10%" label="目标：低于20%" />
-            <van-cell title="客户评分" value="80" label="目标：超过60" />
-            <van-cell title="质检评分" value="80" label="目标：超过60" />
+            <van-cell title="信息超时回复"
+            :value="datas.message.value + '%'"
+            :label="'目标：低于' + datas.message.target + '%'" />
+
+            <van-cell title="施工超时完成"
+            :value="datas.construction.value + '%'"
+            :label="'目标：低于' + datas.construction.target + '%'" />
+
+            <van-cell title="客户评分"
+            :value="datas.evaluate.value"
+            :label="'目标：超过' + datas.evaluate.target" />
+
+            <van-cell title="质检评分"
+            :value="datas.inspect.value"
+            :label="'目标：超过' + datas.inspect.target" />
 
         </van-cell-group>
     </div>
@@ -28,6 +39,13 @@
         },
         data () {
            return {
+               datas: {
+                    message: {value: 4, target: 4},
+                    construction: {value: 10, target: 10},
+                    evaluate: {value: 50, target: 60},
+                    inspect: {value: 40, target: 10},
+               }
+
            }
         },
         computed: {
@@ -45,11 +63,8 @@
         created() {},
 
         mounted() {
-            /**
-             * this.$router 是Router 的实例，this.$route 是当前路由属性，
-             * this.$router.currentRoute 属性就时 this.$route
-             */
-            //console.log(this.$router, this.$route);
+           this.getMessageVal();
+
         },
 
         unmounted() {},
@@ -62,6 +77,21 @@
         },
 
         methods: {
+            async getMessageVal () {
+                const self = this;
+                let data = await self.get(URL.api_messageReplyTimeOut + conf.performanceSet.message.days + "/" + conf. performanceSet.message.hours)
+                console.log(data);
+                if (data.data) {
+                    const da = data.data;
+                    let percentage = (da.time_out_count + da.time_out_not_reply_count) / da.total_count;
+                    percentage = Number(percentage).toFixed(2) * 100;
+                    self.datas.message.value = percentage;
+
+
+
+
+                }
+            }
 
 
         },

@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-04-29 20:39:02
+* @Last Modified time: 2022-05-15 23:39:19
 */
 
 'use strict';
@@ -74,10 +74,17 @@ const URL = {
     api_messageRead: API_BASE_URL + '/api/v1/message/read/',
     /*----------------------------------- 创建一条新的消息 -----------------------------------*/
     api_messageCreate: API_BASE_URL + '/api/v1/message/create',
+    /*----------------------------------- 统计一定时间内超时回复条数 -----------------------------------*/
+    api_messageReplyTimeOut: API_BASE_URL + "/api/v1/message/reply_time_out/",  // params days/hours
+
 
     /*-统计操作------------------------------------------------------------------------*/
     /*----------------------------------- 员工版主页统计 -----------------------------------*/
     api_statistics: API_BASE_URL + '/api/v1/statistics/staff/index',
+    /*----------------------------------- 质检单单位时间内平均分  ------------------------------*/
+    api_inspectGetScoreAvgInDays: API_BASE_URL + "/api/v1/inspect/get_score_avg_in_days/",
+    /*----------------------------------- 评价单单位时间内平均分  ------------------------------*/
+    api_evaluateGetConstructionScoreAvgInDays: API_BASE_URL + "/api/v1/evaluate/get_construction_score_avg_in_days/",
 
     /*-公告操作------------------------------------------------------------------------*/
     /*----------------------------------- 获取最后三天公告 -----------------------------------*/
