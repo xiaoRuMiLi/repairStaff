@@ -37,6 +37,8 @@ const URL = {
     api_getWxShareTicket: '/url/weChat/index.php', // 临时接口上线时需要修改
     /*----------------------------------- 根据施工单获取相关的信息接受者 -----------------------------------*/
     api_getMessageReceiversByConstructionId:  API_BASE_URL + "/api/v1/get_message_receivers_by_construction_id/",
+    /*----------------------------------- 获取一定天数施工单超时占比 -----------------------------------*/
+    api_getConstructionRealCompleteOutTimeInDays:  API_BASE_URL + "/api/v1/construction/real_complete_out_time_in_days/",
 
     /*-登录操作------------------------------------------------------------------------*/
     /*----------------------------------- 登陆 -----------------------------------*/

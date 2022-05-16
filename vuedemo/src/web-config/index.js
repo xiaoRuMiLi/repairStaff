@@ -18,10 +18,10 @@ export default {
     },
     // 绩效get数据时的params
     performanceSet: {
-        construction: {days: 30, target: 90},
-        message: {days: 30, hours: 24, target: 80},
-        evaluate: {days: 30, target: 80},
-        inspect: {day: 30, target: 80}
+        construction: {days: 300, target: 20},
+        message: {days: 300, hours: 24, target: 10}, // days：300 时间周期300天。hours: 24。超过24小时回复的会被判断为超时回复。 
+        evaluate: {days: 300, target: 80},
+        inspect: {days: 300, target: 80}
     }
 
 

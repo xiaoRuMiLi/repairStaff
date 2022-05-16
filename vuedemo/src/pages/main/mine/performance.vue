@@ -3,19 +3,19 @@
         <van-cell-group title="基本信息">
             <van-cell title="信息超时回复"
             :value="datas.message.value + '%'"
-            :label="'目标：低于' + datas.message.target + '%'" />
+            :label="datas.message.days + '天|目标：低于' + datas.message.target + '%'" />
 
             <van-cell title="施工超时完成"
             :value="datas.construction.value + '%'"
-            :label="'目标：低于' + datas.construction.target + '%'" />
+            :label="datas.construction.days + '天|目标：低于' + datas.construction.target + '%'" />
 
             <van-cell title="客户评分"
             :value="datas.evaluate.value"
-            :label="'目标：超过' + datas.evaluate.target" />
+            :label="datas.evaluate.days + '天|目标：超过' + datas.evaluate.target" />
 
             <van-cell title="质检评分"
             :value="datas.inspect.value"
-            :label="'目标：超过' + datas.inspect.target" />
+            :label="datas.inspect.days + '天|目标：超过' + datas.inspect.target" />
 
         </van-cell-group>
     </div>
@@ -40,10 +40,10 @@
         data () {
            return {
                datas: {
-                    message: {value: 4, target: 4},
-                    construction: {value: 10, target: 10},
-                    evaluate: {value: 50, target: 60},
-                    inspect: {value: 40, target: 10},
+                    message: {value: NaN, days: conf.performanceSet.message.days, target: conf.performanceSet.message.target},
+                    construction: {value: NaN, days: conf.performanceSet.construction.days, target: conf.performanceSet.construction.target},
+                    evaluate: {value: NaN, days: conf.performanceSet.evaluate.days, target: conf.performanceSet.evaluate.target},
+                    inspect: {value: NaN, days: conf.performanceSet.inspect.days,target: conf.performanceSet.inspect.target},
                }
 
            }
@@ -64,6 +64,9 @@
 
         mounted() {
            this.getMessageVal();
+           this.getConstructionVal();
+           this.getEvaluateVal();
+           this.getInspectVal();
 
         },
 
@@ -79,19 +82,37 @@
         methods: {
             async getMessageVal () {
                 const self = this;
-                let data = await self.get(URL.api_messageReplyTimeOut + conf.performanceSet.message.days + "/" + conf. performanceSet.message.hours)
-                console.log(data);
+                let data = await self.get(URL.api_messageReplyTimeOut + conf.performanceSet.message.days + "/" + conf. performanceSet.message.hours);
                 if (data.data) {
                     const da = data.data;
                     let percentage = (da.time_out_count + da.time_out_not_reply_count) / da.total_count;
                     percentage = Number(percentage).toFixed(2) * 100;
                     self.datas.message.value = percentage;
-
-
-
-
                 }
+            },
+            async getConstructionVal () {
+                const self = this;
+                let data = await self.get(URL.api_getConstructionRealCompleteOutTimeInDays + conf.performanceSet.construction.days);
+                const da = data.data;
+                let percent = Number(da.time_out_amount / da.total_amount).toFixed(2) * 100;
+                self.datas.construction.value = percent;
+            },
+            async getEvaluateVal () {
+                const self = this;
+                let data = await self.get(URL.api_evaluateGetConstructionScoreAvgInDays + conf.performanceSet.evaluate.days);
+                let da = data.data;
+                let percent = Number(da.score_avg * 20).toFixed(2);
+                self.datas.evaluate.value = percent;
+            },
+            async getInspectVal () {
+                const self = this;
+                console.log(URL.api_inspectGetScoreAvgInDays + conf.performanceSet.inspect.days);
+                let data = await self.get(URL.api_inspectGetScoreAvgInDays + conf.performanceSet.inspect.days);
+                let da =  data.data;
+                let percent = Number(da.score_avg * 20).toFixed(2);
+                self.datas.inspect.value = percent;
             }
+
 
 
         },
