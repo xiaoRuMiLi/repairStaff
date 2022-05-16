@@ -418,7 +418,7 @@ export default {
         return res;
       }
       let makePicture = ( da ) => {
-        let picture = da.repair.register.pictures;
+        let picture = da.repair && da.repair.register && da.repair.register.pictures;
         let pictureArr = picture?(picture.split('|')): [];
         picture = pictureArr.map( (item) => {
           var patt = /^(http|https|ftp|update)+/;
@@ -433,7 +433,7 @@ export default {
             return item;
           }
         })
-        let images = da.repair.register.images || [];
+        let images = da.repair && da.repair.register && da.repair.register.images || [];
         images = images && images.map( (item) => {
           return item.url;
         })
