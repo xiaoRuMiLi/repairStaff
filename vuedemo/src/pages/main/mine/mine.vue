@@ -95,6 +95,7 @@
 
         methods: {
             toMsg () {
+                this.$router.push({path: "mine/opinion"});
 
             },
             loginOut () {
@@ -105,7 +106,6 @@
                 })
                 .then(() => {
                     this.get(URL.api_loginOut).then( res => {
-                        console.log(res);
                         this.$router.push('login');
                     })
                 })

@@ -213,8 +213,10 @@
                             userName : data.user_info.name ,
                             avatarUrl: data.user_info.avatarUrl,
                             userId : data.user_info.id ,
+                            integral: data.user_info.integral,
                             unitId: data.user_info.unit_id,
                             userToken : data.access_token,
+
 
                         });
                         that.saveInfo();

@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-05-15 23:39:19
+* @Last Modified time: 2022-05-16 22:31:11
 */
 
 'use strict';
@@ -90,7 +90,12 @@ const URL = {
 
     /*-公告操作------------------------------------------------------------------------*/
     /*----------------------------------- 获取最后三天公告 -----------------------------------*/
-    api_getLastNotice: API_BASE_URL + "api/v1/notice/get_last_three",
+    api_getLastNotice: API_BASE_URL + "/api/v1/notice/get_last_three",
+
+    /*-建议------------------------------------------------------------------------*/
+    /*----------------------------------- 保存一条建议 -----------------------------------*/
+    api_opinionStore: API_BASE_URL + "/api/v1/opinion/store",
+
 
 }
 // export default 在其他文件引入时语法是 import 别名 from @/web-config/apiUrl 不能使用 import  { Url } from @/web-config/apiUrl. 要这样引用不能加default关键字

@@ -8,7 +8,7 @@
         <div class="val">
           {{val}}
         </div>
-         
+
       </div>
     </div>
     <jin-chat-panel
@@ -82,7 +82,6 @@ export default {
   mounted () {
     this.id = this.$route.params.id;
     this.getDatas(this.id);
-    console.log(this.userInfo);
   },
   created () {
 
@@ -106,7 +105,6 @@ export default {
     },
     formatMessageable: function (messageable,model) {
       let result = {};
-      console.log(model);
       switch ( model ) {
         case 'App\\Models\\Construction':
           result = {
@@ -116,7 +114,6 @@ export default {
             车牌照号: messageable.car_number,
             车型: messageable.car_mode,
           }
-          console.log(result)
           break;
         default:
           break;
@@ -133,7 +130,6 @@ export default {
           let messageable = self.datas[0].messageable;
           let model = self.datas[0].messageable_type;
           self.messageable = self.formatMessageable(messageable,model)
-          console.log(self.messageable);
         }
         this.$refs.panel.toTop();
       })
@@ -162,8 +158,6 @@ export default {
       this.get(URL.api_messageRead + id).then( res=> {
         if( res.status == 'success' ) {
           Toast(this.language.success);
-          console.log(res.data);
-          console.log(self.datas[key],res.data);
           Vue.set(self.datas[key],'read_at',res.data.read_at)
           self.datas[key].read_at = res.data.read_at;
         }

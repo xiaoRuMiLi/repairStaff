@@ -106,7 +106,6 @@
             },
             async getInspectVal () {
                 const self = this;
-                console.log(URL.api_inspectGetScoreAvgInDays + conf.performanceSet.inspect.days);
                 let data = await self.get(URL.api_inspectGetScoreAvgInDays + conf.performanceSet.inspect.days);
                 let da =  data.data;
                 let percent = Number(da.score_avg * 20).toFixed(2);

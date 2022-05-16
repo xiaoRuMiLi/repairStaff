@@ -44,7 +44,6 @@
   "email" : "邮箱",
   "pleaseEnterEmail": "请输入邮箱地址",
   "dear": "亲爱的",
-  "twoInputNotSame": "两次输入不相同"
-
-
+  "twoInputNotSame": "两次输入不相同",
+  "opinionRemind": "请将你的意见告诉我们，以便我们持续改进，你的意见和建议对我们的工作很重要。你也可以用邮箱联系我们\nemail:303219462@qq.com。"
 }

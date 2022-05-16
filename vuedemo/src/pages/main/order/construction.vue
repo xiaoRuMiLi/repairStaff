@@ -292,7 +292,6 @@ export default {
      */
     receiveTap () {
       const self = this;
-      console.log(self.data);
       if ( !self.data.receive_at ) {
         /** 如果没有接单执行接单操作 */
         self.receiveSave();
@@ -341,7 +340,7 @@ export default {
     deleteImage ( file ) {
       const id = file.id;
       this.post(URL.api_imageDelete + id).then( res => {
-        console.log(res)
+        // console.log(res)
       })
     },
     /**
@@ -368,13 +367,11 @@ export default {
         param.append("model", 'construction');
         axios.post(URL.api_imageUpload, param, {
             headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
-            console.log(res);
             if(res.data.success === true){
               self.data.images[target].status = "";
               self.data.images[target].url = res.data.url;
               self.data.images[target].id = res.data.id;
               self.$toast('上传成功');
-              console.log(self.data.images);
             } else {
               self.data.images[target].status = "failed";
               self.$toast('上传失败');
@@ -395,7 +392,6 @@ export default {
       const self = this;
       let id = this.data.id;
       this.post( URL.api_constructionSetRemarks + id ,{ remarks: val}).then( res => {
-        console.log(res)
         self.data.remarks = res.data && res.data.remarks;
       })
     },
@@ -407,7 +403,6 @@ export default {
       self.get( URL.api_constructionShow + constructionId , params ).then ( ( res ) => {
         // console.log( data );
         self.data = self.formatData(res.data);
-        console.log(self.data);
       } );
 
 
@@ -647,14 +642,12 @@ export default {
     // 分享的相关逻辑 指的是要做分享的页面的url送过去，请求成功才能拿到
     let url = location.href.split('#')[0];
     this.post(URL.api_getWxShareTicket,{url}).then(res=>{
-      console.log(res);
       if(res.message = 'success'){
         //这些配置参数必填项，后面去调微信的pai是需要传的。
         this.appId = res.data.appId;
         this.timestamp = res.data.timestamp;
         this.noncstr = res.data.nonceStr;
         this.signatureInfo = res.data.signature;
-        console.log( this.appId, this.timestamp, this.noncstr, this.signatureInfo );
       }
     }).catch(err=>{console.log(err)})
 

@@ -75,7 +75,6 @@
             {
                 const self = this;
                 let data = await self.get(URL.api_userGetUserInfo);
-                console.log(data);
                 self.data = data.data;
 
             },
