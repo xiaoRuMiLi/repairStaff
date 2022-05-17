@@ -39,6 +39,8 @@ const URL = {
     api_getMessageReceiversByConstructionId:  API_BASE_URL + "/api/v1/get_message_receivers_by_construction_id/",
     /*----------------------------------- 获取一定天数施工单超时占比 -----------------------------------*/
     api_getConstructionRealCompleteOutTimeInDays:  API_BASE_URL + "/api/v1/construction/real_complete_out_time_in_days/",
+    /*----------------------------------- 按年月获取订单金额合计 -----------------------------------*/
+    api_constructionGetRealCompleteTotalByYm: API_BASE_URL + "/api/v1/construction/get_real_complete_total_by_ym",
 
     /*-登录操作------------------------------------------------------------------------*/
     /*----------------------------------- 登陆 -----------------------------------*/

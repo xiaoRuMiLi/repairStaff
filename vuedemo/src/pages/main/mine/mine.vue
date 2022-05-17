@@ -64,12 +64,7 @@
                     users : "users" ,
                     other : "other"
                 },
-                nums: [
-                   {tit: '积分', con: '32156'},
-                   {tit: '月施工合计', con: '15000'},
-                   {tit: '触发规则', con: '2'}
-
-                ]
+                nums: []
             }
         },
 
@@ -85,6 +80,7 @@
         created() {},
 
         mounted() {
+            this.getData();
 
         },
 
@@ -148,12 +144,20 @@
                 .catch(() => {
                     // on cancel
                 });
-
             },
+            async getData () {
+                let data = await this.get(URL.api_constructionGetRealCompleteTotalByYm);
+                let total = data.data && data.data.total;
+                const notCompleteTotal = data.data && data.data.notCompleteTotal;
+                this.nums = [
+                    {tit: '积分', con: this.userInfo.integral},
+                    {tit: '月施工合计', con: total},
+                    {tit: '施工中', con: notCompleteTotal},
+                ];
+                   
 
 
-
-
+            }
         },
     }
 </script>

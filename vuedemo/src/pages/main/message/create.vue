@@ -215,7 +215,10 @@
             async getReceivers (id) {
                 const self = this;
                 const data = await self.get(URL.api_getMessageReceiversByConstructionId + id);
-                self.list = "data" in data? data.data: [];
+                let list = "data" in data? Object.values(data.data): [];
+                if ( list.length == 0) return;
+                self.list = list.filter( i => i.name != self.userInfo.userName );
+
             },
 
             async uploadImages (images, model, model_id) {
