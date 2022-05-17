@@ -176,6 +176,7 @@ export default {
             this.uploadImage(images,'message',dat.data.id);
           }
           this.$refs.panel.toTop();
+          this.onOff_messagePop = !1;
         }
       })
     },
