@@ -132,7 +132,7 @@ export default {
           self.messageable = self.formatMessageable(messageable,model)
         }
         this.$refs.panel.toTop();
-      })
+      }).catch(err => console.log(err))
     },
     /**
      * [deleteImage 删除图片]
@@ -161,7 +161,7 @@ export default {
           Vue.set(self.datas[key],'read_at',res.data.read_at)
           self.datas[key].read_at = res.data.read_at;
         }
-      })
+      }).catch(err => console.log(err))
     },
     creatMessage ( form ) {
       let images = form.images || [];
@@ -178,7 +178,7 @@ export default {
           this.$refs.panel.toTop();
           this.onOff_messagePop = !1;
         }
-      })
+      }).catch(err => console.log(err))
     },
     /**
      * [uploadImage 上传图片]
@@ -217,7 +217,7 @@ export default {
               self.inputImages[target].status = "failed";
               self.$toast('上传失败');
             }
-         });
+         }).catch(err => console.log(err));
 
       }
 

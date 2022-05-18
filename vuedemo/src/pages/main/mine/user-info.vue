@@ -74,7 +74,7 @@
             async getData (id)
             {
                 const self = this;
-                let data = await self.get(URL.api_userGetUserInfo);
+                let data = await self.get(URL.api_userGetUserInfo).catch(err => console.log(err));;
                 self.data = data.data;
 
             },

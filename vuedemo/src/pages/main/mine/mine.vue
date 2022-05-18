@@ -146,7 +146,7 @@
                 });
             },
             async getData () {
-                let data = await this.get(URL.api_constructionGetRealCompleteTotalByYm);
+                let data = await this.get(URL.api_constructionGetRealCompleteTotalByYm).catch(err => console.log(err));;
                 let total = data.data && data.data.total;
                 const notCompleteTotal = data.data && data.data.notCompleteTotal;
                 this.nums = [

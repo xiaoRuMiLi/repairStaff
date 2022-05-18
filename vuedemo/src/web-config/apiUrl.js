@@ -8,7 +8,7 @@
 'use strict';
 /* 接口管理 */
 
-const API_BASE_URL = '/Api';
+const API_BASE_URL = '';
 
 
 /* 接口地址： */

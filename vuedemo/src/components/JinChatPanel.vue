@@ -27,10 +27,10 @@
                     </div>
                     <div class="button-container">
                         <div class="button">
-                            <van-button :type="!item.reply_at && item.must_reply? 'danger': 'primary'" size="mini" @click="reply(item.id,key)">回复</van-button>
+                            <van-button :type="!item.reply_at && item.must_reply? 'danger': 'info'" size="mini" @click="reply(item.id,key)">回复</van-button>
                         </div>
                         <div v-if="!item.read_at" class="button">
-                            <van-button type="primary" size="mini" @click="read(item.id,key)">已读</van-button>
+                            <van-button type="info" size="mini" @click="read(item.id,key)">已读</van-button>
                         </div>
                     </div>
 

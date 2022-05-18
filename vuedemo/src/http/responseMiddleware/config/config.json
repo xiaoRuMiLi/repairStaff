@@ -4,5 +4,10 @@
 		"changeKey": { "car_number": "title", "car_mode": "mode" },
 		"defaultVal": {"remarks": "备注为空","age":"16" }
 	
+    },
+    "/api/v1/constructions": {
+		"changeKey": { "car_number": "title", "car_mode": "mode" },
+		"defaultVal": {"remarks": "备注为空","age":"16" }
+	
     }
 }

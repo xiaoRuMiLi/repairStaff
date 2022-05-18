@@ -4,9 +4,11 @@
       :title="$route.meta.title"
       left-text="返回"
       :fixed = "isFixed"
+      style = "background-color: white;"
       left-arrow
       @click-left="onClickLeft"
       @click-right="onClickRight"
+
     />
 
     <!-- 二级路由插槽 -->

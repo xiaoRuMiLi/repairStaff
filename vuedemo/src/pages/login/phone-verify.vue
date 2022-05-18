@@ -129,7 +129,7 @@
                         clearInterval(intval);
                     }
                 }, 1000);
-                const result = await this.post(URL.api_userGetPhone_verify, {phone: this.phone});
+                const result = await this.post(URL.api_userGetPhone_verify, {phone: this.phone}).catch(err=>{console.log(err)});
                 let data = result.data;
                 console.log(data);
                 this.vKey = data.verification_key;

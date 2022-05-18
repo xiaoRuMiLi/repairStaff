@@ -163,7 +163,7 @@
                 // 压缩
                 //  //  await 关键字 只能放在 async 函数内部， await关键字的作用 就是获取 Promise中返回的内容， 获取的是Promise函数中resolve或者reject的值
                // 如果await 后面并不是一个Promise的返回值，则会按照同步程序返回值处理,为undefined
-                let file = await compressConversion(fileObject,this.compressionRate);
+                let file = await compressConversion(fileObject,this.compressionRate).catch(err=>{console.log(err)});
                 return file;
             },
             beforeUpload(file) {
@@ -214,7 +214,7 @@
             },
             async getReceivers (id) {
                 const self = this;
-                const data = await self.get(URL.api_getMessageReceiversByConstructionId + id);
+                const data = await self.get(URL.api_getMessageReceiversByConstructionId + id).catch(err => console.log(err));
                 let list = "data" in data? Object.values(data.data): [];
                 if ( list.length == 0) return;
                 self.list = list.filter( i => i.name != self.userInfo.userName );
@@ -229,7 +229,7 @@
                     images[i].message = '上传中...';
                     let form = {"image": image, model: model, id: model_id};
                     // p params 和 f form 共同组成 axios的 params 参数， ts 为true 弹出上方提示框
-                    let res = await self.upload( URL.api_imageUpload, form );
+                    let res = await self.upload( URL.api_imageUpload, form ).catch(err=>{console.log(err)});
                     console.log(res);
                     if( typeof res.data === 'object' ) {
                         const data  = res.data;
@@ -260,7 +260,7 @@
                         }
 
                     }
-                })
+                }).catch(err => console.log(err))
             },
 
         },

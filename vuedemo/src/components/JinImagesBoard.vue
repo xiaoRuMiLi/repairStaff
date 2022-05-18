@@ -81,7 +81,6 @@
 	padding: 5px 5px 0 0;
     width: 33%;
     box-sizing: border-box;
-    /* flex-grow: 1;*/
 }
 .hidden-btn {
 	text-align: center;
@@ -89,22 +88,17 @@
 }
 
 .short {
-	/*transition: all 5;
-	height: 22vw;*/
 	animation: animal-hidden 1s;
 	animation-fill-mode: forwards;
 	animation-iteration: 1;
 
 }
 .high {
-	/*transition: all 5;
-	height: auto;*/
 	animation: animal-show 1s;
     animation-fill-mode: forwards;
     animation-iteration: 1;
 }
 
-/* 动画 控制旋转 */
 .rotate {
     animation: animal-rotate 0.5s;
     animation-fill-mode:forwards;

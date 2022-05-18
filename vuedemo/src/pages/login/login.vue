@@ -34,7 +34,7 @@
                 />
                 <!-- 按钮 -->
                 <div class="button-container">
-                     <van-button type="primary" size="large" text="立即登录" @click="submit"></van-button>
+                     <van-button type="info" size="large" text="立即登录" @click="submit"></van-button>
 
                 </div>
             </div>
@@ -230,7 +230,7 @@
                             this.$router.back(-1)
                         }
                     }
-                } );
+                } ).catch(err=>{console.log(err)});
             }
 
 
