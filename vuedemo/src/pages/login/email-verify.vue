@@ -128,7 +128,7 @@
                         clearInterval(intval);
                     }
                 }, 1000);
-                const result = await this.post(URL.api_userGetEmail_verify, {email: this.email});
+                const result = await this.post(URL.api_userGetEmail_verify, {email: this.email}).catch(err=>{console.log(err)});
                 let data = result.data;
                 console.log(data);
                 this.vKey = data.verification_key;

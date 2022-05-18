@@ -82,27 +82,3 @@ input,
 video {
     font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
 }
-
-.body,
-#app,
-.el-divider__text,
-.el-link,
-.el-button,
-.el-form-item__label,
-.el-radio__label,
-.el-input,
-.el-table,
-.el-date-editor .el-range-input,
-.el-form-item__content,
-.el-timeline,
-.el-tooltip__popper,
-.el-card__header,
-.el-button--mini,
-.el-button--small,
-.el-input__inner,
-/*.el-tag,*/
-.el-dialog__body,
-.emphasize {
-    font-family: "Microsoft YaHei", "微软雅黑", "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", Arial, sans-serif;
-    font-size: 13px;
-}

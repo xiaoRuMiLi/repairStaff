@@ -173,6 +173,75 @@ js
 			（2）、npm install webpack-dev-server@2.9.1
 
 			（3）、npm run dev
+    npm run build 报错
+        错误 UnhandledPromiseRejectionWarning: CssSyntaxError
+	        看错误代码在哪一行，例如
+	            vant\vuedemo\static\css\app.d00dca0ed228c0750b511664a6780eab.css:2449:10:
+	            这一行说明在打包vant\vuedemo\static\css\app.d00dca0ed228c0750b511664a6780eab.css 文件的时候2449行出错。
+	        首先注释掉/bulid/webpack.prod.conf.js中的
+		     	new OptimizeCSSPlugin({
+				      cssProcessorOptions: config.build.productionSourceMap
+				        ? { safe: true, map: { inline: false } }
+				        : { safe: true }
+				    }),
+		    再执行 npm run build 打包后在static文件夹CSS文件夹 查看css 文件app.d00dca0ed228c0750b511664a6780eab.css. 2449行对应在项目中的css 代码。
+		    改掉错误后恢复prod.cinf.js 文件 然后再打包，直到打包完成
+	        传送门： https://blog.csdn.net/weixin_43845090/article/details/112373743
+	        
+	    版本不匹配
+	        node 和 npm 版本都会影响打包出错，太高的版本和太低的版本都会出错，
+	        该项目打包成功的 npm 版本是8.7.0， node 版本是12.16.1
 
 
 
+    生产环境访问不到后台
+    找到nginx 安装文件夹下面conf 文件夹，或者是nginx.conf 或者是该引用的vhost（一个服务器搭建多个网站）文件夹下的文件逐个查看，找到对应的网站设置文件。如下
+	    server {
+	        listen        8888;
+	        server_name  localhost;
+	        root   "D:/phpstudy_pro/WWW/vue-staff/dist";
+	        location / {
+	            index index.php index.html error/index.html;
+	            error_page 400 /error/400.html;
+	            error_page 403 /error/403.html;
+	            error_page 404 /error/404.html;
+	            error_page 500 /error/500.html;
+	            error_page 501 /error/501.html;
+	            error_page 502 /error/502.html;
+	            error_page 503 /error/503.html;
+	            error_page 504 /error/504.html;
+	            error_page 505 /error/505.html;
+	            error_page 506 /error/506.html;
+	            error_page 507 /error/507.html;
+	            error_page 509 /error/509.html;
+	            error_page 510 /error/510.html;
+	            include D:/phpstudy_pro/WWW/vue-staff/dist/nginx.htaccess;
+	            autoindex  off;
+	        }
+	        # 设置代理，以api(大小写不敏感)开头的路由都会被代理到http://127.0.0.1:8000
+	        location /Api{
+	            proxy_pass http://127.0.0.1:8000;             
+	        }
+	        location ~ \.php(.*)$ {
+	            fastcgi_pass   127.0.0.1:9002;
+	            fastcgi_index  index.php;
+	            fastcgi_split_path_info  ^((?U).+\.php)(/?.+)$;
+	            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+	            fastcgi_param  PATH_INFO  $fastcgi_path_info;
+	            fastcgi_param  PATH_TRANSLATED  $document_root$fastcgi_path_info;
+	            include        fastcgi_params;
+	        }
+	    }
+	添加 
+	    location /api{
+	        proxy_pass http://127.0.0.1:8000/api;             
+	    }
+	这一段代码，设置代理，设置后
+	Axios.get("/api/bookCate") 
+    //其实想要访问的是 "http://127.0.0.1:8000/api/bookCate" 下的资源
+css 
+    定义全局样式变量
+    :root {
+
+    }
+    必须是:root 才会生效 定义全局样式，所有的组件都遵循

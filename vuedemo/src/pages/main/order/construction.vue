@@ -125,10 +125,10 @@
           <van-button type="default" style="width: 80%; border: 1px solid #1989fa; color: #1989fa;" ></van-button>
         </div>-->
         <div class="button-con">
-          <van-button type="primary" icon="photo-o" style="background-color: #1989fa; color: white; width: 80%;" @click="onOff_imagePop=!onOff_imagePop" >添加图片</van-button>
+          <van-button type="info" icon="photo-o" style="background-color: #1989fa; color: white; width: 80%;" @click="onOff_imagePop=!onOff_imagePop" >添加图片</van-button>
         </div>
         <div class="button-con">
-          <van-button type="primary" icon="chat-o" style="background-color: #1989fa; color: white; width: 80%;" @click="toMessage" >发送信息</van-button>
+          <van-button type="info" icon="chat-o" style="background-color: #1989fa; color: white; width: 80%;" @click="toMessage" >发送信息</van-button>
         </div>
       </div>
     </div>
@@ -317,7 +317,7 @@ export default {
         if (res.data) {
           self.data.receive_at = res.data.receive_at;
         }
-      })
+      }).catch(err=>{console.log(err)});
     },
     /**
      * 标记完成时间
@@ -330,7 +330,7 @@ export default {
         if (res.data) {
           self.data.real_complete_at = res.data.real_complete_at;
         }
-      })
+      }).catch(err => console.log(err));
     },
     /**
      * [deleteImage 删除图片]
@@ -341,7 +341,7 @@ export default {
       const id = file.id;
       this.post(URL.api_imageDelete + id).then( res => {
         // console.log(res)
-      })
+      }).catch(err=>{console.log(err)})
     },
     /**
      * [uploadImage 上传图片]
@@ -366,7 +366,7 @@ export default {
         param.append("id", this.data.id);
         param.append("model", 'construction');
         axios.post(URL.api_imageUpload, param, {
-            headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
+          headers: { "Content-Type": "multipart/form-data",},}).then((res) => {
             if(res.data.success === true){
               self.data.images[target].status = "";
               self.data.images[target].url = res.data.url;
@@ -376,7 +376,7 @@ export default {
               self.data.images[target].status = "failed";
               self.$toast('上传失败');
             }
-         });
+          }).catch(err=>{console.log(err)});
 
       }
 
@@ -393,7 +393,7 @@ export default {
       let id = this.data.id;
       this.post( URL.api_constructionSetRemarks + id ,{ remarks: val}).then( res => {
         self.data.remarks = res.data && res.data.remarks;
-      })
+      }).catch(err=>{console.log(err)})
     },
     getData ( constructionId ) {
       const self = this;
@@ -403,7 +403,7 @@ export default {
       self.get( URL.api_constructionShow + constructionId , params ).then ( ( res ) => {
         // console.log( data );
         self.data = self.formatData(res.data);
-      } );
+      }).catch(err=>{console.log(err)});
 
 
 
@@ -642,6 +642,7 @@ export default {
     // 分享的相关逻辑 指的是要做分享的页面的url送过去，请求成功才能拿到
     let url = location.href.split('#')[0];
     this.post(URL.api_getWxShareTicket,{url}).then(res=>{
+      console.log("api_getWxShareTicket", res );
       if(res.message = 'success'){
         //这些配置参数必填项，后面去调微信的pai是需要传的。
         this.appId = res.data.appId;

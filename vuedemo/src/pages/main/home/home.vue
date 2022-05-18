@@ -126,7 +126,7 @@ export default {
     },
     async getData() {
       let self = this;
-      let res = await self.get( URL.api_statistics );
+      let res = await self.get( URL.api_statistics ).catch(err=>{console.log(err)});
       let data = res.data;
       self.task = {
         title: '代办事项',
@@ -156,9 +156,6 @@ export default {
 
         ]
       }
-
-
-
     },
     clickEvent( key ) {
       switch ( key )
@@ -174,7 +171,7 @@ export default {
       }
     },
     async getNotices() {
-      const datas = await this.get(URL.api_getLastNotice);
+      const datas = await this.get(URL.api_getLastNotice).catch(err=>{console.log(err)});
       this.noticeArr =  "data" in datas && datas.data ;
     },
 

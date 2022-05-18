@@ -232,7 +232,7 @@ export default {
         self.datas = self.datas.concat( res.map( this.formatData ) );
         this.onOff.loading = false;
         //self.onOff.finished = true;
-      })
+      }).catch(err => console.log(err));
     },
     clickItem( id ) {
       let self = this;

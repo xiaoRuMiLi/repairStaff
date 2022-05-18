@@ -34,7 +34,7 @@
 
             <div class="button-wrapper" style="padding: 50px var(--van-padding-md);">
                 <div class="button-con" style="text-align: center; width: 100%;">
-                  <van-button type="primary"  size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交</van-button>
+                  <van-button type="info"  size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交</van-button>
                 </div>
             </div>
         </van-form>
@@ -82,7 +82,7 @@
             async submit () {
                 const self = this;
                 console.log(URL.api_opinionStore);
-                const data = await this.post(URL.api_opinionStore, {content: this.message});
+                const data = await this.post(URL.api_opinionStore, {content: this.message}).catch(err => console.log(err));;
                 let da = data.data;
                 if ("id" in da) {
                     Toast(this.language.success);

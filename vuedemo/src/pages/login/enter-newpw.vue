@@ -136,7 +136,7 @@
                     password: this.password,
                 }
                 console.log(params);
-                let result = await this.post(URL.api_userSetPassword, params);
+                let result = await this.post(URL.api_userSetPassword, params).catch(err=>{console.log(err)});
                 if ("code" in result && result.code == 200)
                 {
                     Toast({

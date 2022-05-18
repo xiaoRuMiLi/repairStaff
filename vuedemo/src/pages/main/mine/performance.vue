@@ -82,7 +82,7 @@
         methods: {
             async getMessageVal () {
                 const self = this;
-                let data = await self.get(URL.api_messageReplyTimeOut + conf.performanceSet.message.days + "/" + conf. performanceSet.message.hours);
+                let data = await self.get(URL.api_messageReplyTimeOut + conf.performanceSet.message.days + "/" + conf. performanceSet.message.hours).catch(err => console.log(err));;
                 if (data.data) {
                     const da = data.data;
                     let percentage = (da.time_out_count + da.time_out_not_reply_count) / da.total_count;
@@ -92,21 +92,21 @@
             },
             async getConstructionVal () {
                 const self = this;
-                let data = await self.get(URL.api_getConstructionRealCompleteOutTimeInDays + conf.performanceSet.construction.days);
+                let data = await self.get(URL.api_getConstructionRealCompleteOutTimeInDays + conf.performanceSet.construction.days).catch(err => console.log(err));;
                 const da = data.data;
                 let percent = Number(da.time_out_amount / da.total_amount).toFixed(2) * 100;
                 self.datas.construction.value = percent;
             },
             async getEvaluateVal () {
                 const self = this;
-                let data = await self.get(URL.api_evaluateGetConstructionScoreAvgInDays + conf.performanceSet.evaluate.days);
+                let data = await self.get(URL.api_evaluateGetConstructionScoreAvgInDays + conf.performanceSet.evaluate.days).catch(err => console.log(err));;
                 let da = data.data;
                 let percent = Number(da.score_avg * 20).toFixed(2);
                 self.datas.evaluate.value = percent;
             },
             async getInspectVal () {
                 const self = this;
-                let data = await self.get(URL.api_inspectGetScoreAvgInDays + conf.performanceSet.inspect.days);
+                let data = await self.get(URL.api_inspectGetScoreAvgInDays + conf.performanceSet.inspect.days).catch(err => console.log(err));;
                 let da =  data.data;
                 let percent = Number(da.score_avg * 20).toFixed(2);
                 self.datas.inspect.value = percent;

@@ -19,7 +19,7 @@
     />
 
     <div class="button-container">
-      <van-button type="primary" size="large" @click="popUp">{{language.changeAvatar}}</van-button>
+      <van-button type="info" size="large" @click="popUp">{{language.changeAvatar}}</van-button>
     </div>
   </div>
 </template>
@@ -114,7 +114,7 @@ export default {
       self.images[0].message = '上传中...';
       let form = {"image": image};
       // p params 和 f form 共同组成 axios的 params 参数， ts 为true 弹出上方提示框
-      let res = await self.upload( URL.api_userSetAvatar, form );
+      let res = await self.upload( URL.api_userSetAvatar, form ).catch(err => console.log(err));;
       if( typeof res.data === 'object' ){
           const data  = res.data;
           /* 页面刷新后 修改的user_info就不会被存在
