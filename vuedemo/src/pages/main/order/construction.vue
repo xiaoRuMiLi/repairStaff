@@ -642,6 +642,7 @@ export default {
     // 分享的相关逻辑 指的是要做分享的页面的url送过去，请求成功才能拿到
     let url = location.href.split('#')[0];
     this.post(URL.api_getWxShareTicket,{url}).then(res=>{
+      console.log("api_getWxShareTicket", res );
       if(res.message = 'success'){
         //这些配置参数必填项，后面去调微信的pai是需要传的。
         this.appId = res.data.appId;
