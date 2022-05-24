@@ -1,10 +1,10 @@
 <template>
   <div>
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" lazy-render>
-      <van-swipe-item v-for="img in swipeImgs">
+      <van-swipe-item v-for="(img,index) in swipeImgs">
 
         <!-- <img class="swipe-img" v-lazy="img"/> -->
-        <img class="swipe-img" :src="img"/>
+        <img class="swipe-img" :src="img" @click="handlebigimg(index)"/>
       </van-swipe-item>
 
     </van-swipe>
@@ -33,7 +33,7 @@
 <script>
 
 import axios from 'axios'
-import { NoticeBar, Swipe, SwipeItem, Lazyload } from 'vant';
+import { NoticeBar, Swipe, SwipeItem, Lazyload, ImagePreview } from 'vant';
 import jinRemind from "@/components/jin-remind/index.vue";  //引用组件的地址
 import jinRemindItem from "@/components/jin-remind-item/index.vue";  //引用组件的地址
 import { URL } from '@/web-config/apiUrl';
@@ -46,7 +46,8 @@ export default {
     "van-notice-bar": NoticeBar,
     'jin-remind-item': jinRemindItem,
     'van-swipe': Swipe,
-    'van-swipe-item': SwipeItem
+    'van-swipe-item': SwipeItem,
+    [ImagePreview.Component.name]: ImagePreview.Component
   },
   data () {
     return {
@@ -99,6 +100,12 @@ export default {
     });
   },
   methods: {
+    handlebigimg(index) {
+      ImagePreview({
+        images: this.swipeImgs,
+        startPosition: index
+      });
+    },
     getSwipeImgs () {
       this.swipeImgs = this.otherInfo.swipeImgs;
     },

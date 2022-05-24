@@ -39,7 +39,7 @@
 </style>
 <script>
     import { Checkbox, CheckboxGroup } from 'vant';
-    import './Basecomponent/index.js';
+    import './BaseComponent/index.js';
     export default {
         name: 'jinRemberMe',
         components: {

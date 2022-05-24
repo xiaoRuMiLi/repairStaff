@@ -32,6 +32,7 @@
 </template>
 <script>
 import { Button } from 'vant'
+import './BaseComponent/index.js';
 export default {
 	name: 'textListItem',
 	components: {
@@ -138,6 +139,7 @@ export default {
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: left;
+	font-size: var(--com-font-size-sm);
 }
 .left-con,.right-con {
 	padding: 0 10px;
@@ -164,7 +166,6 @@ export default {
     padding: 10px 0px 0px 0px;
 }
 .text-container .lable {
-	font-size: x-small;
 	margin-right: 1vw;
 	/* 如果设置了 display inline 那么就会变成内联元素，设置宽度就不会起作用 */
     /* display: inline; */
@@ -188,5 +189,6 @@ export default {
 
 .right-con> span {
 	color: #1989fa;
+	font-size: var(--com-font-size-sm);
 }
 </style>>

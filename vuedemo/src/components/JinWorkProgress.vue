@@ -41,6 +41,7 @@
 <script>
     import { Image as VanImage } from 'vant';
     import TimeUtils  from '@/utils/TimeUtils';
+    import './BaseComponent/index.js';
     export default {
         name: 'JinWorkProgress',
         components: {
@@ -216,7 +217,7 @@
    }
    .worker-type {
     color: #ffcd34;
-    font-size: 4px;
+    font-size: var(--com-font-size-sm);
    }
    .jin-work-progress span {
     padding: 10px;
@@ -240,7 +241,7 @@
    .progress {
     height: 10px;
     background-color: #dcdee0;
-    border-radius: 4px;
+    border-radius: var(--com-font-size-sm);
 
    }
    .progress > div {
@@ -283,6 +284,7 @@
   .illustrate span {
     height: 15px;
     line-height: 15px;
+    font-size: var(--com-font-size-sm);
 
   }
   .illustrate .illustrate-color {

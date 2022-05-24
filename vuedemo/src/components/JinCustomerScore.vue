@@ -31,7 +31,8 @@
 	</div>
 </template>
 <script>
-    import { Rate, Image as VanImage } from 'vant';
+  import { Rate, Image as VanImage } from 'vant';
+  import './BaseComponent/index.js';
 	export default {
 		name: 'CustomerScore',
 		components: {
@@ -98,7 +99,7 @@
    }
    .customer-type {
     color: #ffcd34;
-    font-size: 4px;
+    font-size: var(--com-font-size-sm);
    }
    .customer-score span {
     padding: 10px;

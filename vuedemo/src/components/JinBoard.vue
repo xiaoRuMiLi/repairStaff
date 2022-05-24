@@ -10,6 +10,7 @@
     </div>
 </template>
 <script>
+    import './BaseComponent/index.js';
     export default {
         name: 'JinBoard',
         props: {
@@ -54,7 +55,7 @@
         color: #ffffff;
         font-weight: 550;
         width: 100%;
-        font-size: 5px;
+        font-size: var(--com-font-size-sm);
         /* 超出文本显示省略号*/
         white-space: nowrap;
         text-overflow: ellipsis;

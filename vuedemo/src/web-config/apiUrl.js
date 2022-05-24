@@ -2,13 +2,13 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-05-24 20:41:52
+* @Last Modified time: 2022-05-24 22:20:16
 */
 
 'use strict';
 /* 接口管理 */
 
-const API_BASE_URL = '';
+const API_BASE_URL = '/Api';
 
 
 /* 接口地址： */
