@@ -25,7 +25,7 @@
   padding: 10px 5px;
   text-align: left;
   text-overflow: ellipsis;
-  font-size: 5px;
+  font-size: 15px;
   overflow: hidden;
   /* span 标签 display 设置成block width 属性才会生效*/
   display: block;

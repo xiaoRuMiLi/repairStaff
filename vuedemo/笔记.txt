@@ -19,7 +19,7 @@
 	vue-cli3 脚手架搭建完成后，项目目录中没有 vue.config.js 文件，需要手动创建
 	创建vue.config.js
 	vue.config.js 是一个可选的配置文件，如果项目的 (和 package.json 同级的) 根目录中存在这个文件，那么它会被 @vue/cli-service 自动加载。你也可以使用 package.json 中的 vue 字段，但是注意这种写法需要你严格遵照 JSON 的格式来写。
-   
+
 	作者：Rising_life
 	链接：https://www.jianshu.com/p/b358a91bdf2d
 	来源：简书
@@ -56,7 +56,7 @@ Vue
         链接：https://www.jianshu.com/p/71b1807b1815
 静态资源引用
     vue:src引用assets的图片
-        方式1 
+        方式1
             引用 import backImg from "../../assets/images/backimg.jpg";
             使用  <img :src="backImg"  />
         方式2
@@ -174,6 +174,7 @@ js
 
 			（3）、npm run dev
     npm run build 报错
+<<<<<<< Updated upstream
         错误 UnhandledPromiseRejectionWarning: CssSyntaxError
 	        看错误代码在哪一行，例如
 	            vant\vuedemo\static\css\app.d00dca0ed228c0750b511664a6780eab.css:2449:10:
@@ -245,3 +246,12 @@ css
 
     }
     必须是:root 才会生效 定义全局样式，所有的组件都遵循
+=======
+        错误提示
+            This is probably not a problem with npm. There is likely additional logging output above
+        另一台电脑上则可以正常打包，最后发现应该是node，npm , cnpm 这三个版本的问题，能打包的电脑版本是node 12.16.1
+        不能打包的电脑node版本是 17.6.0 ，npm 6.14.8 估计是node版本太高了
+
+
+
+>>>>>>> Stashed changes
