@@ -264,7 +264,7 @@ export default new Router({
 				},
 				{
 				    path: 'message/list',
-				    name: 'messageList',
+				    name: 'message-list',
 				    component: () => import('@/pages/main/message/list'),
 				    replace: false,
 				    /** @type {Object} [重定向]
@@ -284,7 +284,7 @@ export default new Router({
 				},
 				{
 				    path: 'message/detail/:id',
-				    name: 'messageDetail',
+				    name: 'message-detail',
 				    component: () => import('@/pages/main/message/detail'),
 				    replace: false,
 				    /** @type {Object} [重定向]
@@ -304,7 +304,7 @@ export default new Router({
 				},
 				{
 				    path: 'message/create/:id',
-				    name: 'messageCreate',
+				    name: 'message-create',
 				    component: () => import('@/pages/main/message/create'),
 				    replace: false,
 				    /** @type {Object} [重定向]
@@ -351,5 +351,10 @@ export default new Router({
 		    	itercept: false
 		    }
 		}
-    ]
+    ],
+    // 去掉路由哈希中的井号
+    mode: "history",
+    // 这个配置也很重要，否则会出现页面空白情况
+    // 设置base后每次都会在路由中加上/dist/， 例如 原来是http://localhost:8081/mine，增加后变为http://localhost:8081/dist/mine
+    base: "",
 })

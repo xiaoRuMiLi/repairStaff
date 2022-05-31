@@ -2,7 +2,7 @@
 * @Author: Marte
 * @Date:   2022-01-03 22:09:18
 * @Last Modified by:   Marte
-* @Last Modified time: 2022-05-24 22:20:16
+* @Last Modified time: 2022-05-30 20:57:18
 */
 
 'use strict';
@@ -34,7 +34,8 @@ const URL = {
     /*----------------------------------- 按月获取近两年施工单金额合计 -----------------------------------*/
     api_constructionGetTotalGroupByMoon: API_BASE_URL + '/api/v1/get_total_group_by_moon',
     /*----------------------------------- 分享接口调用 -----------------------------------*/
-    api_getWxShareTicket: '/url/weChat/index.php', // 临时接口上线时需要修改
+    api_getWxShareTicket: API_BASE_URL + '/api/v1/wx_jssdk/get_sign_package', // 临时接口上线时需要修改
+
     /*----------------------------------- 根据施工单获取相关的信息接受者 -----------------------------------*/
     api_getMessageReceiversByConstructionId:  API_BASE_URL + "/api/v1/get_message_receivers_by_construction_id/",
     /*----------------------------------- 获取一定天数施工单超时占比 -----------------------------------*/

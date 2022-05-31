@@ -307,7 +307,7 @@ export default {
 
 }
 .main-info .content {
-  padding: 0 var(--van-padding-sm);
+  padding: 2px 0;
   font-size: var(--van-font-size-md);
   position: relative;
 

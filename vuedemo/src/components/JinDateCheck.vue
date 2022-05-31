@@ -20,6 +20,7 @@
 <script>
     import TimeUtils from '@/utils/timeUtils';
     import { Calendar } from 'vant';
+    import "./BaseComponent/index.js";
     export default {
         name: 'jinRadio',
         components: {
@@ -175,14 +176,14 @@
     height: auto;
     width: 100%;
     position: relative;
-    font-size: 14px;
+    font-size: var(--com-font-size-xs);
     display: flex;
     align-items: start;
     flex-direction: column;
     padding: 10px 0px 20px 0px;
 }
 .title {
-    font-size: 16px;
+    font-size: var(--com-font-size-sm);
     font-weight: 500;
     cursor: default;
     padding: 10px 25px;

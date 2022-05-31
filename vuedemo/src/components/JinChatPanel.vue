@@ -249,11 +249,11 @@
     box-sizing: border-box;
     flex-direction: row;
     flex-wrap: wrap;
-
 }
 .image-item {
     width: 25%;
-
+    box-sizing: border-box;
+    padding: var(--com-padding-base);
 }
 .text {
     font-size: var(--com-font-size-md);

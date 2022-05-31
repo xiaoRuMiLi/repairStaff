@@ -25,7 +25,7 @@
                 </van-uploader>
                 <div class="button-wrapper">
                     <div class="button-con">
-                      <van-button type="primary" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交{{form.length}}张图片</van-button>
+                      <van-button type="info" size="large"  style="background-color: #1989fa; color: white; width: 80%; border-radius: 5px;" @click="submit" >点击提交{{form.length}}张图片</van-button>
                     </div>
                 </div>
             </div>

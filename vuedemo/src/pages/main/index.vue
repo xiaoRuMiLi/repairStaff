@@ -18,7 +18,7 @@
       <van-tabbar-item icon="home-o" name="home" to="/home">首页</van-tabbar-item>
       <van-tabbar-item icon="balance-list-o" name="order" to="/order">施工单</van-tabbar-item>
       <van-tabbar-item icon="chat-o" name="message/list" to="/message/list" >信息</van-tabbar-item>
-      <van-tabbar-item icon="user-o" name="setting" to="/mine">我的</van-tabbar-item>
+      <van-tabbar-item icon="user-o" name="mine" to="/mine">我的</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>

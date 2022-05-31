@@ -209,9 +209,12 @@ export default {
       noncstr:"",
       signatureInfo:"",
       // 自配项
-      imgurl:"",//分享图片（如分享出来链接上显示的小图标）
-      url:"",//分享地址（如分享出来一个链接，点链接要跳的页面地址）
-
+      share: {
+        imgurl: "https://staff.weixiubang.club/static/swipe-img/1.jpg",
+        url: "https:weixiubang.club",
+        title: "share title",
+        desc: "share.desc"
+      },
       data: {
         id: '00000547',
         amount: 350,
@@ -566,23 +569,24 @@ export default {
     // 分享页面的逻辑
     shareFriend(){//当点击分享好友按钮时
       //怎么取图片的地址取决于你放图片的路径，你也可以用线上图片，也可以放在你们的服务器上。
-       this.imgurl = location.href.split('/index')[0] + "/static/shareimg.jpg";
-       this.url = "这里是你要分享出来的页面的地址";
-       this.title="这是一个王哈哈";
-       this.desc="小绵羊呀小绵羊呀小绵羊呀小绵羊呀小绵羊呀分享好友呀呀哎呀呀啊";
+       this.share.imgurl = this.data.loginImages.length > 0? this.data.loginImages[0]: '';
+       this.share.url = location.href.split('#')[0];
+       this.share.title = this.data.carNumber + "|" + this.data.carModel;
+       this.share.desc = "维修项目:" + this.data.repairType + "|故障描述:" + this.data.faultDescription;
        this.goshare()
     },
     goshare(){
       let that = this;
       console.log('开始分享');
+      // alert(this.share.url + "|" + this.share.imgurl);
       //开始注入配置项
       wx.config({
-        debug:false,//是否打开debug调试模式。
-        appId:this.appId, //必填，公众号唯一标识
-        timestamp:this.timestamp, //必填，生成签名的时间戳
-        nonceStr:this.noncstr,  //必填，生成签名的随机串
-        signature:this.signatureInfo, //必填，生成的签名
-        jsApiList:['onMenuShareTimeline','onMenuShareAppMessage'] //必填，允许分享好友，分享朋友圈
+        debug: false,//是否打开debug调试模式。
+        appId: this.appId, //必填，公众号唯一标识
+        timestamp: parseInt(this.timestamp), //必填，生成签名的时间戳
+        nonceStr: this.noncstr,  //必填，生成签名的随机串
+        signature: encodeURIComponent(this.signatureInfo), //必填，生成的签名
+        jsApiList:['onMenuShareTimeline','onMenuShareAppMessage', 'updateAppMessageShareData', 'updateTimelineShareData'] //必填，允许分享好友，分享朋友圈
       })
       wx.error((res)=>{//配置成功
         for(var msg in res){
@@ -596,10 +600,37 @@ export default {
       })
       //以上是配置项注入成功
       wx.ready(()=>{//点击要去分享
+        wx.updateAppMessageShareData({
+          title :  this.share.title,
+          link :  this.share.url,
+          desc : this.share.desc,
+          imgUrl : this.share.imgurl,
+          success: function () {
+            console.log("分享成功")
+          },
+          cancel:function(res){
+            console.log("分享失败")
+          }
+        })
+        wx.updateTimelineShareData({
+          title :  this.share.title,
+          link :  this.share.url,
+          desc : this.share.desc,
+          imgUrl : this.share.imgurl,
+          success: function () {
+            console.log("分享成功")
+          },
+          cancel:function(res){
+            console.log("分享失败")
+          }
+        })
         wx.onMenuShareTimeline({//配置去分享朋友圈的选项
-          title :this.share.title,//分享标题
+          title : this.share.title,//分享标题
           link : this.share.url, //分享链接
           imgUrl : this.share.imgurl, //分享图标
+          //imgUrl: '', // 分享图标
+          //type: '', // 分享类型,music、video或link，不填默认为link
+          //dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
           success : function(res){//分享成功
             console.log("已分享朋友圈成功")
             //如分享成功后想做一些其他的业务处理，可以在这里做
@@ -625,10 +656,7 @@ export default {
     },
     toMessage () {
       this.$router.push({path: "/message/create/" + this.data.id})
-
     }
-
-
 
   },
 
@@ -641,7 +669,7 @@ export default {
   created () {
     // 分享的相关逻辑 指的是要做分享的页面的url送过去，请求成功才能拿到
     let url = location.href.split('#')[0];
-    this.post(URL.api_getWxShareTicket,{url}).then(res=>{
+    this.get(URL.api_getWxShareTicket,{url}).then(res=>{
       console.log("api_getWxShareTicket", res );
       if(res.message = 'success'){
         //这些配置参数必填项，后面去调微信的pai是需要传的。
@@ -649,6 +677,7 @@ export default {
         this.timestamp = res.data.timestamp;
         this.noncstr = res.data.nonceStr;
         this.signatureInfo = res.data.signature;
+        this.shareFriend();
       }
     }).catch(err=>{console.log(err)})
 

@@ -14,6 +14,7 @@
 </template>
 <script>
     // <jin-radio :arr="choose_datas" :on-change.sync="chooseVal" :val="chooseVal"></jin-radio>
+    import "./BaseComponent/index.js";
     export default {
     	name: 'jinRadio',
         props: {
@@ -98,7 +99,7 @@
     height: auto;
     width: 100%;
     position: relative;
-    font-size: 14px;
+    font-size: var(--com-font-size-xs);
     display: flex;
     align-items: start;
     flex-direction: column;
@@ -118,6 +119,7 @@
     height: 30px;
     padding: 10px 25px;
     text-align: left;
+    font-size: var(--com-font-size-sm);
 
 }
 .input-box .input-item {

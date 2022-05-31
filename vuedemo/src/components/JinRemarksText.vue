@@ -4,7 +4,7 @@
             <span>{{content}}</span>
         </div>
         <div class="edit">
-            <van-button type="primary" size="mini" icon="edit" color="#1989fa" @click="showPop">编辑</van-button>
+            <van-button type="info" size="mini" icon="edit" color="#1989fa" @click="showPop">编辑</van-button>
         </div>
         <div class="bottom">
             <div class="num">
@@ -23,8 +23,11 @@
                         <van-button type="default" style="width: 80%; border: 1px solid #1989fa;" @click="show=!show">取消</van-button>
                     </div>
                     <div class="button-container">
-                        <van-button type="primary" style="width: 80%; background-color: #1989fa;" @click="submitChange">保存</van-button>
+                        <van-button type="info" style="width: 80%; background-color: #1989fa;" @click="submitChange">保存</van-button>
                     </div>
+                </div>
+                <div class="blank">
+
                 </div>
 
             </slot>
@@ -138,6 +141,9 @@
 }
 .button-container {
     flex-grow: 1;
+}
+.blank {
+    height: 50px;
 }
 
 

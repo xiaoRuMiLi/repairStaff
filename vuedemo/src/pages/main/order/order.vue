@@ -38,6 +38,7 @@
     <van-nav-bar
       title="筛选"
       left-arrow
+      style="background-color: white;"
       @click-left="onClickLeft"
     />
       <!-- 通过 :on-change.sync="chooseVal" 来修改父组件的值，:val="chooseVal" 传递给子组件 -->

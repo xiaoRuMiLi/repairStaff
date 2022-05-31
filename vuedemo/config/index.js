@@ -66,7 +66,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    // 
+    // 打包上线后路由中去掉井号，原”/“改为"/dist/",这个地方使用绝对路径 很重要。
     assetsPublicPath: '/',
 
     /**
