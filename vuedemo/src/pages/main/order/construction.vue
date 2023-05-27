@@ -239,7 +239,7 @@ export default {
         evaluate:'该客户很忙，没有留下任何话!',
         faultDescription: '故障描述就是车子坏了呗！有啥好说的！',
         repairType: '喷漆',
-        repairDatas: [{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200},{content: '左前门喷漆',amount:200}],
+        repairDatas: [{name: '测试',amount:0}],
         loginImages: [
 
         ],
@@ -559,7 +559,7 @@ export default {
         rateProgress: rateProgress,
         startDt: inp.repair.created_at,
         endDt: inp.repair.delivery_at,
-        remarks: inp.remarks,
+        remarks: inp.remarks ? inp.remarks : '',
         images: images,
         inspects: inp.inspects,
       }

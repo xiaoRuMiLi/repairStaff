@@ -6,7 +6,7 @@
 		<div class="content">
 			<div v-for="(item,key) in datas" class="item" :key="key">
 				<div class="key"> {{key + 1}}</div>
-				<div class="repair-type"> {{item.content}} </div>
+				<div class="repair-type"> {{item.name}} </div>
 				<div class="amount"> {{item.amount}} </div>
 			</div>
 			<div class="total">
