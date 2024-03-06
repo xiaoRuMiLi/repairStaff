@@ -10,7 +10,7 @@
 					<span>{{amount}}</span>
 
 			    </div>
-				<div class="text-container" v-for=" item in content">
+				<div class="text-container" v-for=" item, key in content" :key="key">
 					<div class="lable">
 						<div >{{ item.title }}<i></i>:</div>
 					</div>
@@ -20,11 +20,14 @@
 
 			<div class="right-con">
 				<span>{{ rightTitle}} </span>
+				<div v-if="appointment" class="appointment">
+					预约单
+				</div>
 
 			</div>
         </div>
         <div class="bottom">
-        	<div class="buttons" v-for="(item, index) in buttons">
+        	<div class="buttons" v-for="(item, index) in buttons" :key="index">
         		<van-button plain hairline type="primary" color="#fff" size="mini" @click="onClick(index)">{{item}}</van-button>
         	</div>
         </div>
@@ -75,6 +78,10 @@ export default {
 				return [
 				]
 			}
+		},
+		appointment: {
+			type: Boolean,
+			default: false,
 		},
 		rightTitle: {
 			type: [String],
@@ -144,12 +151,30 @@ export default {
 .left-con,.right-con {
 	padding: 0 10px;
 	text-align: start;
-
+}
+.right-con {
+    display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	text-align: center;
+}
+.right-con .appointment {
+	font-size: var(--com-font-size-lg);
+	border-radius: 50%;
+	border: 3px solid #df0404;
+	font-weight: 800;
+	height: 10vw;
+	width: 10vw;
+    color:#f50000;
+	overflow: hidden;
+	line-height: 10vw;
+	text-align: center;
+	opacity: 0.5;
 }
 .left-con span {
 	display: inline;
     padding: 5px 5px;
-    text-align: left;
+    text-align: center;
 
 }
 .left-con  {

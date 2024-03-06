@@ -29,7 +29,7 @@
         @load="onLoad"
       >
       <template slot="default">
-        <text-list-item v-for="( item, key ) in datas" :key="key" :id="item.id" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons" @clickItem="clickItem"> </text-list-item>
+        <text-list-item v-for="( item, key ) in datas" :key="key" :id="item.id" :title="item.title" :amount="item.amount" :content="item.con" :rightTitle="item.rightTitle" :buttons="item.buttons" :appointment="item.appointment" @clickItem="clickItem"> </text-list-item>
       </template>
       </van-list>
     </div>
@@ -198,6 +198,7 @@ export default {
         id: item.id,
         title: item.repair_type + '施工单',
         amount: item.amount,
+        appointment: item.appointment,
         con: [
           {
             title: '车牌照号',
@@ -388,5 +389,6 @@ export default {
     padding: 10px;
 
   }
+  
 
 </style>

@@ -58,7 +58,9 @@ const URL = {
     api_userSetPassword: API_BASE_URL + '/api/v1/user/set_password',
     /*-----------------------------------获取用户信息 -----------------------------------*/
     api_userGetUserInfo: API_BASE_URL + '/api/v1/user',
-
+   
+    /** 接单配置操作  ------------------------------------------------------------------- */
+    api_getReceiveConfig: API_BASE_URL + "/api/v1/construction_receive_configs/get_current_user_construction_receive_config",
 
     /*-图片操作------------------------------------------------------------------------*/
     /*----------------------------------- 上传图片 -----------------------------------*/

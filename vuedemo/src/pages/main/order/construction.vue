@@ -8,8 +8,11 @@
       <div class="circular image-title" @click="shareFriend">
         <i class = "van-icon-share-o van-icon"></i>
       </div>
-      <div class="rectangle image-title">
-        <span>ID: {{data.id}}</span>
+      <div class="rectangle">
+        <span class="image-title">ID: {{data.id}}</span>
+        <div v-if="data.appointment" class="appointment">
+					预约单
+				</div>
       </div>
     </div>
     <div id = "content">
@@ -540,6 +543,7 @@ export default {
         carModel: inp.car_mode,
         marks: makeMarks(inp),
         receive_at: inp.receive_at,
+        appointment: inp.appointment,
         complete_at: inp.complete_at,
         real_complete_at: inp.real_complete_at,
         created_at: inp.created_at,
@@ -668,7 +672,7 @@ export default {
   },
   created () {
     // 分享的相关逻辑 指的是要做分享的页面的url送过去，请求成功才能拿到
-    let url = location.href.split('#')[0];
+    /*let url = location.href.split('#')[0];
     this.get(URL.api_getWxShareTicket,{url}).then(res=>{
       console.log("api_getWxShareTicket", res );
       if(res.message = 'success'){
@@ -680,7 +684,7 @@ export default {
         this.shareFriend();
       }
     }).catch(err=>{console.log(err)})
-
+    */
   }
 }
 </script>
@@ -715,7 +719,12 @@ export default {
 .rectangle {
   bottom: 50px;
   position: absolute;
-  width: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.rectangle span {
   font-size: 12px;
   border-radius: 5px;
   margin: 10px;
@@ -780,6 +789,19 @@ export default {
 .inspect-info {
   color: var(--van-text-color-2);
   font-size: var(--van-font-size-md);
+}
+.appointment {
+  font-size: var(--com-font-size-lg);
+  border-radius: 50%;
+  border: 3px solid #df0404;
+  font-weight: 800;
+  height: 15vw;
+  width: 15vw;
+    color:#f50000;
+  overflow: hidden;
+  line-height: 15vw;
+  text-align: center;
+  opacity: 0.5;
 }
 
 

@@ -18,6 +18,7 @@
                     <div class="title" >{{language.setUp}}</div>
                     <van-cell title-class="cell-title" is-link title="账户信息" value="" @click="toUserInfo" />
                     <van-cell title-class="cell-title" is-link title="修改密码" value="" @click="setPassWord"/>
+                    <van-cell title-class="cell-title" is-link title="接单设置" value="" @click="setReceive"/>
                     <van-cell title-class="cell-title" is-link title="刷新设置" value="" @click="setWebConfig" />
                     <van-cell title-class="cell-title" is-link title="退出登录" value="" @click="loginOut"/>
                 </van-cell-group>
@@ -80,6 +81,7 @@
         created() {},
 
         mounted() {
+            console.log("mine mounted___");
             this.getData();
 
         },
@@ -109,6 +111,10 @@
                     // on cancel
                 });
 
+            },
+            // 设置接单
+            setReceive () {
+                this.$router.push({path: "mine/construction-receive-config"});
             },
             toChart () {
                 this.$router.push({path: "chart"});
