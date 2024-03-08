@@ -71,10 +71,13 @@ export default {
                 if (result.hasOwnProperty("max_amount")) {
                     Toast.success('创建成功');
                     this.remainingTimes --;
+                } else {
+                    Toast.fail("创建失败");
                 }
-                Toast.fail("创建失败");
             })
-            .catch( err => console.log(err))
+            .catch( err => {
+                Toast.fail(err.message);
+            })
             .finally( () => {
 
             });
