@@ -22,7 +22,16 @@ export default {
         message: {days: 30, hours: 24, target: 10}, // days：300 时间周期300天。hours: 24。超过24小时回复的会被判断为超时回复。 
         evaluate: {days: 30, target: 80},
         inspect: {days: 30, target: 80}
-    }
+    },
+    // 接单状态
+    receiveStatus: [ 
+    "未知",
+    "空闲",
+    "接单",
+    "满载",
+    "繁忙",
+    "休假"],
+
 
 
 }

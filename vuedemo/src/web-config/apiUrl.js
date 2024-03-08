@@ -43,6 +43,8 @@ const URL = {
     /*----------------------------------- 按年月获取订单金额合计 -----------------------------------*/
     api_constructionGetRealCompleteTotalByYm: API_BASE_URL + "/api/v1/construction/get_real_complete_total_by_ym",
 
+    api_construction_receive_status: API_BASE_URL +  "/api/v1/constructions/get_current_user_receive_status/",
+
     /*-登录操作------------------------------------------------------------------------*/
     /*----------------------------------- 登陆 -----------------------------------*/
     api_login: API_BASE_URL + '/api/v1/loginApi2',/*{id}, //  - post
