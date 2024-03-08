@@ -61,6 +61,9 @@ const URL = {
    
     /** 接单配置操作  ------------------------------------------------------------------- */
     api_getReceiveConfig: API_BASE_URL + "/api/v1/construction_receive_configs/get_current_user_construction_receive_config",
+    // 获取可以接单设置可以修改次数
+    api_getRemainingTimes: API_BASE_URL + "/api/v1/construction_receive_configs/get_remaining_times",
+    api_constructionReceiveConfigStore: API_BASE_URL + "/api/v1/construction_receive_configs",
 
     /*-图片操作------------------------------------------------------------------------*/
     /*----------------------------------- 上传图片 -----------------------------------*/

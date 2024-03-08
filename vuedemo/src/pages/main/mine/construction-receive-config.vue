@@ -6,7 +6,7 @@
 <template>
     <div>
         <div class="information">
-             在这个页面可以通过下方新增按钮重新生成接单设置，合理的接单设置可以更加高效的完成业绩，每项设置值会影响管理员所看到的接单状态，管理员通过接单状态来判断合适的接单人员，以方便更好的管理预约和维修。
+             在这个页面可以通过下方<strong>重新设置</strong>按钮重新生成接单设置，合理的接单设置可以更加高效的完成业绩，每项设置值会影响管理员所看到的接单状态，管理员通过接单状态来判断合适的接单人员，以方便更好的管理预约和维修。
             
         </div>
         <div class="receive-config">
@@ -21,7 +21,7 @@
         <div class="button-wrapper">
             <div class="white-space">
             </div>
-            <van-button size="large" type="primary"> 重新设置 </van-button>
+            <van-button size="large" type="primary" @click="handleStore"> 重新设置 </van-button>
         </div>
     </div>
 </template>
@@ -121,6 +121,9 @@
                     this.createdAt = receiveConfig.created_at;
                     this.status = receiveConfig.status;
                 }
+            },
+            handleStore() {
+                this.$router.push({name: "store-construction-receive-config"});
             }
             
 

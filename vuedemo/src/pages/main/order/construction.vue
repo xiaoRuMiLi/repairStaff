@@ -723,6 +723,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  box-sizing: border-box;
+  padding: var(--van-padding-sm);
 }
 .rectangle span {
   font-size: 12px;

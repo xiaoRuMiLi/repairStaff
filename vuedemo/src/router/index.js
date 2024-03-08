@@ -260,10 +260,28 @@ export default new Router({
 		                keepAlive: false, // 不需要被缓存
 		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
 		                role : [ 5233 , 5232 , 5231 , 5230 ]
-				    },
+				    }
+					
+				},
+				{
 					path: 'mine/construction-receive-config',
 				    name: 'construction-receive-config',
 				    component: () => import('@/pages/main/mine/construction-receive-config'),
+				    meta : {
+				      	// 是否需要拦截 如果为真跳转到该路由需要守卫拦截,可能会出现无法正常跳转的现象
+				        intercept : false ,
+				        // 有无快速跳转标签
+				        noQuickTabs : true ,
+				        title: '接单参数信息',
+		                keepAlive: false, // 不需要被缓存
+		                // 页面查看需要的权限，如果userrole 是其中之一，那么守卫允许跳转到该页面，起作用首先intercept需要是true 守卫才会拦截
+		                role : [ 5233 , 5232 , 5231 , 5230 ]
+				    },
+				},
+				{
+					path: 'mine/store-construction-receive-config',
+				    name: 'store-construction-receive-config',
+				    component: () => import('@/pages/main/mine/store-construction-receive-config'),
 				    meta : {
 				      	// 是否需要拦截 如果为真跳转到该路由需要守卫拦截,可能会出现无法正常跳转的现象
 				        intercept : false ,
