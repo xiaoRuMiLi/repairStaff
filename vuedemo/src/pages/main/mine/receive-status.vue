@@ -13,7 +13,7 @@
             </div>
             <div class="info">
                 <div class="name">
-                    姓名：{{name}}
+                    姓名：{{userInfo.name}}
                 </div>
                 <div class="vacation-days">
                     休假天数：{{vacationDays}}
@@ -34,29 +34,57 @@
             </van-cell-group>
         </div>
         <div class="status-panel">
-            <div v-for="(item,key) in statusDatas" :key="key" class="item" :class="color[5]">
+            <div v-for="(item,key) in statusDatas" :key="key" class="item" :class="color[item.status]" @click="handleDetail(key)">
                 <div class="status-str" :class="color[item.status]">
                     {{receiveStatus[item.status]}}
                 </div>
                 <div class="date">
-                    2024-03-06
+                    {{item.date}}
                 </div>
                 <div class="week">
-                    星期三
+                    {{daysFromDate(item.date)}}
                 </div>
                 <div class="status-info">
                     <div class="repairing-count">
-                        施工数量{{item.constructions.length}}台
+                        维修中 <span class="count">{{repairingCount(item.constructions)}}</span>
                     </div>
-                    <div class="repairing-count">
-                        完成数量{{completeCount(item.constructions)}}台
+                    <div class="complete-count">
+                        当日完成 <span class="count">{{completeCount(item.constructions)}}</span>
                     </div>
-                    <div class="repairing-count">
-                        预约数量{{appointmentCount(item.constructions)}}台
+                    <div class="appointment-count">
+                        预约中 <span class="count">{{appointmentCount(item.constructions)}}</span>
                     </div>
                 </div>
             </div>
         </div>
+        <van-popup v-model="dateDetailShow" position="bottom" :style="{height: '50%'}" closeable>
+            <div class="date-detail-panel">
+                <div class="construction">
+                    <div class="title"> 当日排班计划</div>
+                    <div v-if="currentStatusConstructions.length <= 0" class="remind">当日暂时没有工作安排</div>
+                    <div v-for="(item, key) in currentStatusConstructions" :key="key" class="item" >
+                        <div class="left">
+                            <div class="car-number">
+                                {{item.car_number}}
+                            </div>
+                            <div class="car-mode">
+                                {{item.car_mode}}
+                            </div> 
+                        </div>
+                        <div class="right">
+                            <div class="amount">
+                                金额 {{item.amount}}
+                            </div>
+                            <div class="repair-count">
+                                维修项目{{item.hasOwnProperty("repair_content") ? item.repair_content.length : 0}}项
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </van-popup>
         <van-popup v-model="startDatePickerShow" position="bottom" :style="{height: '30%'}">
             <van-datetime-picker
             v-model="startDate"
@@ -88,28 +116,108 @@
         padding: var(--van-padding-sm);
 
     }
-
+    .date-detail-panel {
+        padding: var(--van-padding-xl) var(--van-padding-md);
+    }
+    .remind {
+        padding: var(--van-padding-sm) 0;
+        color: var(--van-text-color-1);
+        font-size: var(--van-font-size-md);
+    }
+    .date-detail-panel .construction .item{
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--van-text-color-3);
+        padding: var(--van-padding-sm) 0;
+    }
+    .construction .item .car-number {
+        font-size: var(--van-font-size-md);
+        font-weight: var(--van-font-weight-bold-2);
+        color: var(--van-text-color);
+    }
+    .item .car-mode {
+        font-size: var(--van-font-size-sm);
+        font-weight: var(--van-font-weight-bold);
+        color: var(--van-text-color-2);
+    }
+    .item .repair-count {
+        font-size: var(--van-font-size-sm);
+        font-weight: var(--van-font-weight-bold);
+        color: var(--van-text-color-2);
+    }
+    .item .amount {
+        font-size: var(--van-font-size-md);
+        font-weight: var(--van-font-weight-bold);
+        color: var(--van-orange);
+    }
+    .construction .title {
+        font-size: var(--van-font-size-lg);
+        font-weight: var(--van-font-weight-bold-2);
+        color: var(--van-text-color);
+    }
     .user-info-panel {
         display: flex;
         justify-content: flex-start;
-        padding: var(--van-padding-md);
         align-items: center;
 
     }
     .user-info-panel .image {
         padding: var(--van-padding-sm);
+        border-radius: 5px;
+        overflow: hidden;
+
     }
     .user-info-panel .info {
         padding: var(--van-padding-sm);
+        font-size: var(--van-font-size-md);
+        color: var(--van-text-color-2);
     }
     .status-panel {
         padding: var(--van-padding-sm);
         display: flex;
         box-sizing: border-box;
         flex-wrap: wrap;
+        justify-content: flex-start;
     }
     .status-panel .item {
-        width: 30%;
+        width: 33%;
+        text-align: center;
+        border: 1px solid var(--van-gray-5);
+        border-radius: 5px;
+        margin: 5px 0.15%;
+        padding: var(--van-padding-base);
+        box-sizing: border-box;
+       
+    }
+    .item .status-str {
+        font-weight: var(--van-font-weight-bold-2);
+    }
+    .item .date {
+        font-size: var(--van-font-size-md);
+        font-weight: var(--van-font-weight-bold-2);
+        color: var(--van-text-color);
+    }
+    .item .week {
+        font-size: var(--van-font-size-sm);
+        font-weight: var(--van-font-weight-bold);
+        color: var(--van-text-color);
+    }
+    .item .repairing-count {
+        color: var(--van-text-color-2);
+        font-size: var(--van-font-size-sm);
+    }
+    .item .complete-count {
+        color: var(--van-text-color-2);
+        font-size: var(--van-font-size-sm);
+    }
+    .item .appointment-count {
+        color: var(--van-text-color-2);
+        font-size: var(--van-font-size-sm);
+    }
+    .item .count {
+        color: var(--van-text-color);
+        font-size: var(--van-font-size-md);
+        font-weight: var(--van-font-weight-bold-2);
     }
     .red {
         color: var(--van-red);
@@ -157,10 +265,10 @@ export default {
             endDate: endDate,
             startDatePickerShow: false,
             endDatePickerShow: false,
-            name: " ",
             statusDatas: [],
-            receiveStatus: conf.receiveStatus
-
+            receiveStatus: conf.receiveStatus,
+            dateDetailShow: false,
+            currentIndex: 0,
         }
     },
     methods: {
@@ -183,7 +291,29 @@ export default {
             }
             return 0;
         },
+        repairingCount(cons) {
+            const constructions = Object.entries(cons).map(([key, value]) => value);
+            if (constructions.hasOwnProperty("length")) {
+                const finallyConstructions = constructions.filter(item => {
+                    return item.appointment == 0 && !item.real_complete_at;
+                })
+                return finallyConstructions.length;
+            }
+            return 0;
+        },
+        daysFromDate(date) {
+            const currentDate = new Date(date);
+            const days = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            return days[currentDate.getDay()];
+
+        },
+        // 选择查看详情
+        handleDetail(key) {
+            this.dateDetailShow = true;
+            this.currentIndex = key;
+        },
         async handleEndDatePickerSubmit(value) {
+            this.endDatePickerShow = false;
             this.statusDatas.length = 0;
             Toast.loading({
                 message: '加载中...',
@@ -194,6 +324,7 @@ export default {
                 console.log(data)
                 this.statusDatas.push(item);
             })
+            Toast.clear();
         },
         async getReceiveStatus() {
         
@@ -206,6 +337,15 @@ export default {
       
     },
     computed: {
+        // 选择查看的某一天
+        currentStatus() {
+            console.log(this.statusDatas[this.currentIndex]);
+            return this.statusDatas[this.currentIndex];
+        },
+        // 某一天的所有施工单
+        currentStatusConstructions() {
+            return this.currentStatus ? this.currentStatus.hasOwnProperty("constructions") ? this.currentStatus.constructions : [] : []; 
+        },
         startDateStr() {
             let formattedDate = this.startDate.getFullYear() + '-' +
             ('0' + (this.startDate.getMonth() + 1)).slice(-2) + '-' +
@@ -219,7 +359,7 @@ export default {
             return formattedDate;
         },
         vacationDays() {
-            this.statusDatas.reduce((total, item) => {
+            return this.statusDatas.reduce((total, item) => {
                 if (item.status == 5) {
                     return total += 1
                 };
@@ -292,7 +432,7 @@ export default {
         } catch (err) {
             Toast.fail(err.message);
         } finally {
-            
+            Toast.clear();
         }
     }
 
