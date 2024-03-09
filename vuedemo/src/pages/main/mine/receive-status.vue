@@ -19,7 +19,7 @@
                     休假天数：{{vacationDays}}
                 </div>
                 <div class="complete-amount">
-                    完成金额：{{completeAmoount}}
+                    完成金额：{{completeAmount}}
                 </div>
                 <div class="repairing-amount">
                     施工金额：{{repairingAmount}}
@@ -34,9 +34,9 @@
             </van-cell-group>
         </div>
         <div class="status-panel">
-            <div class="item" :class="color[5]">
-                <div class="status-str">
-                    满载
+            <div v-for="(item,key) in statusDatas" :key="key" class="item" :class="color[5]">
+                <div class="status-str" :class="color[item.status]">
+                    {{receiveStatus[item.status]}}
                 </div>
                 <div class="date">
                     2024-03-06
@@ -46,10 +46,13 @@
                 </div>
                 <div class="status-info">
                     <div class="repairing-count">
-                        维修中数量5台
+                        施工数量{{item.constructions.length}}台
                     </div>
-                    <div class="repairing-amount">
-                        在修金额2000.00
+                    <div class="repairing-count">
+                        完成数量{{completeCount(item.constructions)}}台
+                    </div>
+                    <div class="repairing-count">
+                        预约数量{{appointmentCount(item.constructions)}}台
                     </div>
                 </div>
             </div>
@@ -135,7 +138,7 @@ import conf from '@/web-config/index';
 const startDate = new Date();
 const endDate = new Date();
 endDate.setDate(endDate.getDate() + 10);
-const color = ["red", "orange", "blue", "green", "grey", "purple"];
+const color = [ "grey", "green", "blue", "orange", "red", "purple"];
 export default {
     components: {
         "van-image": VanImage,
@@ -156,13 +159,41 @@ export default {
             endDatePickerShow: false,
             name: " ",
             statusDatas: [],
+            receiveStatus: conf.receiveStatus
 
         }
     },
     methods: {
+        completeCount(cons) {
+            // 有时候传过来的只包含一个元素的数组前端拿到的却是对象所以转换一下
+            const constructions = Object.entries(cons).map(([key, value]) => value);
+            if (constructions.hasOwnProperty("length")) {
+                const finallyConstructions = constructions.filter(item => !!item.real_complete_at)
+                return finallyConstructions.length;
+            }
+            return 0;
+        },
+        appointmentCount(cons) {
+            const constructions = Object.entries(cons).map(([key, value]) => value);
+            if (constructions.hasOwnProperty("length")) {
+                const finallyConstructions = constructions.filter(item => {
+                    return item.appointment;
+                })
+                return finallyConstructions.length;
+            }
+            return 0;
+        },
         async handleEndDatePickerSubmit(value) {
+            this.statusDatas.length = 0;
+            Toast.loading({
+                message: '加载中...',
+                forbidClick: true,
+            });
             const data = await this.getReceiveStatus();
-            console.log(data);
+            data.forEach(item => {
+                console.log(data)
+                this.statusDatas.push(item);
+            })
         },
         async getReceiveStatus() {
         
@@ -171,7 +202,8 @@ export default {
                 return data.data;
             }
            
-        }
+        },
+      
     },
     computed: {
         startDateStr() {
@@ -187,26 +219,80 @@ export default {
             return formattedDate;
         },
         vacationDays() {
+            this.statusDatas.reduce((total, item) => {
+                if (item.status == 5) {
+                    return total += 1
+                };
+                return total;
+            }, 0);
+        },
+        completeAmount() {
+            if (this.finallyConstructions.length > 0) {
+                console.log(this.finallyConstructions);
+                const amountTotal = this.finallyConstructions.reduce((total, item) => {
+                    // 筛选出不是预约单，有金额， 完成的施工单
+                    if (item.amount && item.real_complete_at && item.appointment == 0) {
+                        return total += item.amount;
+                    };
+                    return total;
+                }, 0);
+                return amountTotal;
+            }
+           
             return 0;
         },
-        completeAmoount() {
-            return 0;
+        finallyConstructions() {
+            let constructions = this.statusDatas.flatMap(i => {
+                if (i.constructions.length > 0)
+                {
+                    return i.constructions;
+                } else {
+                    return [];
+                }   
+            });
+            if (constructions.length) {
+                const finallyConstructions =  constructions.filter((item, index) => {
+                    return constructions.findIndex(t => {return t.id == item.id}) === index;
+                })
+                return finallyConstructions;
+            }
+            return [];
+
         },
         repairingAmount() {
+            if (this.finallyConstructions.length > 0) {
+                const amountTotal = this.finallyConstructions.reduce((total, item) => {
+                    // 筛选出不是预约单，有金额， 没有完成的施工单
+                    if (item.amount && !item.real_complete_at && item.appointment == 0) {
+                        return total += item.amount;
+                    };
+                    return total
+                }, 0);
+                return amountTotal;
+            }
+           
             return 0;
+           
         }
+        
     },
     created() {
         //console.log(userInfo);
     },
     async mounted() {
         try{
+            Toast.loading({
+                message: '加载中...',
+                forbidClick: true,
+            });
             const data = await this.getReceiveStatus();
-            console.log(data);
+            data.forEach(item => {
+                this.statusDatas.push(item);
+            })
         } catch (err) {
             Toast.fail(err.message);
         } finally {
-            console.log("isover");
+            
         }
     }
 
