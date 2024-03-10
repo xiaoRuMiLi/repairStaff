@@ -8,12 +8,12 @@
         <div class="user-info-panel">
             <div class="left">
                 <div class="image">
-                    <van-image  width="100" height="100" fit="cover" :src="userInfo.avatarUrl"/>
+                    <van-image  round width="80" height="80" fit="cover" :src="userInfo.avatarUrl"/>
                 </div>
             </div>
             <div class="info">
                 <div class="name">
-                    姓名：{{userInfo.name}}
+                    姓名：{{userInfo.userName}} 
                 </div>
                 <div class="vacation-days">
                     休假天数：{{vacationDays}}
@@ -62,10 +62,11 @@
                 <div class="construction">
                     <div class="title"> 当日排班计划</div>
                     <div v-if="currentStatusConstructions.length <= 0" class="remind">当日暂时没有工作安排</div>
-                    <div v-for="(item, key) in currentStatusConstructions" :key="key" class="item" >
+                    <div v-for="(item, key) in currentStatusConstructions" :key="key" class="item" @click="handleToConstruction(item.id)">
                         <div class="left">
                             <div class="car-number">
                                 {{item.car_number}}
+                                <div v-if="item.appointment" class="tag"> 预约 </div>
                             </div>
                             <div class="car-mode">
                                 {{item.car_mode}}
@@ -80,6 +81,11 @@
                             </div>
                         </div>
 
+                    </div>
+                    <div class="button-container">
+                        <div class="white-space"> </div>
+                        <div v-if="currentStatus.status != 5" class="button"><van-button type="primary" size="large" @click="handleHoliday">设置为休假日</van-button></div>
+                        <div v-else class="button"><van-button type="primary" size="large" @click="handleCancelHoliday">取消休假</van-button></div>
                     </div>
 
                 </div>
@@ -134,7 +140,38 @@
         font-size: var(--van-font-size-md);
         font-weight: var(--van-font-weight-bold-2);
         color: var(--van-text-color);
+        display: flex;
+        align-items: flex-end;
     }
+    .construction .item .tag {
+        background-color: rgba(225, 0, 255, 0.5);
+        padding: var(--van-padding-base);
+        color: var(--van-gray-1);
+        border-radius: 5px;
+        margin-left: var(--van-padding-sm);
+        font-size: var(--van-font-size-sm);
+    }
+    .button-container {
+        padding: var(--van-padding-md);
+        bottom: 0;
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .button-container .white-space {
+        background-color: var(--van-background-color-light);
+        height: var(--van-padding-lg);
+    }
+    .button-container .button {
+        border-radius: 10px;
+        padding: var(--van-padding-base);
+        overflow: hidden;
+        box-sizing: border-box;
+        flex-grow: 1;
+    }
+
     .item .car-mode {
         font-size: var(--van-font-size-sm);
         font-weight: var(--van-font-weight-bold);
@@ -307,11 +344,25 @@ export default {
             return days[currentDate.getDay()];
 
         },
+        // 跳转到施工单详情
+        handleToConstruction(id) {
+            this.$router.push({name: "construction", params: {id: id}});
+        },
         // 选择查看详情
         handleDetail(key) {
             this.dateDetailShow = true;
             this.currentIndex = key;
         },
+        // 设置当前时间为休息日
+        handleHoliday() {
+            const date = this.currentStatus.date;
+            this.post()
+        },
+        // 取消当前时间为休息日
+        handleCancelHoliday() {
+
+        },
+
         async handleEndDatePickerSubmit(value) {
             this.endDatePickerShow = false;
             this.statusDatas.length = 0;
@@ -327,7 +378,7 @@ export default {
             Toast.clear();
         },
         async getReceiveStatus() {
-        
+            console.log(this.startDateStr,this.endDateStr );
             const data = await this.get(`${URL.api_construction_receive_status}/${this.startDateStr}/${this.endDateStr}`);
             if (data.data) {
                 return data.data;
@@ -339,7 +390,6 @@ export default {
     computed: {
         // 选择查看的某一天
         currentStatus() {
-            console.log(this.statusDatas[this.currentIndex]);
             return this.statusDatas[this.currentIndex];
         },
         // 某一天的所有施工单
@@ -368,7 +418,6 @@ export default {
         },
         completeAmount() {
             if (this.finallyConstructions.length > 0) {
-                console.log(this.finallyConstructions);
                 const amountTotal = this.finallyConstructions.reduce((total, item) => {
                     // 筛选出不是预约单，有金额， 完成的施工单
                     if (item.amount && item.real_complete_at && item.appointment == 0) {

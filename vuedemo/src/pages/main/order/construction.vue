@@ -451,10 +451,10 @@ export default {
         // 如果客户没有给与评价那么显示客户说里面的语言
         if ( !da.evaluates || da.evaluates.length == 0 ){
           return {
-            name: da.repair.repair_client.name,
-            avatarImg: da.repair.repair_client.avatarUrl,
+            name: da.repair.repair_client ? da.repair.repair_client.name : "未知",
+            avatarImg: da.repair.repair_client ? da.repair.repair_client.avatarUrl : "",
             scoreValue: 0,
-            clientType: da.repair.repair_client.type,
+            clientType: da.repair.repair_client ? da.repair.repair_client.type : "未知",
             evaluate: da.repair.register.owner_say?da.repair.register.owner_say:'该客户很忙，没有留下任何话!',
             scoreTime: da.repair.created_at
           }
