@@ -81,7 +81,7 @@ export default {
                 Toast.fail(err.message);
             })
             .finally( () => {
-
+                Toast.clear();
             });
 
             

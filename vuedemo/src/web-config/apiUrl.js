@@ -42,8 +42,13 @@ const URL = {
     api_getConstructionRealCompleteOutTimeInDays:  API_BASE_URL + "/api/v1/construction/real_complete_out_time_in_days/",
     /*----------------------------------- 按年月获取订单金额合计 -----------------------------------*/
     api_constructionGetRealCompleteTotalByYm: API_BASE_URL + "/api/v1/construction/get_real_complete_total_by_ym",
-
+    /*-------------------------------------获取当前登录用户的接单状态------------------------------*/
     api_construction_receive_status: API_BASE_URL +  "/api/v1/constructions/get_current_user_receive_status/",
+    /*------------------------------------创建某天休假单-----------------------------------------*/
+    api_vacationsStoreByOneday: API_BASE_URL + "/api/v1/vacations/store_by_oneday",
+
+    /*--------------------------------------删除某天的休假安排--------------------------------*/
+    api_vacationsDestoryByDate: API_BASE_URL + "/api/v1/vacations/destory_by_oneday/",
 
     /*-登录操作------------------------------------------------------------------------*/
     /*----------------------------------- 登陆 -----------------------------------*/

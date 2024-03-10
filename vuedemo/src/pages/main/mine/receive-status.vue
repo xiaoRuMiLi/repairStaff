@@ -65,8 +65,8 @@
                     <div v-for="(item, key) in currentStatusConstructions" :key="key" class="item" @click="handleToConstruction(item.id)">
                         <div class="left">
                             <div class="car-number">
-                                {{item.car_number}}
                                 <div v-if="item.appointment" class="tag"> 预约 </div>
+                                {{item.car_number}}
                             </div>
                             <div class="car-mode">
                                 {{item.car_mode}}
@@ -85,7 +85,7 @@
                     <div class="button-container">
                         <div class="white-space"> </div>
                         <div v-if="currentStatus.status != 5" class="button"><van-button type="primary" size="large" @click="handleHoliday">设置为休假日</van-button></div>
-                        <div v-else class="button"><van-button type="primary" size="large" @click="handleCancelHoliday">取消休假</van-button></div>
+                        <div v-else class="button"><van-button type="primary" size="large" @click="handleDestoryHoliday">取消休假</van-button></div>
                     </div>
 
                 </div>
@@ -148,7 +148,7 @@
         padding: var(--van-padding-base);
         color: var(--van-gray-1);
         border-radius: 5px;
-        margin-left: var(--van-padding-sm);
+        margin-right: var(--van-padding-sm);
         font-size: var(--van-font-size-sm);
     }
     .button-container {
@@ -277,7 +277,7 @@
 </style>
 
 <script>
-import { Image as VanImage, Cell, CellGroup, DatetimePicker, Popup, Toast } from "vant";
+import { Image as VanImage, Cell, CellGroup, DatetimePicker, Popup, Toast, Dialog } from "vant";
 import { URL } from '@/web-config/apiUrl';
 import conf from '@/web-config/index';
 const startDate = new Date();
@@ -354,13 +354,49 @@ export default {
             this.currentIndex = key;
         },
         // 设置当前时间为休息日
-        handleHoliday() {
+        async handleHoliday() {
             const date = this.currentStatus.date;
-            this.post()
+            Dialog.confirm({
+            title: '提醒',
+            message: `将${date}设置为休息日吗？`,
+            })
+            .then(() => {
+                Toast.loading("执行中");
+                return this.post(URL.api_vacationsStoreByOneday, {date: date});
+            }).then (data => {
+                console.log(data);
+                if (data.data.hasOwnProperty("id")) {
+                    this.currentStatus.status = 5;
+                    Toast("设置成功");
+                }
+            })
+            .catch((err) => {
+                Toast(err.message);
+            }).finally ( () => {
+                Toast.clear();
+            })
+            
         },
-        // 取消当前时间为休息日
-        handleCancelHoliday() {
 
+        async handleDestoryHoliday()
+        {
+            const date = this.currentStatus.date;
+            Dialog.confirm({
+                title: "提醒",
+                message: `确定取消${date}的休假计划吗？`
+            }).then(() => {
+                Toast.loading("执行中");
+                return this.post(`${URL.api_vacationsDestoryByDate}${date}`);
+            }).then(data => {
+                console.log(data);
+                this.currentStatus.status = 1,
+                Toast("设置成功");
+            }).catch(err => {
+                Toast(err.message);
+            }).finally(() => {
+                Toast.clear();
+            })
+            
         },
 
         async handleEndDatePickerSubmit(value) {
