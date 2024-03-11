@@ -10,6 +10,24 @@
     </van-swipe>
     <div class="content">
       <van-notice-bar scrollable :text="notices" />
+      <div class="menu">
+        <div class="title"> 常用功能 </div>
+        <div class="menu-content">
+          <div class="menu-item" @click="$router.push({name: 'receive-status'})">
+            <van-icon name="calendar-o" size="40" />
+            <div class="text">
+              排班查看
+            </div>
+          </div>
+          <div class="menu-item" @click="$router.push({name: 'construction-receive-config'})">
+            <van-icon size="40"  name="todo-list-o" />
+            <div class="text">
+              接单设置
+            </div>
+          </div>
+        </div>
+        
+      </div>
       <jin-remind :remind-title = "task.title">
         <template slot="item">
           <!-- 组件内部注册的事件名字是clickItem 父元素通过click-item 可以调用 ,: component lists rendered with v-for should have explicit keys 报错需要给组件加上:key-->
@@ -33,7 +51,7 @@
 <script>
 
 import axios from 'axios'
-import { NoticeBar, Swipe, SwipeItem, Lazyload, ImagePreview } from 'vant';
+import { NoticeBar, Swipe, SwipeItem, Lazyload, ImagePreview, Icon } from 'vant';
 import jinRemind from "@/components/jin-remind/index.vue";  //引用组件的地址
 import jinRemindItem from "@/components/jin-remind-item/index.vue";  //引用组件的地址
 import { URL } from '@/web-config/apiUrl';
@@ -42,6 +60,7 @@ export default {
   name: 'homePage',
   mixins : [ require ( "@/mixins" ).default],
   components: {
+    Icon,
     'jin-remind': jinRemind,
     "van-notice-bar": NoticeBar,
     'jin-remind-item': jinRemindItem,
@@ -207,6 +226,33 @@ export default {
   .swipe-img {
     width: 100%;
     height: 100%;
+  }
+  .menu {
+    display: flex;
+    padding: var(--van-font-size-md) 0;
+    flex-direction: column;
+  }
+  .menu .menu-content {
+    display: flex;
+    padding: var(--van-padding-md) 0;
+    background: var(--van-background-color-light);
+    border-radius: 5px;
+  }
+  .menu .title {
+    font-size: var(--van-font-size-lg);
+    font-weight: var(--van-font-weight-bold-2);
+    padding: var(--van-padding-sm) var(--van-padding-base);
+  }
+  .menu .menu-item {
+    padding: var(--van-padding-base);
+    flex: 0 0 20%; /* 这将使得每个子元素占据容器的25%宽度 */
+    box-sizing: border-box; /* 包括padding和border在内的宽度 */
+    text-align: center;
+  }
+  .menu-item .text {
+    font-size: var(--van-font-size-sm);
+    width: 100%;
+    text-align: center;
   }
 </style>
 
