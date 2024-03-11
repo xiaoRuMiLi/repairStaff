@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="mine-wrapper">
         <!-- 背景图区域 -->
         <!-- hideBack 等同于:hideBack = "true" -->
         <jin-background
@@ -179,7 +179,7 @@
     color: var(--com-text-color);
     font-weight: var(--com-font-weight-bold);
 }
-.wrapper {
+.mine-wrapper {
     background-color: var(--van-white);
 }
 .content-father {

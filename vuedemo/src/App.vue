@@ -1,3 +1,8 @@
+<!--
+ * @Description: 
+ * @User: King <303219462@qq.com>
+ * @Date: 2023-04-10 19:41:13
+-->
 <template>
   <div id="app">
     <!--<img src="./assets/logo.png">-->
@@ -11,6 +16,8 @@
     <router-view v-if="!$route.meta.keepAlive">
         <!-- 这里是不被缓存的视图组件，比如详情B页面-->
     </router-view>
+    <div class="white-space" :style="{height: '50px'}">
+    </div>
   </div>
 </template>
 
