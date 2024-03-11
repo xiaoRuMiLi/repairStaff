@@ -48,7 +48,7 @@ axios.interceptors.response.use ( ( res ) => {
     return Promise.resolve ( newRes.data );
 } , ( error ) => {
     NProgress.done ();
-    // 对系统返回code做统一弹出提示处理
+    // 对系统返回code做统一弹出提示处
     return Promise.reject (statusCode.getStatusErr(error));
     //return Promise.reject ( error );
 } );
@@ -61,6 +61,7 @@ function mes () {
         duration : 3000 ,
         customClass : "messageBox"
     } );*/
+    Toast("访问服务器的时候出现了一个错误");
     console.log('在访问服务器的时候出现了一个错误')
 }
 

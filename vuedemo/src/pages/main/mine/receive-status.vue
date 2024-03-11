@@ -364,16 +364,19 @@ export default {
                 Toast.loading("执行中");
                 return this.post(URL.api_vacationsStoreByOneday, {date: date});
             }).then (data => {
-                console.log(data);
                 if (data.data.hasOwnProperty("id")) {
+                    Toast.clear();
                     this.currentStatus.status = 5;
                     Toast("设置成功");
+                    return ;
                 }
+                Toast("当天不允许安排休假计划或者已经有休假计划");
             })
             .catch((err) => {
+                Toast.clear();
                 Toast(err.message);
             }).finally ( () => {
-                Toast.clear();
+                //Toast.clear();
             })
             
         },
@@ -388,13 +391,13 @@ export default {
                 Toast.loading("执行中");
                 return this.post(`${URL.api_vacationsDestoryByDate}${date}`);
             }).then(data => {
-                console.log(data);
+                Toast.clear();
                 this.currentStatus.status = 1,
                 Toast("设置成功");
             }).catch(err => {
-                Toast(err.message);
-            }).finally(() => {
                 Toast.clear();
+            }).finally(() => {
+                //Toast.clear();
             })
             
         },

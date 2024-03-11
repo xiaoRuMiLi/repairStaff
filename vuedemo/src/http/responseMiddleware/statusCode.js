@@ -64,7 +64,7 @@ const getStatusErr = ( error, toast = true ) =>
                 error.message = `未知错误(${error.response.status})!`;
         }
     }
-    if ( toast )
+    if ( Toast )
     {
         Toast(error.message + ' 。 Message： ' + error.response.data.message);
     }
