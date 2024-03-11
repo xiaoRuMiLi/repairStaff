@@ -357,31 +357,21 @@ export default {
         async handleHoliday() {
             const date = this.currentStatus.date;
             const constructions = Object.entries(this.currentStatus.constructions).map((key, val) => val);
-            if (constructions.length > 0)
-            {
-                return Toast("当日有未完成的施工单，请重新选择日期");
-            }
-            try {
-                Dialog.confirm({
-                title: '提醒',
-                message: `将${date}设置为休息日吗？`,
-                })
-                .then(() => {
-                    Toast.loading("执行中");
-                    return this.post(URL.api_vacationsStoreByOneday, {date: date});
-                }).then (data => {
-                    if (data.data.hasOwnProperty("id")) {
-                        //Toast.clear();
-                        this.currentStatus.status = 5;
-                        Toast("设置成功");
-                        return ;
-                    }
-                    Toast("当天不允许安排休假计划或者已经有休假计划");
-                })
-            } catch (err) {
-               Toast(err.message);
-            }
-            
+            Dialog.confirm({
+            title: '提醒',
+            message: `将${date}设置为休息日吗？`,
+            })
+            .then(() => {
+                Toast.loading("执行中");
+                return this.post(URL.api_vacationsStoreByOneday, {date: date});
+            }).then (data => {
+                if (data.data.hasOwnProperty("id")) {
+                    //Toast.clear();
+                    this.currentStatus.status = 5;
+                    Toast("设置成功");
+                    return ;
+                }
+            })    
         },
 
         async handleDestoryHoliday()
@@ -397,10 +387,6 @@ export default {
                 Toast.clear();
                 this.currentStatus.status = 1,
                 Toast("设置成功");
-            }).catch(err => {
-                Toast.clear();
-            }).finally(() => {
-                //Toast.clear();
             })
             
         },

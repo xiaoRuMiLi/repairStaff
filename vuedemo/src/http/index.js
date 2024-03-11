@@ -61,7 +61,7 @@ function mes () {
         duration : 3000 ,
         customClass : "messageBox"
     } );*/
-    Toast("访问服务器的时候出现了一个错误");
+    //Toast("访问服务器的时候出现了一个错误");
     console.log('在访问服务器的时候出现了一个错误')
 }
 
