@@ -356,6 +356,10 @@ export default {
         // 设置当前时间为休息日
         async handleHoliday() {
             const date = this.currentStatus.date;
+            if (this.currentStatus.constructions.length > 0)
+            {
+                return Toast("当日有未完成的施工单，请重新选择日期");
+            }
             Dialog.confirm({
             title: '提醒',
             message: `将${date}设置为休息日吗？`,
@@ -429,7 +433,7 @@ export default {
     computed: {
         // 选择查看的某一天
         currentStatus() {
-            return this.statusDatas[this.currentIndex];
+            return this.statusDatas[this.currentIndex] ? this.statusDatas[this.currentIndex] : {status: 0, date: ""} ;
         },
         // 某一天的所有施工单
         currentStatusConstructions() {
